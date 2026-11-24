@@ -132,6 +132,14 @@ def main():
         page.wait_for_timeout(400)
         require(page.locator("#census-places").is_visible(), "Back returns to the list")
 
+        # the Places tab is home: from a place's page it returns to the list, with the filters cleared
+        page.goto(base + "?place=marin-city")
+        page.wait_for_selector("#place-table tbody tr")
+        page.locator('#page-tabs a[data-tab="start"]').click()
+        page.wait_for_selector("#census-cards li")
+        require(page.locator("#census-places").is_visible() and page.locator("#census-place").is_hidden(), "the Places tab returns to the list")
+        require("place=" not in page.url, "home has no place in the address")
+
         # the Data tab
         page.goto(base + "#data")
         page.wait_for_selector("#measures-table tbody tr")
@@ -139,6 +147,9 @@ def main():
         require(page.locator("#measures-table tbody tr").count() == 33, "the Data tab lists the 33 measures")
         require("American Community Survey" in page.locator("#dataset-facts").inner_text(), "the Data tab names the dataset")
         require(page.locator("#data .action-toolbar button[aria-label]").count() >= 6, "the Data tab's tables have their buttons")
+        page.locator('#page-tabs a[data-tab="start"]').click()
+        page.wait_for_selector("#census-cards li")
+        require(page.locator("#page-tabs a[aria-current=page]").inner_text() == "Places", "the Places tab brings back the list from the Data tab")
 
         page.goto(base + "?place=nowhere")
         page.wait_for_timeout(800)
