@@ -6,6 +6,13 @@ A static, zero-build MarinOS app on the Marin App Shell (`vendor/marinos/`, vers
 
 The statistics come from `marin-data` (`statistics/README.md` there): schemaGov observations built from the ACS 5-year estimates. This app reads them; it does not calculate or round them. Margins of error, the source and what was left out must be shown with a value. A place with no observation shows nothing rather than a guess.
 
+Reading an observation:
+- Resolve its variable by `@id`, never by a Census code. A subset such as age 65+ is its own variable.
+- A 5-year estimate has `observationPeriod` (for example `2020/2024`), not a date. Never show it as one year.
+- `value` can be absent. An observation with only `minValue` is an open-ended median: show it as "250,000 or more" (`maxValue` alone, "or less"). Never show the bound as an exact number.
+- `marginOfError` and its `confidenceLevel` are optional. Show them when present; do not invent them.
+- A statistical area is a `Place` with `areaType`. Governed areas are jurisdictions. Do not treat a community, a Census place and a tract as the same thing.
+
 ## Boundaries
 
 - Do not edit `vendor/marinos/`. Adopt a new shell with its installer and update `platform.shell`.
