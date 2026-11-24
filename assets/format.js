@@ -9,6 +9,7 @@
     if (unit === "USD") return `$${group(n)}`;
     if (unit === "percent") return `${fixed(n, 1)}%`;
     if (unit === "years") return fixed(n, 1);
+    if (unit === "persons per household") return fixed(n, 2);
     return group(n);
   }
 
@@ -54,7 +55,26 @@
     return rows.map((row) => row.map(csvCell).join(",")).join("\r\n") + "\r\n";
   }
 
-  const api = { number, entry, confidence, csvCell, csv };
+  const escapeHtml = (value) => String(value).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  const mdCell = (value) => String(value).replace(/\|/g, "\\|").replace(/\s*\n\s*/g, " ");
+
+  // A table as the three formats every Copy and Download menu offers (Text, HTML, Markdown). `rows` are arrays of text.
+  // `source` is a line of text (or empty) that follows the table. No classes or styles: it pastes cleanly into a CMS or Word.
+  function formats(title, head, rows, source = "") {
+    const html = `<h2>${escapeHtml(title)}</h2>` +
+      `<table><thead><tr>${head.map((h) => `<th>${escapeHtml(h)}</th>`).join("")}</tr></thead>` +
+      `<tbody>${rows.map((row) => `<tr>${row.map((c) => `<td>${escapeHtml(c)}</td>`).join("")}</tr>`).join("")}</tbody></table>` +
+      (source ? `<p>${escapeHtml(source)}</p>` : "");
+    const markdown = `## ${title}\n\n| ${head.map(mdCell).join(" | ")} |\n| ${head.map(() => "---").join(" | ")} |\n` +
+      rows.map((row) => `| ${row.map(mdCell).join(" | ")} |`).join("\n") + (source ? `\n\n${source}` : "") + "\n";
+    const text = `${title}\n\n${[head, ...rows].map((row) => row.join("\t")).join("\n")}` + (source ? `\n\n${source}` : "") + "\n";
+    return { text, html, markdown };
+  }
+
+  // Any table as CSV, for the tables that are not places (the measures, the dataset).
+  const rowsCsv = (head, rows) => [head, ...rows].map((row) => row.map(csvCell).join(",")).join("\r\n") + "\r\n";
+
+  const api = { number, entry, confidence, csvCell, csv, formats, rowsCsv };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   else window.MarinCensusFormat = api;
 })();

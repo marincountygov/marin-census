@@ -13,6 +13,10 @@ Reading an observation:
 - `marginOfError` and its `confidenceLevel` are optional. Show them when present; do not invent them.
 - A statistical area is a `Place` with `areaType`. Governed areas are jurisdictions. Do not treat a community, a Census place and a tract as the same thing.
 
+## The list view
+
+Read `marin-ui/docs/components.md` ("Filter column", "Results header", "Cards") before changing it. The list is a directory of places and stays simple: the filter column has Search and Area types and nothing else. Cards are the default layout (the name, then Population); the table has a fixed set of columns, the headline measures in `topics.json`. The toolbar has, in order: sort (cards only), layout, then Copy link, Copy, Download and Fullscreen (table only). Copy link, Copy and Download are in a `.doc-actions` that is a direct child of the toolbar, never inside an `.action-group`. Choosing other measures and comparing places belongs to the compare and reports tool (the shell's `docs/reports-plan.md`), not to the list: do not add column pickers or measure filters here. The source is on a place's page and the Data tab, not on the list. The layout and sort are kept in the address; always keep `location.hash`, because the shell's tabs use it. Do not add a control the rules do not describe.
+
 ## Boundaries
 
 - Do not edit `vendor/marinos/`. Adopt a new shell with its installer and update `platform.shell`.

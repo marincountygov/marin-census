@@ -1,0 +1,433 @@
+{
+  "schemaVersion": "1.0.0",
+  "title": "ACS 5-year source mapping",
+  "notes": [
+    "Each variable is a source-independent statistical variable. The ACS cells here are how this release is computed, never the public id.",
+    "A cell is TABLE_NNN (for example B01003_001). The estimate is the E column and the margin of error is the M column of that cell in the Census table-based summary file.",
+    "calculation.type: direct = one cell; sum = add cells (and optionally subtract others); share = a numerator over the denominator variable, as percent.",
+    "Margins: a sum or difference uses the square root of the sum of squared margins. A share uses the Census proportion formula, and the ratio formula when that has a negative root.",
+    "openEnded: a median the Census publishes as 'or more' (margin code -333333333, estimate cap + 1). It is written as a one-sided bound (minValue = cap) with no value and no margin of error, and only when the source estimate is exactly cap + 1.",
+    "role: indicator is a measure for people to read. denominator is published so a share can be reproduced and is the measurementDenominator of its share."
+  ],
+  "source": {
+    "id": "acs-2024-5yr",
+    "name": "American Community Survey 5-year estimates, 2020-2024",
+    "publisher": "U.S. Census Bureau",
+    "program": "American Community Survey",
+    "estimate": "5-year",
+    "vintage": 2024,
+    "observationPeriod": "2020/2024",
+    "geographyVintage": "2020 census tracts and 2024 places",
+    "confidenceLevel": 0.9,
+    "base": "https://www2.census.gov/programs-surveys/acs/summary_file/2024/table-based-SF",
+    "geographyFile": "documentation/Geos20245YR.txt",
+    "shellsFile": "documentation/ACS20245YR_Table_Shells.txt",
+    "placesByCountyUrl": "https://www2.census.gov/geo/docs/reference/codes2020/place_by_cou/st06_ca_place_by_county2020.txt",
+    "tableFile": "data/5YRData/acsdt5y2024-{table}.dat",
+    "state": "06",
+    "county": "041"
+  },
+  "variables": [
+    {
+      "id": "population-total",
+      "name": "Total population",
+      "description": "Residents counted at their usual place of residence.",
+      "role": "indicator", "statType": "count", "populationType": "Person", "unit": "persons",
+      "universe": "Total population",
+      "calculation": {"type": "direct", "cell": "B01003_001"}
+    },
+    {
+      "id": "median-age",
+      "name": "Median age",
+      "description": "The age that divides the population into two equal groups.",
+      "role": "indicator", "statType": "median", "populationType": "Person", "unit": "years",
+      "universe": "Total population",
+      "calculation": {"type": "direct", "cell": "B01002_001"}
+    },
+    {
+      "id": "population-under-18",
+      "name": "Population under age 18",
+      "description": "Residents younger than 18.",
+      "role": "indicator", "statType": "count", "populationType": "Person", "unit": "persons",
+      "dimension": {"propertyID": "age", "maxValue": 17, "unitText": "year"},
+      "universe": "Population under 18 years",
+      "calculation": {"type": "direct", "cell": "B09001_001"}
+    },
+    {
+      "id": "population-65-plus",
+      "name": "Population age 65 and over",
+      "description": "Residents aged 65 or older.",
+      "role": "indicator", "statType": "count", "populationType": "Person", "unit": "persons",
+      "dimension": {"propertyID": "age", "minValue": 65, "unitText": "year"},
+      "universe": "Total population",
+      "calculation": {"type": "sum", "cells": [
+        "B01001_020", "B01001_021", "B01001_022", "B01001_023", "B01001_024", "B01001_025",
+        "B01001_044", "B01001_045", "B01001_046", "B01001_047", "B01001_048", "B01001_049"]}
+    },
+    {
+      "id": "median-household-income",
+      "name": "Median household income",
+      "description": "Median of annual household income, in 2024 inflation-adjusted dollars. Households are the universe, not people.",
+      "role": "indicator", "statType": "median", "unit": "USD",
+      "universe": "Households",
+      "openEnded": {"bound": "minValue", "cap": 250000},
+      "calculation": {"type": "direct", "cell": "B19013_001"}
+    },
+    {
+      "id": "poverty-rate",
+      "name": "Poverty rate",
+      "description": "Share of people for whom poverty status is determined whose income in the past 12 months was below the poverty level.",
+      "role": "indicator", "statType": "percent", "populationType": "Person", "unit": "percent",
+      "universe": "Population for whom poverty status is determined",
+      "calculation": {"type": "share", "numerator": {"type": "sum", "cells": ["B17001_002"]}, "denominator": "population-poverty-status-determined"}
+    },
+    {
+      "id": "median-gross-rent",
+      "name": "Median gross rent",
+      "description": "Median monthly rent plus utilities, in 2024 inflation-adjusted dollars, for renter-occupied units paying cash rent.",
+      "role": "indicator", "statType": "median", "unit": "USD",
+      "universe": "Renter-occupied housing units paying cash rent",
+      "openEnded": {"bound": "minValue", "cap": 3500},
+      "calculation": {"type": "direct", "cell": "B25064_001"}
+    },
+    {
+      "id": "rent-burden-rate",
+      "name": "Rent burden rate",
+      "description": "Share of renter households paying 30 percent or more of household income on rent. Renter households where the share is not computed are counted in the denominator, so this reads slightly lower than the Census's own published percentage, which leaves them out.",
+      "role": "indicator", "statType": "percent", "unit": "percent",
+      "universe": "Renter-occupied housing units",
+      "calculation": {"type": "share", "numerator": {"type": "sum", "cells": ["B25070_007", "B25070_008", "B25070_009", "B25070_010"]}, "denominator": "renter-households"}
+    },
+    {
+      "id": "disability-rate",
+      "name": "Disability rate",
+      "description": "Share of the civilian noninstitutionalized population with a disability.",
+      "role": "indicator", "statType": "percent", "populationType": "Person", "unit": "percent",
+      "universe": "Civilian noninstitutionalized population",
+      "calculation": {"type": "share", "numerator": {"type": "sum", "cells": [
+        "B18101_004", "B18101_007", "B18101_010", "B18101_013", "B18101_016", "B18101_019",
+        "B18101_023", "B18101_026", "B18101_029", "B18101_032", "B18101_035", "B18101_038"]}, "denominator": "civilian-noninstitutionalized-population"}
+    },
+    {
+      "id": "households-without-internet-rate",
+      "name": "Households without internet access rate",
+      "description": "Share of households with no internet access, with or without a subscription.",
+      "role": "indicator", "statType": "percent", "unit": "percent",
+      "universe": "Households",
+      "calculation": {"type": "share", "numerator": {"type": "sum", "cells": ["B28002_013"]}, "denominator": "households-total"}
+    },
+    {
+      "id": "population-poverty-status-determined",
+      "name": "Population for whom poverty status is determined",
+      "description": "People in the universe of the poverty rate. It leaves out, for example, people in institutions and college dormitories.",
+      "role": "denominator", "statType": "count", "populationType": "Person", "unit": "persons",
+      "universe": "Population for whom poverty status is determined",
+      "calculation": {"type": "direct", "cell": "B17001_001"}
+    },
+    {
+      "id": "renter-households",
+      "name": "Renter households",
+      "description": "Renter-occupied housing units.",
+      "role": "denominator", "statType": "count", "unit": "households",
+      "universe": "Renter-occupied housing units",
+      "calculation": {"type": "direct", "cell": "B25070_001"}
+    },
+    {
+      "id": "civilian-noninstitutionalized-population",
+      "name": "Civilian noninstitutionalized population",
+      "description": "People in the universe of the disability rate.",
+      "role": "denominator", "statType": "count", "populationType": "Person", "unit": "persons",
+      "universe": "Civilian noninstitutionalized population",
+      "calculation": {"type": "direct", "cell": "B18101_001"}
+    },
+    {
+      "id": "households-total",
+      "name": "Total households",
+      "description": "Occupied housing units.",
+      "role": "denominator", "statType": "count", "unit": "households",
+      "universe": "Households",
+      "calculation": {"type": "direct", "cell": "B28002_001"}
+    },
+    {
+      "id": "average-household-size",
+      "name": "Average household size",
+      "description": "Average number of people in an occupied housing unit.",
+      "role": "indicator", "statType": "mean", "unit": "persons per household",
+      "universe": "Occupied housing units",
+      "calculation": {"type": "direct", "cell": "B25010_001"}
+    },
+    {
+      "id": "under-18-rate",
+      "name": "Share of population under age 18",
+      "description": "Share of residents younger than 18.",
+      "role": "indicator", "statType": "percent", "populationType": "Person", "unit": "percent",
+      "universe": "Total population",
+      "calculation": {"type": "share", "numerator": {"type": "sum", "cells": ["B01001_003", "B01001_004", "B01001_005", "B01001_006", "B01001_027", "B01001_028", "B01001_029", "B01001_030"]}, "denominator": "population-total"}
+    },
+    {
+      "id": "population-65-plus-rate",
+      "name": "Share of population age 65 and over",
+      "description": "Share of residents aged 65 or older.",
+      "role": "indicator", "statType": "percent", "populationType": "Person", "unit": "percent",
+      "universe": "Total population",
+      "calculation": {"type": "share", "numerator": {"type": "sum", "cells": ["B01001_020", "B01001_021", "B01001_022", "B01001_023", "B01001_024", "B01001_025", "B01001_044", "B01001_045", "B01001_046", "B01001_047", "B01001_048", "B01001_049"]}, "denominator": "population-total"}
+    },
+    {
+      "id": "foreign-born-rate",
+      "name": "Foreign-born rate",
+      "description": "Share of residents born outside the United States.",
+      "role": "indicator", "statType": "percent", "populationType": "Person", "unit": "percent",
+      "universe": "Total population",
+      "calculation": {"type": "share", "numerator": {"type": "sum", "cells": ["B05002_013"]}, "denominator": "population-nativity"}
+    },
+    {
+      "id": "veteran-rate",
+      "name": "Veteran rate",
+      "description": "Share of civilian adults who are veterans.",
+      "role": "indicator", "statType": "percent", "populationType": "Person", "unit": "percent",
+      "universe": "Civilian population 18 years and over",
+      "calculation": {"type": "share", "numerator": {"type": "sum", "cells": ["B21001_002"]}, "denominator": "civilian-population-18-plus"}
+    },
+    {
+      "id": "limited-english-households-rate",
+      "name": "Limited English speaking households rate",
+      "description": "Share of households in which no one 14 and over speaks English only or speaks English very well.",
+      "role": "indicator", "statType": "percent", "unit": "percent",
+      "universe": "Households",
+      "calculation": {"type": "share", "numerator": {"type": "sum", "cells": ["C16002_004", "C16002_007", "C16002_010", "C16002_013"]}, "denominator": "households-language-status"}
+    },
+    {
+      "id": "per-capita-income",
+      "name": "Per capita income",
+      "description": "Mean income per person in the past 12 months, in 2024 inflation-adjusted dollars.",
+      "role": "indicator", "statType": "mean", "populationType": "Person", "unit": "USD",
+      "universe": "Total population",
+      "calculation": {"type": "direct", "cell": "B19301_001"}
+    },
+    {
+      "id": "child-poverty-rate",
+      "name": "Child poverty rate",
+      "description": "Share of people under 18 for whom poverty status is determined whose income in the past 12 months was below the poverty level.",
+      "role": "indicator", "statType": "percent", "populationType": "Person", "unit": "percent",
+      "universe": "Population under 18 for whom poverty status is determined",
+      "calculation": {"type": "share", "numerator": {"type": "sum", "cells": ["B17001_004", "B17001_005", "B17001_006", "B17001_007", "B17001_008", "B17001_009", "B17001_018", "B17001_019", "B17001_020", "B17001_021", "B17001_022", "B17001_023"]}, "denominator": "population-under-18-poverty-determined"}
+    },
+    {
+      "id": "senior-poverty-rate",
+      "name": "Senior poverty rate",
+      "description": "Share of people 65 and over for whom poverty status is determined whose income in the past 12 months was below the poverty level.",
+      "role": "indicator", "statType": "percent", "populationType": "Person", "unit": "percent",
+      "universe": "Population 65 and over for whom poverty status is determined",
+      "calculation": {"type": "share", "numerator": {"type": "sum", "cells": ["B17001_015", "B17001_016", "B17001_029", "B17001_030"]}, "denominator": "population-65-plus-poverty-determined"}
+    },
+    {
+      "id": "housing-units-total",
+      "name": "Housing units",
+      "description": "Occupied and vacant housing units.",
+      "role": "indicator", "statType": "count", "unit": "housing units",
+      "universe": "Housing units",
+      "calculation": {"type": "direct", "cell": "B25002_001"}
+    },
+    {
+      "id": "homeownership-rate",
+      "name": "Homeownership rate",
+      "description": "Share of occupied housing units that are owner-occupied.",
+      "role": "indicator", "statType": "percent", "unit": "percent",
+      "universe": "Occupied housing units",
+      "calculation": {"type": "share", "numerator": {"type": "sum", "cells": ["B25003_002"]}, "denominator": "occupied-housing-units"}
+    },
+    {
+      "id": "vacancy-rate",
+      "name": "Vacancy rate",
+      "description": "Share of housing units that are vacant.",
+      "role": "indicator", "statType": "percent", "unit": "percent",
+      "universe": "Housing units",
+      "calculation": {"type": "share", "numerator": {"type": "sum", "cells": ["B25002_003"]}, "denominator": "housing-units-total"}
+    },
+    {
+      "id": "median-home-value",
+      "name": "Median home value",
+      "description": "Median value of owner-occupied housing units, as the owner estimates it, in 2024 inflation-adjusted dollars.",
+      "role": "indicator", "statType": "median", "unit": "USD",
+      "universe": "Owner-occupied housing units",
+      "openEnded": {"bound": "minValue", "cap": 2000000},
+      "calculation": {"type": "direct", "cell": "B25077_001"}
+    },
+    {
+      "id": "owner-cost-burden-rate",
+      "name": "Owner cost burden rate",
+      "description": "Share of owner households paying 30 percent or more of household income on housing costs.",
+      "role": "indicator", "statType": "percent", "unit": "percent",
+      "universe": "Owner-occupied housing units",
+      "calculation": {"type": "share", "numerator": {"type": "sum", "cells": ["B25091_008", "B25091_009", "B25091_010", "B25091_011", "B25091_019", "B25091_020", "B25091_021", "B25091_022"]}, "denominator": "owner-occupied-housing-units"}
+    },
+    {
+      "id": "overcrowding-rate",
+      "name": "Overcrowding rate",
+      "description": "Share of occupied housing units with more than 1 occupant per room.",
+      "role": "indicator", "statType": "percent", "unit": "percent",
+      "universe": "Occupied housing units",
+      "calculation": {"type": "share", "numerator": {"type": "sum", "cells": ["B25014_005", "B25014_006", "B25014_007", "B25014_011", "B25014_012", "B25014_013"]}, "denominator": "occupied-housing-units-by-room"}
+    },
+    {
+      "id": "broadband-subscription-rate",
+      "name": "Broadband subscription rate",
+      "description": "Share of households with a broadband internet subscription of any type.",
+      "role": "indicator", "statType": "percent", "unit": "percent",
+      "universe": "Households",
+      "calculation": {"type": "share", "numerator": {"type": "sum", "cells": ["B28002_004"]}, "denominator": "households-total"}
+    },
+    {
+      "id": "households-without-computer-rate",
+      "name": "Households without a computer rate",
+      "description": "Share of households with no computer, smartphone or tablet.",
+      "role": "indicator", "statType": "percent", "unit": "percent",
+      "universe": "Households",
+      "calculation": {"type": "share", "numerator": {"type": "sum", "cells": ["B28001_011"]}, "denominator": "households-computers"}
+    },
+    {
+      "id": "work-from-home-rate",
+      "name": "Work-from-home rate",
+      "description": "Share of workers 16 and over who worked from home.",
+      "role": "indicator", "statType": "percent", "populationType": "Person", "unit": "percent",
+      "universe": "Workers 16 years and over",
+      "calculation": {"type": "share", "numerator": {"type": "sum", "cells": ["B08301_021"]}, "denominator": "workers-16-plus"}
+    },
+    {
+      "id": "public-transit-rate",
+      "name": "Public transit commute rate",
+      "description": "Share of workers 16 and over who commuted by public transportation.",
+      "role": "indicator", "statType": "percent", "populationType": "Person", "unit": "percent",
+      "universe": "Workers 16 years and over",
+      "calculation": {"type": "share", "numerator": {"type": "sum", "cells": ["B08301_010"]}, "denominator": "workers-16-plus"}
+    },
+    {
+      "id": "households-without-vehicle-rate",
+      "name": "Households without a vehicle rate",
+      "description": "Share of households with no vehicle available.",
+      "role": "indicator", "statType": "percent", "unit": "percent",
+      "universe": "Households",
+      "calculation": {"type": "share", "numerator": {"type": "sum", "cells": ["B08201_002"]}, "denominator": "households-vehicles"}
+    },
+    {
+      "id": "labor-force-participation-rate",
+      "name": "Labor force participation rate",
+      "description": "Share of people 16 and over who are in the labor force.",
+      "role": "indicator", "statType": "percent", "populationType": "Person", "unit": "percent",
+      "universe": "Population 16 years and over",
+      "calculation": {"type": "share", "numerator": {"type": "sum", "cells": ["B23025_002"]}, "denominator": "population-16-plus"}
+    },
+    {
+      "id": "unemployment-rate",
+      "name": "Unemployment rate",
+      "description": "Share of the civilian labor force that is unemployed.",
+      "role": "indicator", "statType": "percent", "populationType": "Person", "unit": "percent",
+      "universe": "Civilian labor force",
+      "calculation": {"type": "share", "numerator": {"type": "sum", "cells": ["B23025_005"]}, "denominator": "civilian-labor-force"}
+    },
+    {
+      "id": "population-nativity",
+      "name": "Population in the nativity universe",
+      "description": "People in the universe of the foreign-born rate.",
+      "role": "denominator", "statType": "count", "populationType": "Person", "unit": "persons",
+      "universe": "Total population",
+      "calculation": {"type": "direct", "cell": "B05002_001"}
+    },
+    {
+      "id": "civilian-population-18-plus",
+      "name": "Civilian population 18 and over",
+      "description": "People in the universe of the veteran rate.",
+      "role": "denominator", "statType": "count", "populationType": "Person", "unit": "persons",
+      "universe": "Civilian population 18 years and over",
+      "calculation": {"type": "direct", "cell": "B21001_001"}
+    },
+    {
+      "id": "households-language-status",
+      "name": "Households by language status",
+      "description": "Households in the universe of the limited English speaking rate.",
+      "role": "denominator", "statType": "count", "unit": "households",
+      "universe": "Households",
+      "calculation": {"type": "direct", "cell": "C16002_001"}
+    },
+    {
+      "id": "population-under-18-poverty-determined",
+      "name": "Population under 18 for whom poverty status is determined",
+      "description": "People under 18 in the universe of the child poverty rate.",
+      "role": "denominator", "statType": "count", "populationType": "Person", "unit": "persons",
+      "universe": "Population under 18 for whom poverty status is determined",
+      "calculation": {"type": "sum", "cells": ["B17001_004", "B17001_005", "B17001_006", "B17001_007", "B17001_008", "B17001_009", "B17001_018", "B17001_019", "B17001_020", "B17001_021", "B17001_022", "B17001_023", "B17001_033", "B17001_034", "B17001_035", "B17001_036", "B17001_037", "B17001_038", "B17001_047", "B17001_048", "B17001_049", "B17001_050", "B17001_051", "B17001_052"]}
+    },
+    {
+      "id": "population-65-plus-poverty-determined",
+      "name": "Population 65 and over for whom poverty status is determined",
+      "description": "People 65 and over in the universe of the senior poverty rate.",
+      "role": "denominator", "statType": "count", "populationType": "Person", "unit": "persons",
+      "universe": "Population 65 and over for whom poverty status is determined",
+      "calculation": {"type": "sum", "cells": ["B17001_015", "B17001_016", "B17001_029", "B17001_030", "B17001_044", "B17001_045", "B17001_058", "B17001_059"]}
+    },
+    {
+      "id": "occupied-housing-units",
+      "name": "Occupied housing units",
+      "description": "Occupied housing units in the universe of the homeownership rate.",
+      "role": "denominator", "statType": "count", "unit": "households",
+      "universe": "Occupied housing units",
+      "calculation": {"type": "direct", "cell": "B25003_001"}
+    },
+    {
+      "id": "owner-occupied-housing-units",
+      "name": "Owner-occupied housing units",
+      "description": "Owner-occupied units in the universe of the owner cost burden rate.",
+      "role": "denominator", "statType": "count", "unit": "households",
+      "universe": "Owner-occupied housing units",
+      "calculation": {"type": "direct", "cell": "B25091_001"}
+    },
+    {
+      "id": "occupied-housing-units-by-room",
+      "name": "Occupied housing units by occupants per room",
+      "description": "Occupied housing units in the universe of the overcrowding rate.",
+      "role": "denominator", "statType": "count", "unit": "households",
+      "universe": "Occupied housing units",
+      "calculation": {"type": "direct", "cell": "B25014_001"}
+    },
+    {
+      "id": "households-computers",
+      "name": "Households by computer access",
+      "description": "Households in the universe of the no-computer rate.",
+      "role": "denominator", "statType": "count", "unit": "households",
+      "universe": "Households",
+      "calculation": {"type": "direct", "cell": "B28001_001"}
+    },
+    {
+      "id": "workers-16-plus",
+      "name": "Workers 16 and over",
+      "description": "Workers in the universe of the commute rates.",
+      "role": "denominator", "statType": "count", "populationType": "Person", "unit": "persons",
+      "universe": "Workers 16 years and over",
+      "calculation": {"type": "direct", "cell": "B08301_001"}
+    },
+    {
+      "id": "households-vehicles",
+      "name": "Households by vehicles available",
+      "description": "Households in the universe of the no-vehicle rate.",
+      "role": "denominator", "statType": "count", "unit": "households",
+      "universe": "Households",
+      "calculation": {"type": "direct", "cell": "B08201_001"}
+    },
+    {
+      "id": "population-16-plus",
+      "name": "Population 16 and over",
+      "description": "People in the universe of the labor force participation rate.",
+      "role": "denominator", "statType": "count", "populationType": "Person", "unit": "persons",
+      "universe": "Population 16 years and over",
+      "calculation": {"type": "direct", "cell": "B23025_001"}
+    },
+    {
+      "id": "civilian-labor-force",
+      "name": "Civilian labor force",
+      "description": "People in the universe of the unemployment rate.",
+      "role": "denominator", "statType": "count", "populationType": "Person", "unit": "persons",
+      "universe": "Civilian labor force",
+      "calculation": {"type": "direct", "cell": "B23025_003"}
+    }
+  ]
+}

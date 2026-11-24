@@ -12,6 +12,8 @@ test("numbers by unit", () => {
   assert.equal(f.number("USD", 149091), "$149,091");
   assert.equal(f.number("percent", 8.307604), "8.3%");
   assert.equal(f.number("years", 47.4), "47.4");
+  assert.equal(f.number("persons per household", 2.4567), "2.46");
+  assert.equal(f.number("housing units", 110000.4), "110,000");
 });
 
 test("an estimate with a margin", () => {
@@ -61,4 +63,14 @@ test("csv keeps the numbers as published and leaves the bound's estimate empty",
   };
   const out = f.csv(data, [{ name: "Ross", kindLabel: "City or town", geoid: "0662980", values: { income: { min: 250000 } }, unavailable: {} }]);
   assert.equal(out.split("\r\n")[1], "Ross,City or town,0662980,income,,,250000,,USD,2020/2024,Source,");
+});
+
+test("a table as text, html and markdown, escaped and with the source after it", () => {
+  const out = f.formats("Places", ["Place", "Population"], [["A | B", "1,000"], ["<C>", "2"]], "Source: x");
+  assert.equal(out.html, "<h2>Places</h2><table><thead><tr><th>Place</th><th>Population</th></tr></thead><tbody><tr><td>A | B</td><td>1,000</td></tr><tr><td>&lt;C&gt;</td><td>2</td></tr></tbody></table><p>Source: x</p>");
+  assert.ok(out.markdown.includes("| A \\| B | 1,000 |"));
+  assert.ok(out.markdown.includes("| --- | --- |"));
+  assert.ok(out.markdown.endsWith("Source: x\n"));
+  assert.ok(out.text.startsWith("Places\n\nPlace\tPopulation\nA | B\t1,000"));
+  assert.equal(f.formats("T", ["a"], [["b"]]).html.includes("<p>"), false);
 });

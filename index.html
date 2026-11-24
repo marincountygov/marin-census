@@ -38,6 +38,7 @@
       </template>
     </marin-app-header>
 
+    <nav class="mm-page-tabs" id="page-tabs" aria-label="Sections"><a href="#start" aria-current="page">Places</a><a href="#data">Data</a></nav>
     <main id="main" class="container app-main">
       <!-- Keep the primary workflow first; the shell uses it as the default view. -->
       <section id="start" class="app-page-heading" data-tab-section="start" aria-labelledby="start-heading">
@@ -49,20 +50,20 @@
           <div class="search-side" data-filter-column="filters.json" data-filter-name="places"></div>
           <div class="search-results">
             <div class="mm-results-summary"><p class="app-help-text" id="census-count" tabindex="-1" data-filter-results></p></div>
-            <div id="census-table-region">
-              <div class="action-toolbar">
-                <div class="action-group" role="group" aria-label="Table actions">
-                  <div class="menu">
-                    <button type="button" class="action-button menu-toggle" data-icon="download" aria-expanded="false" aria-controls="download-panel" aria-label="Download, choose a format" title="Download"><svg class="menu-toggle__caret" aria-hidden="true" viewBox="0 0 16 16"><path d="M4 6l4 4 4-4"/></svg></button>
-                    <div id="download-panel" class="menu-panel" hidden>
-                      <button type="button" data-button-kind="menu-item" data-download="csv" data-scope="places">CSV</button>
-                      <button type="button" data-button-kind="menu-item" data-download="json" data-scope="places">JSON</button>
-                    </div>
-                  </div>
-                  <button type="button" class="action-button" data-icon="maximize" data-fullscreen-target="#census-table-region" aria-label="Fullscreen" title="Fullscreen"></button>
+            <div id="census-results-region">
+              <div class="action-toolbar" id="census-toolbar">
+                <div class="action-group" role="group" aria-label="Sort" id="sort-group">
+                  <button type="button" class="action-button" data-sort="population-total" aria-pressed="true" aria-label="Population, high to low" title="Population, high to low"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m3 16 4 4 4-4"/><path d="M7 20V4"/><path d="M11 4h10"/><path d="M11 8h7"/><path d="M11 12h4"/></svg></button>
+                  <button type="button" class="action-button" data-sort="name" aria-pressed="false" aria-label="Name, A to Z" title="Name, A to Z"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m3 16 4 4 4-4"/><path d="M7 20V4"/><path d="M20 8h-5"/><path d="M15 10V6.5a2.5 2.5 0 0 1 5 0V10"/><path d="M15 14h5l-5 6h5"/></svg></button>
                 </div>
+                <div class="action-group" role="group" aria-label="Layout">
+                  <button type="button" class="action-button" data-layout="cards" aria-pressed="true" aria-label="Cards" title="Cards" data-icon="layout-grid"></button>
+                  <button type="button" class="action-button" data-layout="table" aria-pressed="false" aria-label="Table" title="Table"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3v18"/><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M3 15h18"/></svg></button>
+                </div>
+                <div data-actions="places" data-file-name="marin-census-places" data-fullscreen-target="#census-results-region" data-fullscreen-hidden-in="cards"></div>
               </div>
-              <div class="table-scroll">
+              <ul id="census-cards" class="search-results-list search-results-list--3"></ul>
+              <div class="table-scroll" id="census-table-scroll" hidden>
                 <table id="census-table">
                   <caption class="visually-hidden">Marin statistics by place</caption>
                   <thead></thead>
@@ -70,10 +71,6 @@
                 </table>
               </div>
             </div>
-            <section class="census-source" aria-labelledby="source-heading">
-              <h2 id="source-heading">Source</h2>
-              <p data-census-source></p>
-            </section>
           </div>
         </div>
 
@@ -81,16 +78,7 @@
           <h2 id="place-heading" tabindex="-1"></h2>
           <div id="place-table-region">
             <div class="action-toolbar">
-              <div class="action-group" role="group" aria-label="Table actions">
-                <div class="menu">
-                  <button type="button" class="action-button menu-toggle" data-icon="download" aria-expanded="false" aria-controls="place-download-panel" aria-label="Download, choose a format" title="Download"><svg class="menu-toggle__caret" aria-hidden="true" viewBox="0 0 16 16"><path d="M4 6l4 4 4-4"/></svg></button>
-                  <div id="place-download-panel" class="menu-panel" hidden>
-                    <button type="button" data-button-kind="menu-item" data-download="csv" data-scope="place">CSV</button>
-                    <button type="button" data-button-kind="menu-item" data-download="json" data-scope="place">JSON</button>
-                  </div>
-                </div>
-                <button type="button" class="action-button" data-icon="maximize" data-fullscreen-target="#place-table-region" aria-label="Fullscreen" title="Fullscreen"></button>
-              </div>
+              <div data-actions="place" data-fullscreen-target="#place-table-region"></div>
             </div>
             <div class="table-scroll">
               <table id="place-table">
@@ -105,6 +93,26 @@
             <p data-census-source></p>
           </section>
         </div>
+      </section>
+
+      <section id="data" class="app-page-heading" data-tab-section="data" aria-labelledby="data-heading" hidden>
+        <h2 id="data-heading" class="visually-hidden">Data</h2>
+        <section aria-labelledby="dataset-heading">
+          <h3 id="dataset-heading">Dataset</h3>
+          <div class="action-toolbar"><div data-actions="dataset"></div></div>
+          <div class="facts" id="dataset-facts"></div>
+        </section>
+        <section id="measures-region" aria-labelledby="measures-heading">
+          <h3 id="measures-heading">Measures</h3>
+          <div class="action-toolbar"><div data-actions="measures" data-fullscreen-target="#measures-region"></div></div>
+          <div class="table-scroll">
+            <table id="measures-table">
+              <caption class="visually-hidden">The measures and where they come from</caption>
+              <thead></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </section>
       </section>
 
       <!-- Supply app-owned content only; the shell generates sections and headings. -->
