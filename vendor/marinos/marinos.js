@@ -6,8 +6,8 @@
     return;
   }
 
-  const SHELL_VERSION = "2.0.0";
-  const MARIN_UI_VERSION = "1.36.0";
+  const SHELL_VERSION = "2.2.0";
+  const MARIN_UI_VERSION = "1.38.0";
   const MARINOS_URL = "https://marincountygov.github.io/marin-os/";
   const MARINOS_STATUS_URL = `${MARINOS_URL}#status`;
   const CATALOG_URL = `${MARINOS_URL}catalog.json`;
@@ -1632,12 +1632,18 @@
       const lead = resetPending ? "Filters reset. " : "";
       resetPending = false;
       window.clearTimeout(resetTimer);
-      const message = lead + (text || (count === 0 ? "No results." : `${count} ${count === 1 ? "result" : "results"}.`));
+      // text may be a string, or a node an app built (a line with some words in another weight).
+      const isNode = Boolean(text && typeof text === "object" && text.nodeType);
+      const message = lead + (isNode ? text.textContent : text || (count === 0 ? "No results." : `${count} ${count === 1 ? "result" : "results"}.`));
       if (!resultsEl) {
         announce(message);
         return;
       }
-      resultsEl.textContent = message;
+      // "Filters reset." is for the ear: it sits in a visually hidden span in front of the app's own words, so the line a
+      // sighted person reads stays the app's line.
+      const spoken = lead ? [make("span", { class: "visually-hidden", text: lead })] : [];
+      if (isNode) resultsEl.replaceChildren(...spoken, text);
+      else resultsEl.replaceChildren(...spoken, text || (count === 0 ? "No results." : `${count} ${count === 1 ? "result" : "results"}.`));
       if (count === 0) {
         const again = make("button", { type: "button", class: "action-button", text: "Reset filters" });
         again.addEventListener("click", reset);
@@ -1661,6 +1667,80 @@
         note.textContent = `(${counts[input.value] ?? 0})`;
       });
     }
+
+    // Matching. The file names the record field each group looks at ("field": "themes", a dot path such as
+    // "venue.name"; a list of values counts as each of them) and the fields the search reads ("search.fields").
+    // matchesRecord(record) is true when (it is not called matches: that name is the browser's own Element.matches, which
+    // selector tools call on every element) the record fits the search and every group that has a choice (OR inside a
+    // group, AND across groups); a group with no "field" is the app's own to apply. skip leaves groups out.
+    // updateCounts(records) shows beside every choice how many of the records would match if that choice were
+    // added, which leaves out its own group so its other choices stay visible.
+    const valuesAt = (record, path) => {
+      let found = [record];
+      String(path).split(".").forEach((key) => {
+        found = found.flatMap((one) => (one == null ? [] : [].concat(one).map((item) => item?.[key])))
+          .flatMap((item) => (Array.isArray(item) ? item : [item])).filter((item) => item != null && item !== "");
+      });
+      return found.map((item) => String(item).trim());
+    };
+    const searchCache = new WeakMap();
+    const searchTextOf = (record) => {
+      if (!searchCache.has(record)) searchCache.set(record, config.search.fields.map((field) => valuesAt(record, field).join(" ")).join(" ").toLowerCase());
+      return searchCache.get(record);
+    };
+    column.matchesRecord = (record, options = {}) => {
+      const skip = options.skip || [];
+      const query = state.search.trim().toLowerCase();
+      if (query && config.search?.fields?.length) {
+        const words = config.search.match === "words" ? query.split(/\s+/) : [query];
+        const text = searchTextOf(record);
+        if (!words.every((word) => text.includes(word))) return false;
+      }
+      return groups.every((group) => {
+        if (!group.field || skip.includes(group.id)) return true;
+        const value = state.groups[group.id];
+        if (group.type === "date-range") {
+          if (!value.from && !value.to) return true;
+          const day = (valuesAt(record, group.field)[0] || "").slice(0, 10);
+          return Boolean(day) && !(value.from && day < value.from) && !(value.to && day > value.to);
+        }
+        const chosen = isMany(group) ? value : value === "" ? [] : [value];
+        if (!chosen.length) return true;
+        const have = valuesAt(record, group.field);
+        return chosen.some((one) => have.includes(one));
+      });
+    };
+    column.filter = (records, options) => records.filter((record) => column.matchesRecord(record, options));
+    // options.extra(record) is the app's own test (a time window, a tab), applied to every count; options.skip
+    // { groupId: [other group ids] } leaves more groups out of one group's counts.
+    column.updateCounts = (records, options = {}) => {
+      const extra = options.extra || (() => true);
+      groups.forEach((group) => {
+        if (!group.field || group.type === "date-range" || !controls[group.id]?.list) return;
+        const skip = [group.id, ...((options.skip || {})[group.id] || [])];
+        const by = group.groupBy || [];
+        const paths = new Map(group.list.map((option) => [option.value, option.path]));
+        const counts = {};
+        const totals = {};
+        by.length && group.list.forEach((option) => {
+          for (let depth = 1; depth <= Math.min(option.path.length, by.length); depth += 1) totals[option.path.slice(0, depth).join(" / ")] = 0;
+        });
+        records.forEach((record) => {
+          if (!extra(record) || !column.matchesRecord(record, { skip })) return;
+          const values = [...new Set(valuesAt(record, group.field))];
+          values.forEach((value) => { counts[value] = (counts[value] || 0) + 1; });
+          if (!by.length) return;
+          const keys = new Set();
+          values.forEach((value) => {
+            const path = paths.get(value) || [];
+            for (let depth = 1; depth <= Math.min(path.length, by.length); depth += 1) keys.add(path.slice(0, depth).join(" / "));
+          });
+          keys.forEach((key) => { totals[key] = (totals[key] || 0) + 1; });
+        });
+        setCounts(group.id, counts);
+        if (by.length) column.setGroupCounts(group.id, totals);
+      });
+    };
 
     // The pinned title row hides what sits under it, so a field tabbed into view must stop below it
     // (WCAG 2.2 Focus Not Obscured): the panel's scroll padding follows the title row's real height.
@@ -2274,6 +2354,115 @@
 
   window.marinContentFormats = contentFormats;
   window.marinFormatMenus = formatMenus;
+
+  // ---- Search results that show where the words are -----------------------------------------------------------------
+  // A search of document text shows a line of the text under each result with the matched words marked (marinSearchSnippet),
+  // and marks the same words on the page the result opens. The words travel in sessionStorage, never in the address
+  // (marinSearchRemember on a press, and the highlighter below on arrival). The rules are "Search results that show where the
+  // words are" in Marin UI's docs/components.md; the two classes (mark.search-hit, .search-snippet) are in Marin UI's CSS.
+  const SEARCH_HIT_KEY = "marin-search-hit";
+  const SEARCH_WORD = /[\p{L}\p{N}]+/gu;
+  const searchPlain = (text) => String(text || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+  /** The words of what a person typed, lower case and without accents: what marinSearchSnippet and marinSearchRemember take. */
+  function marinSearchWords(text) {
+    return searchPlain(text).split(/[^a-z0-9]+/).filter(Boolean);
+  }
+
+  const startsAWord = (word, words) => words.some((w) => searchPlain(word).startsWith(w));
+
+  /** A `span.search-snippet` with about a line of `text` around the first word that starts with a typed word, each such word in a
+   * `mark.search-hit`, with an ellipsis on a side that continues. `null` when no word of the text starts with one. */
+  function marinSearchSnippet(text, words) {
+    const source = String(text || "");
+    const first = [...source.matchAll(SEARCH_WORD)].find((m) => startsAWord(m[0], words));
+    if (!first) return null;
+    let start = Math.max(0, first.index - 60);
+    if (start) {
+      const gap = source.indexOf(" ", start);
+      if (gap > -1 && gap < first.index) start = gap + 1;
+    }
+    let end = Math.min(source.length, start + 170);
+    if (end < source.length) {
+      const gap = source.lastIndexOf(" ", end);
+      if (gap > first.index) end = gap;
+    }
+    const part = source.slice(start, end);
+    const span = Object.assign(document.createElement("span"), { className: "search-snippet" });
+    if (start) span.append("\u2026");
+    let at = 0;
+    for (const m of part.matchAll(SEARCH_WORD)) {
+      if (!startsAWord(m[0], words)) continue;
+      span.append(part.slice(at, m.index), Object.assign(document.createElement("mark"), { className: "search-hit", textContent: m[0] }));
+      at = m.index + m[0].length;
+    }
+    span.append(part.slice(at));
+    if (end < source.length) span.append("\u2026");
+    return span;
+  }
+
+  /** Keep the typed words for the page `href` opens (call it when a result is pressed). Quietly does nothing without storage. */
+  function marinSearchRemember(href, words) {
+    try {
+      sessionStorage.setItem(SEARCH_HIT_KEY, JSON.stringify({ path: new URL(href, location.href).pathname, terms: words, at: Date.now() }));
+    } catch {
+      /* no storage: no highlight */
+    }
+  }
+
+  // On arrival: if the words were kept for this page (and are under two minutes old), mark each word that starts with one inside the
+  // page's content ([data-search-highlight], else #start, else #main), scroll to the first mark (or stay at the section the address
+  // names), and let Escape clear the marks. Read once; a reload shows none.
+  function marinSearchHighlight() {
+    let hit = null;
+    try {
+      hit = JSON.parse(sessionStorage.getItem(SEARCH_HIT_KEY) || "null");
+      sessionStorage.removeItem(SEARCH_HIT_KEY);
+    } catch {
+      return;
+    }
+    if (!hit || hit.path !== location.pathname || !Array.isArray(hit.terms) || !hit.terms.length || Date.now() - hit.at > 120000) return;
+    const root = document.querySelector("[data-search-highlight]") || document.getElementById("start") || document.getElementById("main");
+    if (!root) return;
+    const skip = "script, style, nav, aside, .doc-actions, .doc-pager, mark, [data-no-copy], search, template";
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode: (n) => (n.parentElement && !n.parentElement.closest(skip) && n.nodeValue.trim() ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT),
+    });
+    const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    const marks = [];
+    for (const node of nodes) {
+      const text = node.nodeValue;
+      const found = [...text.matchAll(SEARCH_WORD)].filter((m) => startsAWord(m[0], hit.terms));
+      if (!found.length) continue;
+      const fragment = document.createDocumentFragment();
+      let at = 0;
+      for (const m of found) {
+        fragment.append(text.slice(at, m.index));
+        const mark = Object.assign(document.createElement("mark"), { className: "search-hit", textContent: m[0] });
+        marks.push(mark);
+        fragment.append(mark);
+        at = m.index + m[0].length;
+      }
+      fragment.append(text.slice(at));
+      node.replaceWith(fragment);
+    }
+    if (!marks.length) return;
+    const target = location.hash.length > 1 ? document.getElementById(decodeURIComponent(location.hash.slice(1))) : null;
+    (marks.find((m) => target && target.contains(m)) || marks[0]).scrollIntoView({ block: "center" });
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape") return;
+      marks.forEach((m) => m.replaceWith(document.createTextNode(m.textContent)));
+      root.normalize();
+    });
+  }
+
+  window.marinSearchWords = marinSearchWords;
+  window.marinSearchSnippet = marinSearchSnippet;
+  window.marinSearchRemember = marinSearchRemember;
+  window.marinSearchHighlight = marinSearchHighlight;
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", marinSearchHighlight);
+  else marinSearchHighlight();
 
   // Copy-to-clipboard: any button[data-copy-value] copies that value and
   // shows brief feedback. Announces through #app-status-message if present
