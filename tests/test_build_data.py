@@ -51,6 +51,24 @@ class CensusData(unittest.TestCase):
     def test_numbers_are_not_rounded(self):
         self.assertEqual(PLACES["marin-county"]["values"]["poverty-rate"]["v"], 8.307604)
 
+    def test_measures_follow_topics_json_and_denominators_stay_hidden(self):
+        measures = [m["id"] for m in DATA["measures"]]
+        indicators = {v["id"] for v in DATA["variables"] if v["role"] == "indicator"}
+        self.assertEqual(set(measures), indicators)
+        self.assertEqual(len(measures), 33)
+        self.assertIn("population-total", measures)  # a measure even though it is also a denominator
+        self.assertNotIn("occupied-housing-units", measures)
+        self.assertEqual(len(DATA["headlineMeasures"]), 10)
+        self.assertLessEqual(set(DATA["headlineMeasures"]), set(measures))
+        self.assertEqual({m["topic"] for m in DATA["measures"]}, {t["name"] for t in DATA["topics"]})
+
+    def test_home_values_at_the_top_code_are_bounds(self):
+        value = PLACES["belvedere"]["values"]["median-home-value"]
+        self.assertEqual(value, {"min": 2000000})
+
+    def test_a_mean_keeps_two_places(self):
+        self.assertEqual(PLACES["marin-county"]["values"]["average-household-size"]["v"], 2.44)
+
     def test_source_label_and_confidence(self):
         self.assertEqual(DATA["source"]["label"], "U.S. Census Bureau, American Community Survey 5-year estimates, 2020–2024")
         self.assertEqual(DATA["source"]["confidenceLevel"], 0.9)

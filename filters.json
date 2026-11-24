@@ -3,7 +3,9 @@
   "schemaVersion": "1.0.0",
   "search": {
     "id": "filter-search",
-    "fields": ["name"]
+    "fields": [
+      "name"
+    ]
   },
   "groups": [
     {
@@ -12,7 +14,11 @@
       "label": "Area types",
       "collapsed": false,
       "param": "kind",
-      "default": ["County", "City or town", "Census-designated place"],
+      "default": [
+        "County",
+        "City or town",
+        "Census-designated place"
+      ],
       "options": {
         "from": "data/census.json",
         "records": "places",

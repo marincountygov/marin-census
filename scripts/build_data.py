@@ -32,6 +32,9 @@ KINDS = {
 }
 
 
+TOPICS = ROOT / "topics.json"
+
+
 def load(path):
     return json.loads(path.read_text(encoding="utf-8"))
 
@@ -55,6 +58,23 @@ def kind_of(record):
     if record["@id"].endswith("/id/jurisdiction/us-ca-marin"):
         return "county"
     return "cdp"  # a Marin community that is also a Census-designated place
+
+
+def census_tables(variable):
+    """The Census tables a variable is made from (B19013, B25070 ...), in order, from its cells in the mapping."""
+    calc = variable["calculation"]
+    if calc["type"] == "direct":
+        cells = [calc["cell"]]
+    elif calc["type"] == "sum":
+        cells = calc["cells"] + calc.get("subtract", [])
+    else:
+        cells = calc["numerator"]["cells"]
+    found = []
+    for cell in cells:
+        table = cell.split("_")[0]
+        if table not in found:
+            found.append(table)
+    return found
 
 
 def source_label(dataset):
@@ -81,6 +101,8 @@ def build():
     juris = load(SOURCE / "jurisdictions.jsonld")["@graph"]
     areas = load(SOURCE / "areas.jsonld")["@graph"]
     omitted = load(SOURCE / "omitted-values.json")["omitted"]
+    mapping = load(SOURCE / "acs-mapping.json")
+    manifest = load(SOURCE / "manifest.json")
 
     variables = []
     for v in variables_ld:
@@ -89,10 +111,29 @@ def build():
             "statType": v["statType"],
             "denominator": tail(v["measurementDenominator"]["@id"]) if "measurementDenominator" in v else None,
         })
+    tables = {m["id"]: census_tables(m) for m in mapping["variables"]}
+    for v in variables:
+        v["censusTables"] = tables[v["id"]]
     ids = [v["id"] for v in variables]
+    # Which variables are measures, and how they are grouped, comes from topics.json (presentation, kept here).
+    topics = load(TOPICS)
+    topic_of = {m: t["name"] for t in topics["topics"] for m in t["measures"]}
+    listed = [m for t in topics["topics"] for m in t["measures"]]
+    if len(listed) != len(set(listed)):
+        sys.exit("topics.json lists a measure twice")
+    unknown = sorted(set(listed) - set(ids))
+    if unknown:
+        sys.exit(f"topics.json lists measures that are not in marin-data: {unknown}")
+    bad_default = sorted(set(topics["headlineMeasures"]) - set(listed))
+    if bad_default:
+        sys.exit(f"headlineMeasures are not listed in a topic: {bad_default}")
     denominators = {v["denominator"] for v in variables if v["denominator"]}
     for v in variables:
-        v["role"] = "denominator" if v["id"] in denominators else "indicator"
+        v["role"] = "indicator" if v["id"] in topic_of else "denominator"
+        if v["id"] in topic_of:
+            v["topic"] = topic_of[v["id"]]
+        elif v["id"] not in denominators:
+            sys.exit(f"{v['id']} is neither a measure in topics.json nor the denominator of one")
 
     places, by_iri = [], {}
     for record in juris + areas:
@@ -130,6 +171,7 @@ def build():
     }
     if len(confidence) != 1:
         sys.exit(f"expected one confidence level, found {sorted(confidence)}")
+    by_id = {v["id"]: v for v in variables}
     first = next(o for p in observations for o in load(p)["@graph"])
     return {
         "source": {
@@ -137,8 +179,16 @@ def build():
             "period": first["observationPeriod"],
             "confidenceLevel": confidence.pop(),
             "url": dataset.get("url"),
+            "publisher": dataset["publisher"]["name"],
+            "name": re.sub(r"(\d{4})-(\d{4})", "\\1\u2013\\2", dataset["name"]),
+            "license": dataset.get("license"),
+            "geographyVintage": mapping["source"]["geographyVintage"],
+            "retrieved": manifest["retrieved"],
         },
         "kinds": KINDS,
+        "topics": [{"id": t["id"], "name": t["name"]} for t in topics["topics"]],
+        "measures": [{"id": m, "name": by_id[m]["name"], "topic": t["name"]} for t in topics["topics"] for m in t["measures"]],
+        "headlineMeasures": topics["headlineMeasures"],
         "variables": variables,
         "places": places,
     }

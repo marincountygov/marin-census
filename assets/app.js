@@ -1,6 +1,13 @@
-// Marin Census: a table of places and their statistics, and one page for each place.
+// Marin Census: places as cards or a table, one page for each place, and a Data tab.
 // vendor/marinos/marinos.js owns the shell, the filter column and the menus. assets/format.js shows the numbers.
 // Every number comes from data/census.json (built from marin-data) exactly as published; nothing is calculated here.
+//
+// What goes where (marin-ui "Filter column" and "Results header"):
+//   filter column  Search and Area types: what narrows which places show, and nothing else
+//   toolbar        sort (cards), layout (cards or table), then Copy link, Copy, Download and, last, Fullscreen
+//   address        keeps the filters (the column does), the layout and the sort
+// The table has a fixed set of columns, the headline measures. Choosing other measures, and comparing places, is for
+// the compare and reports tool; every measure is on a place's page and in the downloads.
 (() => {
   'use strict';
 
@@ -8,16 +15,20 @@
   const $ = (id) => document.getElementById(id);
   const DATA_URL = 'data/census.json';
   const DEFAULT_KINDS = ['County', 'City or town', 'Census-designated place'];
+  const DEFAULT_SORT = { key: 'population-total', dir: -1 };
 
   const app = {
     data: null,
     column: null,
-    indicators: [],
     byId: {},
+    layout: 'cards', // 'cards' or 'table'
+    sort: DEFAULT_SORT, // { key, dir }
+    shown: [], // the measures the table has columns for
     filtered: [],
-    sort: null, // { key, dir } or null for the order in the file
     place: null, // the place on show
     placeSort: null, // { dir } by measure name, or null for the order in the file
+    fullscreenGroup: null, // the Fullscreen button of the list, which only the table has
+    measureSort: null, // { key, dir } on the Data tab's table
   };
 
   function el(tag, props = {}, ...children) {
@@ -26,7 +37,45 @@
     return node;
   }
 
+  const svg = (paths) => {
+    const node = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    node.setAttribute('viewBox', '0 0 24 24');
+    node.setAttribute('aria-hidden', 'true');
+    node.innerHTML = paths;
+    return node;
+  };
+
+  // ---- the address -------------------------------------------------------------------------------------------
+  // The filter column keeps its own choices in the address (q, kind). This keeps the layout and the sort.
+
+  function readAddress() {
+    const params = new URLSearchParams(window.location.search);
+    app.layout = params.get('view') === 'table' ? 'table' : 'cards';
+    const sort = params.get('sort');
+    if (sort) {
+      const dir = sort.startsWith('-') ? -1 : 1;
+      const key = sort.replace(/^-/, '');
+      if (key === 'name' || key === 'kind' || app.byId[key]) app.sort = { key, dir };
+    }
+  }
+
+  function writeAddress() {
+    const params = new URLSearchParams(window.location.search);
+    const set = (name, value) => (value === null ? params.delete(name) : params.set(name, value));
+    set('view', app.layout === 'table' ? 'table' : null);
+    const isDefaultSort = app.sort.key === DEFAULT_SORT.key && app.sort.dir === DEFAULT_SORT.dir;
+    set('sort', isDefaultSort ? null : `${app.sort.dir < 0 ? '-' : ''}${app.sort.key}`);
+    const query = params.toString();
+    const next = `${window.location.pathname}${query ? `?${query}` : ''}${window.location.hash}`; // keep the hash: the shell's tabs use it
+    if (next !== `${window.location.pathname}${window.location.search}${window.location.hash}`) window.history.replaceState(window.history.state, '', next);
+  }
+
   // ---- the source line ---------------------------------------------------------------------------------------
+
+  function sourceLine() {
+    const { label, confidenceLevel } = app.data.source;
+    return `${label}. Margins of error are at the ${F.confidence(confidenceLevel)} confidence level.`;
+  }
 
   function drawSource() {
     const { label, url, confidenceLevel } = app.data.source;
@@ -35,24 +84,126 @@
     });
   }
 
-  // ---- a cell ------------------------------------------------------------------------------------------------
+  // ---- the buttons above a table or a place ------------------------------------------------------------------
+  // Copy link, Copy and Download, then Fullscreen in a group of its own, as every table of a Marin app has them.
+  //   spec.formats()   { text, html, markdown } of what is on screen
+  //   spec.csv() / spec.json()   the file contents of Download
+  //   spec.fileName    the name of the files
+  //   spec.fullscreen  the selector of what opens fullscreen, or none
 
-  function cell(variable, place, tag = 'td') {
-    const e = F.entry(variable, place);
-    const node = el(tag, { className: `census-cell census-cell--${e.kind}` }, el('span', { className: 'census-value', textContent: e.text }));
-    if (e.margin) node.append(el('span', { className: 'census-margin', textContent: e.margin }));
-    return node;
+  let menuCount = 0;
+
+  function menu(kind, label, items) {
+    const id = `${kind}-panel-${++menuCount}`;
+    const toggle = el('button', { type: 'button', className: 'action-button menu-toggle', title: label }, svg(kind === 'copy'
+      ? '<rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/>'
+      : '<path d="M12 15V3"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/>'));
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-controls', id);
+    toggle.setAttribute('aria-label', `${label}, choose a format`);
+    const caret = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    caret.setAttribute('class', 'menu-toggle__caret');
+    caret.setAttribute('viewBox', '0 0 16 16');
+    caret.setAttribute('aria-hidden', 'true');
+    caret.innerHTML = '<path d="M4 6l4 4 4-4"/>';
+    toggle.append(caret);
+    const panel = el('div', { id, className: 'menu-panel', hidden: true }, items.map(([name, attribute, value]) => {
+      const button = el('button', { type: 'button', textContent: name });
+      button.dataset.buttonKind = 'menu-item';
+      button.setAttribute(attribute, value);
+      return button;
+    }));
+    return el('div', { className: 'menu' }, toggle, panel);
   }
 
-  // ---- the table of places -----------------------------------------------------------------------------------
+  function actionBar(host, spec) {
+    const status = el('span', { className: 'doc-action-status', role: 'status' });
+    status.setAttribute('aria-live', 'polite');
+    const share = el('button', { type: 'button', className: 'action-button', title: 'Copy link' }, svg('<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>'));
+    share.setAttribute('aria-label', 'Copy link');
+    const actions = el('div', { className: 'doc-actions' }, share,
+      menu('copy', 'Copy', [['Text', 'data-copy-format', 'text'], ['HTML', 'data-copy-format', 'html'], ['Markdown', 'data-copy-format', 'markdown']]),
+      menu('download', 'Download', [['Text', 'data-download-format', 'text'], ['HTML', 'data-download-format', 'html'], ['Markdown', 'data-download-format', 'markdown'], ['JSON', 'data-download', 'json'], ['CSV', 'data-download', 'csv']]),
+      status);
+    actions.dataset.fileName = spec.fileName;
+    share.addEventListener('click', async () => {
+      status.textContent = (await window.marinCopyText(window.location.href)) ? 'Link copied' : "Couldn't copy: copy the address bar link instead";
+    });
+    window.marinFormatMenus(actions, () => spec.formats(), { fileName: spec.fileName, status });
+    actions.addEventListener('click', (event) => {
+      const button = event.target.closest('[data-download]');
+      if (!button || !window.marinDownload) return;
+      const name = actions.dataset.fileName;
+      if (button.dataset.download === 'csv') window.marinDownload({ content: spec.csv(), name: `${name}.csv`, type: 'text/csv' });
+      else window.marinDownload({ content: spec.json(), name: `${name}.json`, type: 'application/json' });
+    });
+    const parts = [actions];
+    let fullscreen = null;
+    if (spec.fullscreen) {
+      const button = el('button', { type: 'button', className: 'action-button', title: 'Fullscreen' });
+      button.dataset.icon = 'maximize';
+      button.dataset.fullscreenTarget = spec.fullscreen;
+      button.setAttribute('aria-label', 'Fullscreen');
+      fullscreen = el('div', { className: 'action-group', role: 'group' }, button);
+      fullscreen.setAttribute('aria-label', 'Fullscreen');
+      parts.push(fullscreen);
+    }
+    host.replaceWith(...parts);
+    return { actions, fullscreen };
+  }
 
-  function columns() {
+  // ---- what Copy and Download hold ---------------------------------------------------------------------------
+
+  const withMargin = (e) => (e.margin ? `${e.text} ${e.margin}` : e.text);
+
+  function listRows() {
+    if (app.layout === 'table') {
+      return {
+        head: ['Place', 'Area type', ...app.shown.map((v) => v.name)],
+        rows: app.filtered.map((p) => [p.name, p.kindLabel, ...app.shown.map((v) => withMargin(F.entry(v, p)))]),
+      };
+    }
+    const population = app.byId['population-total'];
+    return { head: ['Place', 'Population'], rows: app.filtered.map((p) => [p.name, F.entry(population, p).text]) };
+  }
+
+  function placeRows(place) {
+    const level = F.confidence(app.data.source.confidenceLevel);
+    const rows = [];
+    app.data.measures.forEach((m) => {
+      const v = app.byId[m.id];
+      const e = F.entry(v, place);
+      const denominator = v.denominator && app.byId[v.denominator];
+      rows.push([m.topic, v.name, e.text, e.margin, denominator ? `${F.entry(denominator, place).text} ${denominator.name}` : '']);
+    });
+    return { head: ['Topic', 'Measure', 'Estimate', `Margin of error (${level})`, 'Out of'], rows };
+  }
+
+  function datasetFacts() {
+    const s = app.data.source;
+    const nouns = { county: ['county', 'county'], city: ['city or town', 'cities and towns'], cdp: ['Census-designated place', 'Census-designated places'], tract: ['census tract', 'census tracts'] };
+    const counts = Object.keys(app.data.kinds).map((kind) => { const n = app.data.places.filter((p) => p.kind === kind).length; return `${n} ${nouns[kind][n === 1 ? 0 : 1]}`; });
     return [
-      { key: 'name', label: 'Place' },
-      { key: 'kind', label: 'Area type' },
-      ...app.indicators.map((v) => ({ key: v.id, label: v.name })),
+      ['Dataset', s.name],
+      ['Publisher', s.publisher],
+      ['Period', s.period.replace('/', '–')],
+      ['Margin of error', `${F.confidence(s.confidenceLevel)} confidence level`],
+      ['Geography', s.geographyVintage],
+      ['Retrieved', s.retrieved],
+      ['Areas', `${app.data.places.length}: ${counts.join(', ')}`],
+      ['Measures', String(app.data.measures.length)],
     ];
   }
+
+  function measureRows() {
+    return app.data.measures.map((m) => {
+      const v = app.byId[m.id];
+      return [v.name, m.topic, v.description, v.unit, v.censusTables.join(', ')];
+    });
+  }
+  const MEASURE_HEAD = ['Measure', 'Topic', 'Definition', 'Unit', 'Census table'];
+
+  // ---- sorting -----------------------------------------------------------------------------------------------
 
   function compare(a, b) {
     const { key, dir } = app.sort;
@@ -64,12 +215,74 @@
     return dir * (x - y);
   }
 
+  // The two sort buttons for cards: Population and Name. Pressing the pressed one reverses it.
+  const SORTS = {
+    'population-total': {
+      down: { label: 'Population, high to low', icon: '<path d="m3 16 4 4 4-4"/><path d="M7 20V4"/><path d="M11 4h10"/><path d="M11 8h7"/><path d="M11 12h4"/>' },
+      up: { label: 'Population, low to high', icon: '<path d="m3 8 4-4 4 4"/><path d="M7 4v16"/><path d="M11 12h4"/><path d="M11 16h7"/><path d="M11 20h10"/>' },
+    },
+    name: {
+      up: { label: 'Name, A to Z', icon: '<path d="m3 16 4 4 4-4"/><path d="M7 20V4"/><path d="M20 8h-5"/><path d="M15 10V6.5a2.5 2.5 0 0 1 5 0V10"/><path d="M15 14h5l-5 6h5"/>' },
+      down: { label: 'Name, Z to A', icon: '<path d="m3 16 4 4 4-4"/><path d="M7 20V4"/><path d="M15 4h5l-5 6h5"/><path d="M15 20v-3.5a2.5 2.5 0 0 1 5 0V20"/><path d="M20 18h-5"/>' },
+    },
+  };
+
+  function drawSortButtons() {
+    document.querySelectorAll('#sort-group [data-sort]').forEach((button) => {
+      const key = button.dataset.sort;
+      const pressed = app.sort.key === key;
+      // Not pressed: the button offers its natural order. Pressed: it shows the order now on, and pressing it reverses it.
+      const natural = key === 'name' ? 1 : -1;
+      const dir = pressed ? app.sort.dir : natural;
+      const spec = SORTS[key][dir > 0 ? 'up' : 'down'];
+      button.setAttribute('aria-pressed', String(pressed));
+      button.setAttribute('aria-label', spec.label);
+      button.title = spec.label;
+      button.querySelector('svg').innerHTML = spec.icon;
+    });
+  }
+
+  // ---- cards -------------------------------------------------------------------------------------------------
+
+  function drawCards() {
+    const population = app.byId['population-total'];
+    const cards = app.filtered.map((place) => {
+      const link = el('a', { href: `?place=${encodeURIComponent(place.id)}`, textContent: place.name });
+      link.dataset.place = place.id;
+      const figure = el('dl', { className: 'capital-figures' }, el('div', {}, el('dt', { textContent: 'Population' }), el('dd', { textContent: F.entry(population, place).text })));
+      return el('li', { className: 'app-card mm-card' }, el('h3', { className: 'mm-card__title' }, link), figure);
+    });
+    $('census-cards').replaceChildren(...cards);
+  }
+
+  // ---- the table ---------------------------------------------------------------------------------------------
+
+  // The table's columns are fixed: the headline measures, in the order of topics.json.
+  function shownMeasures() {
+    return app.data.measures.filter((m) => app.data.headlineMeasures.includes(m.id)).map((m) => app.byId[m.id]);
+  }
+
+  function columnsOfTable() {
+    return [
+      { key: 'name', label: 'Place' },
+      { key: 'kind', label: 'Area type' },
+      ...app.shown.map((v) => ({ key: v.id, label: v.name })),
+    ];
+  }
+
+  function cell(variable, place) {
+    const e = F.entry(variable, place);
+    const node = el('td', { className: `census-cell census-cell--${e.kind}` }, el('span', { className: 'census-value', textContent: e.text }));
+    if (e.margin) node.append(el('span', { className: 'census-margin', textContent: e.margin }));
+    return node;
+  }
+
   function drawHead() {
     const row = el('tr');
-    columns().forEach((col) => {
+    columnsOfTable().forEach((col) => {
       const th = el('th', { scope: 'col' });
       th.dataset.key = col.key;
-      th.setAttribute('aria-sort', app.sort && app.sort.key === col.key ? (app.sort.dir > 0 ? 'ascending' : 'descending') : 'none');
+      th.setAttribute('aria-sort', app.sort.key === col.key ? (app.sort.dir > 0 ? 'ascending' : 'descending') : 'none');
       th.append(el('button', { type: 'button', className: 'sort-button', textContent: col.label }));
       row.append(th);
     });
@@ -82,13 +295,15 @@
       const link = el('a', { href: `?place=${encodeURIComponent(place.id)}`, textContent: place.name });
       link.dataset.place = place.id;
       tr.append(el('th', { scope: 'row' }, link), el('td', { textContent: place.kindLabel }));
-      app.indicators.forEach((v) => tr.append(cell(v, place)));
+      app.shown.forEach((v) => tr.append(cell(v, place)));
       return tr;
     });
     $('census-table').tBodies[0].replaceChildren(...rows);
   }
 
-  // The line above the results: the count, then only the choices that narrow it beyond how the page opens.
+  // ---- the line above the results ----------------------------------------------------------------------------
+
+  // The count, then only the choices that narrow it beyond how the page opens.
   function resultsLine() {
     const state = app.column.filterState;
     const kinds = (state.groups && state.groups.kind) || [];
@@ -100,35 +315,39 @@
     return window.marinResultsLine({ count: window.marinResultsLine.count(app.filtered.length, 'place', 'places'), filters });
   }
 
+  // ---- put it on the page ------------------------------------------------------------------------------------
+
+  function showLayout() {
+    const table = app.layout === 'table';
+    $('census-cards').hidden = table;
+    $('census-table-scroll').hidden = !table;
+    $('sort-group').hidden = table; // the table sorts from its headings
+    if (app.fullscreenGroup) app.fullscreenGroup.hidden = !table;
+    document.querySelectorAll('[data-layout]').forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.layout === app.layout)));
+  }
+
   function update() {
-    app.filtered = app.column.filter(app.data.places);
-    if (app.sort) app.filtered = app.filtered.slice().sort(compare);
+    app.shown = shownMeasures();
+    app.filtered = app.column.filter(app.data.places).slice().sort(compare);
     app.column.updateCounts(app.data.places);
     app.column.setResults(app.filtered.length, resultsLine());
-    drawHead();
-    drawRows();
+    showLayout();
+    drawSortButtons();
+    if (app.layout === 'table') { drawHead(); drawRows(); } else { drawCards(); }
+    writeAddress();
   }
 
-  function sortBy(key) {
-    if (app.sort && app.sort.key === key) app.sort = { key, dir: -app.sort.dir };
-    else app.sort = { key, dir: 1 };
+  // A sort button of the cards starts at its natural order (name A to Z, population high to low); a table heading starts ascending.
+  function setSort(key, first) {
+    if (app.sort.key === key) app.sort = { key, dir: -app.sort.dir };
+    else app.sort = { key, dir: first };
     update();
-    const th = $('census-table').tHead.querySelector(`th[data-key="${CSS.escape(key)}"] button`);
-    if (th) th.focus();
   }
 
-  // ---- downloads ---------------------------------------------------------------------------------------------
-
-  function download(kind, scope) {
-    if (!window.marinDownload) return;
-    const places = scope === 'place' && app.place ? [app.place] : app.filtered;
-    const name = scope === 'place' && app.place ? `marin-census-${app.place.id}` : 'marin-census-places';
-    if (kind === 'csv') {
-      window.marinDownload({ content: F.csv(app.data, places), name: `${name}.csv`, type: 'text/csv' });
-      return;
-    }
-    const content = JSON.stringify({ source: app.data.source, variables: app.data.variables, places }, null, 1) + '\n';
-    window.marinDownload({ content, name: `${name}.json`, type: 'application/json' });
+  function setLayout(layout) {
+    if (app.layout === layout) return;
+    app.layout = layout;
+    update();
   }
 
   // ---- one place ---------------------------------------------------------------------------------------------
@@ -143,21 +362,70 @@
     measure.setAttribute('aria-sort', app.placeSort ? (app.placeSort.dir > 0 ? 'ascending' : 'descending') : 'none');
     const head = el('tr', {}, measure, ...['Estimate', `Margin of error (${level})`, 'Out of'].map((t) => el('th', { scope: 'col', textContent: t })));
     $('place-table').tHead.replaceChildren(head);
-    // Only the measure name sorts: the estimates are in different units (people, dollars, percent), so ordering them together would mean nothing.
-    const measures = app.placeSort
-      ? app.indicators.slice().sort((a, b) => app.placeSort.dir * a.name.localeCompare(b.name, 'en'))
-      : app.indicators;
-    const rows = measures.map((v) => {
-      const e = F.entry(v, place);
-      const estimate = el('td', { className: `census-cell census-cell--${e.kind}` }, el('span', { className: 'census-value', textContent: e.text }));
-      if (e.kind === 'missing' && e.reason) estimate.append(el('span', { className: 'census-margin', textContent: e.reason }));
-      const tr = el('tr', {}, el('th', { scope: 'row', textContent: v.name }), estimate, el('td', { textContent: e.margin }));
-      const denominator = v.denominator && app.byId[v.denominator];
-      const out = denominator ? F.entry(denominator, place) : null;
-      tr.append(el('td', {}, out ? [el('span', { className: 'census-value', textContent: out.text }), el('span', { className: 'census-margin', textContent: denominator.name })] : null));
-      return tr;
+    // Only the measure name sorts, within its topic: the estimates are in different units (people, dollars, percent),
+    // so ordering them together would mean nothing.
+    const bodies = app.data.topics.map((topic) => {
+      let measures = app.data.measures.filter((m) => m.topic === topic.name).map((m) => app.byId[m.id]);
+      if (app.placeSort) measures = measures.slice().sort((a, b) => app.placeSort.dir * a.name.localeCompare(b.name, 'en'));
+      const body = el('tbody');
+      body.append(el('tr', { className: 'census-topic' }, el('th', { scope: 'colgroup', colSpan: 4, textContent: topic.name })));
+      measures.forEach((v) => {
+        const e = F.entry(v, place);
+        const estimate = el('td', { className: `census-cell census-cell--${e.kind}` }, el('span', { className: 'census-value', textContent: e.text }));
+        if (e.kind === 'missing' && e.reason) estimate.append(el('span', { className: 'census-margin', textContent: e.reason }));
+        const tr = el('tr', {}, el('th', { scope: 'row', textContent: v.name }), estimate, el('td', { textContent: e.margin }));
+        const denominator = v.denominator && app.byId[v.denominator];
+        const out = denominator ? F.entry(denominator, place) : null;
+        tr.append(el('td', {}, out ? [el('span', { className: 'census-value', textContent: out.text }), el('span', { className: 'census-margin', textContent: denominator.name })] : null));
+        body.append(tr);
+      });
+      return body;
     });
-    $('place-table').tBodies[0].replaceChildren(...rows);
+    [...$('place-table').tBodies].forEach((body) => body.remove());
+    $('place-table').append(...bodies);
+  }
+
+  // ---- the Data tab ------------------------------------------------------------------------------------------
+
+  function drawData() {
+    const facts = datasetFacts().map(([name, value]) => {
+      const content = name === 'Dataset' && app.data.source.url ? el('a', { href: app.data.source.url, textContent: value }) : value;
+      return el('div', {}, el('dt', { textContent: name }), el('dd', {}, content));
+    });
+    $('dataset-facts').replaceChildren(el('dl', {}, facts));
+    drawMeasureTable();
+  }
+
+  function drawMeasureTable() {
+    const sortable = ['Measure', 'Topic', 'Unit', 'Census table'];
+    const head = el('tr');
+    MEASURE_HEAD.forEach((name, i) => {
+      const th = el('th', { scope: 'col' });
+      if (sortable.includes(name)) {
+        th.dataset.column = String(i);
+        th.setAttribute('aria-sort', app.measureSort && app.measureSort.key === i ? (app.measureSort.dir > 0 ? 'ascending' : 'descending') : 'none');
+        th.append(el('button', { type: 'button', className: 'sort-button', textContent: name }));
+      } else th.textContent = name;
+      head.append(th);
+    });
+    $('measures-table').tHead.replaceChildren(head);
+    let rows = measureRows();
+    if (app.measureSort) rows = rows.slice().sort((a, b) => app.measureSort.dir * a[app.measureSort.key].localeCompare(b[app.measureSort.key], 'en'));
+    $('measures-table').tBodies[0].replaceChildren(...rows.map((row) => el('tr', {}, el('th', { scope: 'row', textContent: row[0] }), row.slice(1).map((text) => el('td', { textContent: text })))));
+  }
+
+  // ---- the tabs ----------------------------------------------------------------------------------------------
+  // The shell shows the section the hash names and marks its own navigation. This marks #page-tabs the same way.
+
+  function syncPageTabs() {
+    const tabs = document.querySelector('#page-tabs');
+    const names = [...tabs.querySelectorAll("a[href^='#']")].map((a) => a.getAttribute('href').slice(1));
+    const raw = window.location.hash.slice(1);
+    const current = names.includes(raw) ? raw : names[0];
+    tabs.querySelectorAll("a[href^='#']").forEach((link) => {
+      if (link.getAttribute('href') === `#${current}`) link.setAttribute('aria-current', 'page');
+      else link.removeAttribute('aria-current');
+    });
   }
 
   // ---- which screen ------------------------------------------------------------------------------------------
@@ -187,6 +455,45 @@
 
   // ---- start -------------------------------------------------------------------------------------------------
 
+  function wireActionBars() {
+    const find = (name) => document.querySelector(`[data-actions="${name}"]`);
+    const placeJson = (places) => JSON.stringify({ source: app.data.source, variables: app.data.variables, places }, null, 1) + '\n';
+    const listFormats = () => { const { head, rows } = listRows(); return F.formats('Marin places', head, rows, sourceLine()); };
+    const places = find('places');
+    const list = actionBar(places, {
+      fileName: places.dataset.fileName,
+      fullscreen: places.dataset.fullscreenTarget,
+      formats: listFormats,
+      csv: () => F.csv(app.data, app.filtered),
+      json: () => placeJson(app.filtered),
+    });
+    app.fullscreenGroup = list.fullscreen;
+    const place = find('place');
+    const placeBar = actionBar(place, {
+      fileName: 'marin-census-place',
+      fullscreen: place.dataset.fullscreenTarget,
+      formats: () => { const { head, rows } = placeRows(app.place); return F.formats(app.place.name, head, rows, sourceLine()); },
+      csv: () => F.csv(app.data, [app.place]),
+      json: () => placeJson([app.place]),
+    });
+    // The place's files are named for the place.
+    placeBar.actions.addEventListener('click', () => { placeBar.actions.dataset.fileName = `marin-census-${app.place.id}`; }, true);
+    actionBar(find('dataset'), {
+      fileName: 'marin-census-all-places',
+      formats: () => F.formats('Dataset', ['Item', 'Value'], datasetFacts(), sourceLine()),
+      csv: () => F.csv(app.data, app.data.places),
+      json: () => placeJson(app.data.places),
+    });
+    const measures = find('measures');
+    actionBar(measures, {
+      fileName: 'marin-census-measures',
+      fullscreen: measures.dataset.fullscreenTarget,
+      formats: () => F.formats('Measures', MEASURE_HEAD, measureRows()),
+      csv: () => F.rowsCsv(MEASURE_HEAD, measureRows()),
+      json: () => JSON.stringify(app.data.measures.map((m) => app.byId[m.id]), null, 1) + '\n',
+    });
+  }
+
   async function start() {
     const loading = $('census-loading');
     try {
@@ -199,8 +506,15 @@
       return;
     }
     app.byId = Object.fromEntries(app.data.variables.map((v) => [v.id, v]));
-    app.indicators = app.data.variables.filter((v) => v.role === 'indicator');
+    readAddress();
     drawSource();
+    drawData();
+    wireActionBars();
+    syncPageTabs();
+    window.addEventListener('hashchange', syncPageTabs);
+    document.querySelector('#page-tabs').addEventListener('click', (event) => {
+      if (event.target.closest("a[href^='#']")) window.scrollTo({ top: 0, behavior: 'instant' });
+    });
 
     app.column = document.querySelector('[data-filter-column]');
     await new Promise((resolve) => {
@@ -209,24 +523,38 @@
     });
     app.column.addEventListener('marin-filter-change', update);
 
+    document.querySelectorAll('#sort-group [data-sort]').forEach((button) => button.addEventListener('click', () => setSort(button.dataset.sort, button.dataset.sort === 'name' ? 1 : -1)));
+    document.querySelectorAll('[data-layout]').forEach((button) => button.addEventListener('click', () => setLayout(button.dataset.layout)));
     $('census-table').tHead.addEventListener('click', (event) => {
       const th = event.target.closest('th[data-key]');
-      if (th) sortBy(th.dataset.key);
+      if (!th) return;
+      setSort(th.dataset.key, 1);
+      const again = $('census-table').tHead.querySelector(`th[data-key="${CSS.escape(th.dataset.key)}"] button`);
+      if (again) again.focus();
     });
-    $('census-table').tBodies[0].addEventListener('click', (event) => {
+    $('measures-table').tHead.addEventListener('click', (event) => {
+      const th = event.target.closest('th[data-column]');
+      if (!th) return;
+      const key = Number(th.dataset.column);
+      app.measureSort = { key, dir: app.measureSort && app.measureSort.key === key ? -app.measureSort.dir : 1 };
+      drawMeasureTable();
+      $('measures-table').tHead.querySelector(`th[data-column="${key}"] button`).focus();
+    });
+    const openPlace = (event) => {
       const link = event.target.closest('a[data-place]');
       if (!link || event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return;
       event.preventDefault();
       open(link.dataset.place);
-    });
+    };
+    $('census-table').tBodies[0].addEventListener('click', openPlace);
+    $('census-cards').addEventListener('click', openPlace);
     $('place-table').tHead.addEventListener('click', (event) => {
       if (!event.target.closest('th[data-key]')) return;
       app.placeSort = { dir: app.placeSort ? -app.placeSort.dir : 1 };
       drawPlace(app.place);
       $('place-table').tHead.querySelector('button').focus();
     });
-    document.querySelectorAll('[data-download]').forEach((button) => button.addEventListener('click', () => download(button.dataset.download, button.dataset.scope)));
-    window.addEventListener('popstate', () => route(true));
+    window.addEventListener('popstate', () => { readAddress(); route(true); });
 
     loading.hidden = true;
     $('census-places').hidden = false;

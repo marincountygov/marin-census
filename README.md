@@ -17,8 +17,9 @@ Open `http://127.0.0.1:8765/`. Use HTTP, not `file://`. There is no build step.
 
 ## Pages
 
-- **Places** (the default): a table of places and ten measures, with a filter column (search and area type; tracts are off until chosen), sortable columns, Download (CSV, JSON) and Fullscreen. A value shows its margin of error under it. An open-ended median reads "$250,000 or more". A value the Census does not give reads "Not available".
-- **A place** (`?place=marin-city`): all the measures with margins of error and what each rate is out of, and the source.
+- **Places** (the default): a directory of places as cards (the name and its population) or a table of ten headline measures that sorts from its headings. The filter column has search and area type (tracts are off until chosen). Sort buttons on the cards (population or name, press again to reverse). Copy link, Copy (Text, HTML, Markdown) and Download (those, JSON, CSV) in both layouts; Fullscreen on the table. The layout, sort and filters are in the address.
+- **A place** (`?place=marin-city`): all the measures by topic with margins of error and what each rate is out of, the same buttons, and the source.
+- **Data**: the dataset (publisher, period, geography, retrieval date), the measures with their definitions, units and Census tables, and a download of all places.
 
 ## Data
 
