@@ -4,7 +4,7 @@
 
 A static, zero-build MarinOS app on the Marin App Shell (`vendor/marinos/`, version in `platform.shell` in `marin.yml`). It follows `marin-digital-standards`. The primary view is `#start` in `index.html`; app code is `assets/app.js` and `assets/app.css`. `assets/gate.js` is the login and loads first.
 
-The statistics come from `marin-data` (`statistics/README.md` there): schemaGov observations built from the ACS 5-year estimates. This app reads them; it does not calculate or round them. Margins of error, the source and what was left out must be shown with a value. A place with no observation shows nothing rather than a guess.
+`data/source/` is copied from `marin-data` and never edited here (`python3 ../marin-data/scripts/sync_copies.py .`); `scripts/build_data.py` turns it into `data/census.json`, the one file the page reads. The statistics come from `marin-data` (`statistics/README.md` there): schemaGov observations built from the ACS 5-year estimates. This app reads them; it does not calculate or round them. Margins of error, the source and what was left out must be shown with a value. A place with no observation shows nothing rather than a guess.
 
 Reading an observation:
 - Resolve its variable by `@id`, never by a Census code. A subset such as age 65+ is its own variable.
@@ -22,7 +22,7 @@ Reading an observation:
 
 ## Before finishing
 
-Run `bash scripts/check.sh`, then check the page in a browser: keyboard operation, narrow layout, light and dark.
+Run `python3 scripts/build_data.py` if the data changed, then `bash scripts/check.sh --browser`, then check the page in a browser: keyboard operation, narrow layout, light and dark.
 
 ## References
 

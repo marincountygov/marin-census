@@ -1,0 +1,25 @@
+{
+  "$schema": "vendor/marinos/filter-panel.schema.json",
+  "schemaVersion": "1.0.0",
+  "search": {
+    "id": "filter-search",
+    "fields": ["name"]
+  },
+  "groups": [
+    {
+      "type": "checkbox",
+      "id": "kind",
+      "label": "Area types",
+      "collapsed": false,
+      "param": "kind",
+      "default": ["County", "City or town", "Census-designated place"],
+      "options": {
+        "from": "data/census.json",
+        "records": "places",
+        "valueField": "kindLabel",
+        "order": "data"
+      },
+      "field": "kindLabel"
+    }
+  ]
+}

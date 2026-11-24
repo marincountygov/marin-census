@@ -1,0 +1,6321 @@
+{
+ "source": {
+  "label": "U.S. Census Bureau, American Community Survey 5-year estimates, 2020–2024",
+  "period": "2020/2024",
+  "confidenceLevel": 0.9,
+  "url": "https://www.census.gov/programs-surveys/acs"
+ },
+ "kinds": {
+  "county": "County",
+  "city": "City or town",
+  "cdp": "Census-designated place",
+  "tract": "Census tract"
+ },
+ "variables": [
+  {
+   "id": "population-total",
+   "name": "Total population",
+   "description": "Residents counted at their usual place of residence.",
+   "statType": "count",
+   "denominator": null,
+   "role": "indicator",
+   "unit": "persons"
+  },
+  {
+   "id": "median-age",
+   "name": "Median age",
+   "description": "The age that divides the population into two equal groups.",
+   "statType": "median",
+   "denominator": null,
+   "role": "indicator",
+   "unit": "years"
+  },
+  {
+   "id": "population-under-18",
+   "name": "Population under age 18",
+   "description": "Residents younger than 18.",
+   "statType": "count",
+   "denominator": null,
+   "role": "indicator",
+   "unit": "persons"
+  },
+  {
+   "id": "population-65-plus",
+   "name": "Population age 65 and over",
+   "description": "Residents aged 65 or older.",
+   "statType": "count",
+   "denominator": null,
+   "role": "indicator",
+   "unit": "persons"
+  },
+  {
+   "id": "median-household-income",
+   "name": "Median household income",
+   "description": "Median of annual household income, in 2024 inflation-adjusted dollars. Households are the universe, not people.",
+   "statType": "median",
+   "denominator": null,
+   "role": "indicator",
+   "unit": "USD"
+  },
+  {
+   "id": "poverty-rate",
+   "name": "Poverty rate",
+   "description": "Share of people for whom poverty status is determined whose income in the past 12 months was below the poverty level.",
+   "statType": "percent",
+   "denominator": "population-poverty-status-determined",
+   "role": "indicator",
+   "unit": "percent"
+  },
+  {
+   "id": "median-gross-rent",
+   "name": "Median gross rent",
+   "description": "Median monthly rent plus utilities, in 2024 inflation-adjusted dollars, for renter-occupied units paying cash rent.",
+   "statType": "median",
+   "denominator": null,
+   "role": "indicator",
+   "unit": "USD"
+  },
+  {
+   "id": "rent-burden-rate",
+   "name": "Rent burden rate",
+   "description": "Share of renter households paying 30 percent or more of household income on rent. Renter households where the share is not computed are counted in the denominator, so this reads slightly lower than the Census's own published percentage, which leaves them out.",
+   "statType": "percent",
+   "denominator": "renter-households",
+   "role": "indicator",
+   "unit": "percent"
+  },
+  {
+   "id": "disability-rate",
+   "name": "Disability rate",
+   "description": "Share of the civilian noninstitutionalized population with a disability.",
+   "statType": "percent",
+   "denominator": "civilian-noninstitutionalized-population",
+   "role": "indicator",
+   "unit": "percent"
+  },
+  {
+   "id": "households-without-internet-rate",
+   "name": "Households without internet access rate",
+   "description": "Share of households with no internet access, with or without a subscription.",
+   "statType": "percent",
+   "denominator": "households-total",
+   "role": "indicator",
+   "unit": "percent"
+  },
+  {
+   "id": "population-poverty-status-determined",
+   "name": "Population for whom poverty status is determined",
+   "description": "People in the universe of the poverty rate. It leaves out, for example, people in institutions and college dormitories.",
+   "statType": "count",
+   "denominator": null,
+   "role": "denominator",
+   "unit": "persons"
+  },
+  {
+   "id": "renter-households",
+   "name": "Renter households",
+   "description": "Renter-occupied housing units.",
+   "statType": "count",
+   "denominator": null,
+   "role": "denominator",
+   "unit": "households"
+  },
+  {
+   "id": "civilian-noninstitutionalized-population",
+   "name": "Civilian noninstitutionalized population",
+   "description": "People in the universe of the disability rate.",
+   "statType": "count",
+   "denominator": null,
+   "role": "denominator",
+   "unit": "persons"
+  },
+  {
+   "id": "households-total",
+   "name": "Total households",
+   "description": "Occupied housing units.",
+   "statType": "count",
+   "denominator": null,
+   "role": "denominator",
+   "unit": "households"
+  }
+ ],
+ "places": [
+  {
+   "id": "marin-county",
+   "name": "Marin County",
+   "kind": "county",
+   "kindLabel": "County",
+   "geoid": "06041",
+   "values": {
+    "population-total": {
+     "v": 257969
+    },
+    "median-age": {
+     "v": 47.4,
+     "m": 0.3
+    },
+    "population-under-18": {
+     "v": 49986,
+     "m": 86
+    },
+    "population-65-plus": {
+     "v": 61345,
+     "m": 1498.979653
+    },
+    "median-household-income": {
+     "v": 149091,
+     "m": 4474
+    },
+    "poverty-rate": {
+     "v": 8.307604,
+     "m": 0.745213
+    },
+    "median-gross-rent": {
+     "v": 2668,
+     "m": 83
+    },
+    "rent-burden-rate": {
+     "v": 52.914675,
+     "m": 2.892551
+    },
+    "disability-rate": {
+     "v": 10.00165,
+     "m": 0.471318
+    },
+    "households-without-internet-rate": {
+     "v": 2.741269,
+     "m": 0.49274
+    },
+    "population-poverty-status-determined": {
+     "v": 253599,
+     "m": 285
+    },
+    "renter-households": {
+     "v": 36402,
+     "m": 1167
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 254598,
+     "m": 194
+    },
+    "households-total": {
+     "v": 103018,
+     "m": 725
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "belvedere",
+   "name": "Belvedere",
+   "kind": "city",
+   "kindLabel": "City or town",
+   "geoid": "0605164",
+   "values": {
+    "population-total": {
+     "v": 2345,
+     "m": 329
+    },
+    "median-age": {
+     "v": 49.0,
+     "m": 5.7
+    },
+    "population-under-18": {
+     "v": 574,
+     "m": 154
+    },
+    "population-65-plus": {
+     "v": 585,
+     "m": 99.287461
+    },
+    "median-household-income": {
+     "min": 250000
+    },
+    "poverty-rate": {
+     "v": 5.910064,
+     "m": 3.71835
+    },
+    "median-gross-rent": {
+     "min": 3500
+    },
+    "rent-burden-rate": {
+     "v": 63.028169,
+     "m": 13.433182
+    },
+    "disability-rate": {
+     "v": 8.400853,
+     "m": 3.065056
+    },
+    "households-without-internet-rate": {
+     "v": 0,
+     "m": 1.580135
+    },
+    "population-poverty-status-determined": {
+     "v": 2335,
+     "m": 331
+    },
+    "renter-households": {
+     "v": 284,
+     "m": 75
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 2345,
+     "m": 329
+    },
+    "households-total": {
+     "v": 886,
+     "m": 103
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "corte-madera",
+   "name": "Corte Madera",
+   "kind": "city",
+   "kindLabel": "City or town",
+   "geoid": "0616462",
+   "values": {
+    "population-total": {
+     "v": 10077,
+     "m": 20
+    },
+    "median-age": {
+     "v": 45.9,
+     "m": 3.1
+    },
+    "population-under-18": {
+     "v": 2576,
+     "m": 358
+    },
+    "population-65-plus": {
+     "v": 1892,
+     "m": 319.134768
+    },
+    "median-household-income": {
+     "v": 232763,
+     "m": 36730
+    },
+    "poverty-rate": {
+     "v": 4.634316,
+     "m": 2.6992
+    },
+    "median-gross-rent": {
+     "min": 3500
+    },
+    "rent-burden-rate": {
+     "v": 38.712242,
+     "m": 12.159011
+    },
+    "disability-rate": {
+     "v": 7.097479,
+     "m": 2.006367
+    },
+    "households-without-internet-rate": {
+     "v": 0.49554,
+     "m": 0.866598
+    },
+    "population-poverty-status-determined": {
+     "v": 10077,
+     "m": 20
+    },
+    "renter-households": {
+     "v": 1258,
+     "m": 287
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 10074,
+     "m": 28
+    },
+    "households-total": {
+     "v": 4036,
+     "m": 262
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "fairfax",
+   "name": "Fairfax",
+   "kind": "city",
+   "kindLabel": "City or town",
+   "geoid": "0623168",
+   "values": {
+    "population-total": {
+     "v": 7516,
+     "m": 22
+    },
+    "median-age": {
+     "v": 48.7,
+     "m": 2.0
+    },
+    "population-under-18": {
+     "v": 1281,
+     "m": 220
+    },
+    "population-65-plus": {
+     "v": 1735,
+     "m": 316.257806
+    },
+    "median-household-income": {
+     "v": 141653,
+     "m": 19700
+    },
+    "poverty-rate": {
+     "v": 12.06345,
+     "m": 4.452006
+    },
+    "median-gross-rent": {
+     "v": 2367,
+     "m": 233
+    },
+    "rent-burden-rate": {
+     "v": 50.984252,
+     "m": 14.271059
+    },
+    "disability-rate": {
+     "v": 9.890696,
+     "m": 3.051566
+    },
+    "households-without-internet-rate": {
+     "v": 1.776417,
+     "m": 1.374453
+    },
+    "population-poverty-status-determined": {
+     "v": 7502,
+     "m": 22
+    },
+    "renter-households": {
+     "v": 1016,
+     "m": 244
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 7502,
+     "m": 22
+    },
+    "households-total": {
+     "v": 3265,
+     "m": 188
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "larkspur",
+   "name": "Larkspur",
+   "kind": "city",
+   "kindLabel": "City or town",
+   "geoid": "0640438",
+   "values": {
+    "population-total": {
+     "v": 12854,
+     "m": 26
+    },
+    "median-age": {
+     "v": 51.2,
+     "m": 1.9
+    },
+    "population-under-18": {
+     "v": 2137,
+     "m": 250
+    },
+    "population-65-plus": {
+     "v": 3268,
+     "m": 391.118908
+    },
+    "median-household-income": {
+     "v": 140417,
+     "m": 33906
+    },
+    "poverty-rate": {
+     "v": 6.976015,
+     "m": 2.468995
+    },
+    "median-gross-rent": {
+     "v": 3001,
+     "m": 204
+    },
+    "rent-burden-rate": {
+     "v": 51.817335,
+     "m": 6.881965
+    },
+    "disability-rate": {
+     "v": 10.260229,
+     "m": 1.992933
+    },
+    "households-without-internet-rate": {
+     "v": 2.027252,
+     "m": 1.192687
+    },
+    "population-poverty-status-determined": {
+     "v": 12758,
+     "m": 27
+    },
+    "renter-households": {
+     "v": 3219,
+     "m": 381
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 12758,
+     "m": 27
+    },
+    "households-total": {
+     "v": 6018,
+     "m": 280
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "mill-valley",
+   "name": "Mill Valley",
+   "kind": "city",
+   "kindLabel": "City or town",
+   "geoid": "0647710",
+   "values": {
+    "population-total": {
+     "v": 14012,
+     "m": 26
+    },
+    "median-age": {
+     "v": 48.7,
+     "m": 2.8
+    },
+    "population-under-18": {
+     "v": 2607,
+     "m": 257
+    },
+    "population-65-plus": {
+     "v": 3287,
+     "m": 427.448242
+    },
+    "median-household-income": {
+     "v": 206212,
+     "m": 10740
+    },
+    "poverty-rate": {
+     "v": 5.91267,
+     "m": 2.075848
+    },
+    "median-gross-rent": {
+     "v": 3278,
+     "m": 682
+    },
+    "rent-burden-rate": {
+     "v": 37.376366,
+     "m": 11.549461
+    },
+    "disability-rate": {
+     "v": 8.138869,
+     "m": 1.804299
+    },
+    "households-without-internet-rate": {
+     "v": 0.861463,
+     "m": 0.719486
+    },
+    "population-poverty-status-determined": {
+     "v": 13970,
+     "m": 26
+    },
+    "renter-households": {
+     "v": 1921,
+     "m": 298
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 13970,
+     "m": 26
+    },
+    "households-total": {
+     "v": 5688,
+     "m": 289
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "novato",
+   "name": "Novato",
+   "kind": "city",
+   "kindLabel": "City or town",
+   "geoid": "0652582",
+   "values": {
+    "population-total": {
+     "v": 52546,
+     "m": 71
+    },
+    "median-age": {
+     "v": 47.5,
+     "m": 2.1
+    },
+    "population-under-18": {
+     "v": 10774,
+     "m": 629
+    },
+    "population-65-plus": {
+     "v": 12612,
+     "m": 902.131365
+    },
+    "median-household-income": {
+     "v": 115736,
+     "m": 10368
+    },
+    "poverty-rate": {
+     "v": 9.596258,
+     "m": 1.775267
+    },
+    "median-gross-rent": {
+     "v": 2506,
+     "m": 127
+    },
+    "rent-burden-rate": {
+     "v": 62.00353,
+     "m": 7.843626
+    },
+    "disability-rate": {
+     "v": 12.152267,
+     "m": 1.206583
+    },
+    "households-without-internet-rate": {
+     "v": 4.02872,
+     "m": 1.510497
+    },
+    "population-poverty-status-determined": {
+     "v": 52385,
+     "m": 73
+    },
+    "renter-households": {
+     "v": 6798,
+     "m": 556
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 52303,
+     "m": 88
+    },
+    "households-total": {
+     "v": 20056,
+     "m": 628
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "ross",
+   "name": "Ross",
+   "kind": "city",
+   "kindLabel": "City or town",
+   "geoid": "0662980",
+   "values": {
+    "population-total": {
+     "v": 2606,
+     "m": 355
+    },
+    "median-age": {
+     "v": 42.3,
+     "m": 3.8
+    },
+    "population-under-18": {
+     "v": 822,
+     "m": 215
+    },
+    "population-65-plus": {
+     "v": 491,
+     "m": 109.160432
+    },
+    "median-household-income": {
+     "min": 250000
+    },
+    "poverty-rate": {
+     "v": 4.75825,
+     "m": 2.289124
+    },
+    "median-gross-rent": {
+     "min": 3500
+    },
+    "rent-burden-rate": {
+     "v": 30.909091,
+     "m": 21.232825
+    },
+    "disability-rate": {
+     "v": 6.638526,
+     "m": 3.123242
+    },
+    "households-without-internet-rate": {
+     "v": 0,
+     "m": 1.670644
+    },
+    "population-poverty-status-determined": {
+     "v": 2606,
+     "m": 355
+    },
+    "renter-households": {
+     "v": 110,
+     "m": 51
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 2606,
+     "m": 355
+    },
+    "households-total": {
+     "v": 838,
+     "m": 90
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "san-anselmo",
+   "name": "San Anselmo",
+   "kind": "city",
+   "kindLabel": "City or town",
+   "geoid": "0664434",
+   "values": {
+    "population-total": {
+     "v": 12679,
+     "m": 37
+    },
+    "median-age": {
+     "v": 45.6,
+     "m": 3.3
+    },
+    "population-under-18": {
+     "v": 3001,
+     "m": 403
+    },
+    "population-65-plus": {
+     "v": 2745,
+     "m": 363.440504
+    },
+    "median-household-income": {
+     "v": 173641,
+     "m": 17464
+    },
+    "poverty-rate": {
+     "v": 7.442522,
+     "m": 2.946892
+    },
+    "median-gross-rent": {
+     "v": 2797,
+     "m": 327
+    },
+    "rent-burden-rate": {
+     "v": 58.570563,
+     "m": 10.554663
+    },
+    "disability-rate": {
+     "v": 7.839267,
+     "m": 1.791521
+    },
+    "households-without-internet-rate": {
+     "v": 1.703675,
+     "m": 1.163691
+    },
+    "population-poverty-status-determined": {
+     "v": 12657,
+     "m": 40
+    },
+    "renter-households": {
+     "v": 1651,
+     "m": 305
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 12667,
+     "m": 38
+    },
+    "households-total": {
+     "v": 5224,
+     "m": 296
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "san-rafael",
+   "name": "San Rafael",
+   "kind": "city",
+   "kindLabel": "City or town",
+   "geoid": "0668364",
+   "values": {
+    "population-total": {
+     "v": 60433,
+     "m": 83
+    },
+    "median-age": {
+     "v": 43.2,
+     "m": 1.4
+    },
+    "population-under-18": {
+     "v": 11905,
+     "m": 764
+    },
+    "population-65-plus": {
+     "v": 12299,
+     "m": 888.497046
+    },
+    "median-household-income": {
+     "v": 119435,
+     "m": 8545
+    },
+    "poverty-rate": {
+     "v": 11.655142,
+     "m": 1.916511
+    },
+    "median-gross-rent": {
+     "v": 2377,
+     "m": 73
+    },
+    "rent-burden-rate": {
+     "v": 56.499536,
+     "m": 5.173515
+    },
+    "disability-rate": {
+     "v": 10.210673,
+     "m": 1.101664
+    },
+    "households-without-internet-rate": {
+     "v": 3.557399,
+     "m": 1.159503
+    },
+    "population-poverty-status-determined": {
+     "v": 59004,
+     "m": 174
+    },
+    "renter-households": {
+     "v": 10770,
+     "m": 632
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 59761,
+     "m": 146
+    },
+    "households-total": {
+     "v": 22910,
+     "m": 756
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "sausalito",
+   "name": "Sausalito",
+   "kind": "city",
+   "kindLabel": "City or town",
+   "geoid": "0670364",
+   "values": {
+    "population-total": {
+     "v": 7141,
+     "m": 37
+    },
+    "median-age": {
+     "v": 55.6,
+     "m": 2.8
+    },
+    "population-under-18": {
+     "v": 474,
+     "m": 133
+    },
+    "population-65-plus": {
+     "v": 2405,
+     "m": 350.660805
+    },
+    "median-household-income": {
+     "v": 182357,
+     "m": 14313
+    },
+    "poverty-rate": {
+     "v": 7.97193,
+     "m": 3.64882
+    },
+    "median-gross-rent": {
+     "min": 3500
+    },
+    "rent-burden-rate": {
+     "v": 42.029888,
+     "m": 10.183617
+    },
+    "disability-rate": {
+     "v": 11.174905,
+     "m": 2.77897
+    },
+    "households-without-internet-rate": {
+     "v": 3.294769,
+     "m": 1.847061
+    },
+    "population-poverty-status-determined": {
+     "v": 7125,
+     "m": 42
+    },
+    "renter-households": {
+     "v": 1606,
+     "m": 229
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 7141,
+     "m": 37
+    },
+    "households-total": {
+     "v": 3976,
+     "m": 276
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "tiburon",
+   "name": "Tiburon",
+   "kind": "city",
+   "kindLabel": "City or town",
+   "geoid": "0678666",
+   "values": {
+    "population-total": {
+     "v": 9012,
+     "m": 30
+    },
+    "median-age": {
+     "v": 51.6,
+     "m": 1.6
+    },
+    "population-under-18": {
+     "v": 1767,
+     "m": 242
+    },
+    "population-65-plus": {
+     "v": 2481,
+     "m": 388.228026
+    },
+    "median-household-income": {
+     "v": 232969,
+     "m": 36536
+    },
+    "poverty-rate": {
+     "v": 1.899654,
+     "m": 1.162069
+    },
+    "median-gross-rent": {
+     "min": 3500
+    },
+    "rent-burden-rate": {
+     "v": 37.641723,
+     "m": 14.428747
+    },
+    "disability-rate": {
+     "v": 7.146037,
+     "m": 2.369839
+    },
+    "households-without-internet-rate": {
+     "v": 0,
+     "m": 0.541311
+    },
+    "population-poverty-status-determined": {
+     "v": 8949,
+     "m": 61
+    },
+    "renter-households": {
+     "v": 882,
+     "m": 248
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 8984,
+     "m": 31
+    },
+    "households-total": {
+     "v": 3510,
+     "m": 259
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "alto",
+   "name": "Alto",
+   "kind": "cdp",
+   "kindLabel": "Census-designated place",
+   "geoid": "0601416",
+   "values": {
+    "population-total": {
+     "v": 1024,
+     "m": 346
+    },
+    "median-age": {
+     "v": 42.3,
+     "m": 19.0
+    },
+    "population-under-18": {
+     "v": 249,
+     "m": 108
+    },
+    "population-65-plus": {
+     "v": 100,
+     "m": 96.695398
+    },
+    "median-household-income": {
+     "v": 129191,
+     "m": 123241
+    },
+    "poverty-rate": {
+     "v": 25.976562,
+     "m": 31.211185
+    },
+    "rent-burden-rate": {
+     "v": 31.799163,
+     "m": 30.140116
+    },
+    "disability-rate": {
+     "v": 4.492188,
+     "m": 8.144447
+    },
+    "households-without-internet-rate": {
+     "v": 2.660754,
+     "m": 3.891784
+    },
+    "population-poverty-status-determined": {
+     "v": 1024,
+     "m": 346
+    },
+    "renter-households": {
+     "v": 239,
+     "m": 118
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 1024,
+     "m": 346
+    },
+    "households-total": {
+     "v": 451,
+     "m": 150
+    }
+   },
+   "unavailable": {
+    "median-gross-rent": "estimate is the code -666666666: no sample observations or too few"
+   }
+  },
+  {
+   "id": "black-point-green-point-cdp",
+   "name": "Black Point-Green Point",
+   "kind": "cdp",
+   "kindLabel": "Census-designated place",
+   "geoid": "0606982",
+   "values": {
+    "population-total": {
+     "v": 1655,
+     "m": 380
+    },
+    "median-age": {
+     "v": 47.3,
+     "m": 5.3
+    },
+    "population-under-18": {
+     "v": 303,
+     "m": 166
+    },
+    "population-65-plus": {
+     "v": 420,
+     "m": 119.184731
+    },
+    "median-household-income": {
+     "v": 168438,
+     "m": 125718
+    },
+    "poverty-rate": {
+     "v": 9.78852,
+     "m": 6.702709
+    },
+    "median-gross-rent": {
+     "v": 3131,
+     "m": 1408
+    },
+    "rent-burden-rate": {
+     "v": 44.761905,
+     "m": 34.129533
+    },
+    "disability-rate": {
+     "v": 4.954683,
+     "m": 4.162398
+    },
+    "households-without-internet-rate": {
+     "v": 2.664797,
+     "m": 3.036247
+    },
+    "population-poverty-status-determined": {
+     "v": 1655,
+     "m": 380
+    },
+    "renter-households": {
+     "v": 105,
+     "m": 66
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 1655,
+     "m": 380
+    },
+    "households-total": {
+     "v": 713,
+     "m": 147
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "bolinas",
+   "name": "Bolinas",
+   "kind": "cdp",
+   "kindLabel": "Census-designated place",
+   "geoid": "0607316",
+   "values": {
+    "population-total": {
+     "v": 1334,
+     "m": 286
+    },
+    "median-age": {
+     "v": 61.4,
+     "m": 12.4
+    },
+    "population-under-18": {
+     "v": 115,
+     "m": 58
+    },
+    "population-65-plus": {
+     "v": 577,
+     "m": 165.933722
+    },
+    "median-household-income": {
+     "v": 100625,
+     "m": 57069
+    },
+    "poverty-rate": {
+     "v": 9.070465,
+     "m": 6.381964
+    },
+    "median-gross-rent": {
+     "v": 1924,
+     "m": 951
+    },
+    "rent-burden-rate": {
+     "v": 56.962025,
+     "m": 26.958116
+    },
+    "disability-rate": {
+     "v": 15.517241,
+     "m": 7.516269
+    },
+    "households-without-internet-rate": {
+     "v": 12.948518,
+     "m": 10.273069
+    },
+    "population-poverty-status-determined": {
+     "v": 1334,
+     "m": 286
+    },
+    "renter-households": {
+     "v": 158,
+     "m": 77
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 1334,
+     "m": 286
+    },
+    "households-total": {
+     "v": 641,
+     "m": 131
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "dillon-beach",
+   "name": "Dillon Beach",
+   "kind": "cdp",
+   "kindLabel": "Census-designated place",
+   "geoid": "0619262",
+   "values": {
+    "population-total": {
+     "v": 293,
+     "m": 176
+    },
+    "median-age": {
+     "v": 61.1,
+     "m": 58.2
+    },
+    "population-under-18": {
+     "v": 0,
+     "m": 14
+    },
+    "population-65-plus": {
+     "v": 53,
+     "m": 65.099923
+    },
+    "median-household-income": {
+     "v": 209536,
+     "m": 102706
+    },
+    "poverty-rate": {
+     "v": 0,
+     "m": 4.778157
+    },
+    "rent-burden-rate": {
+     "v": 0,
+     "m": 121.73913
+    },
+    "disability-rate": {
+     "v": 9.215017,
+     "m": 16.869056
+    },
+    "households-without-internet-rate": {
+     "v": 0,
+     "m": 10.218978
+    },
+    "population-poverty-status-determined": {
+     "v": 293,
+     "m": 176
+    },
+    "renter-households": {
+     "v": 23,
+     "m": 32
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 293,
+     "m": 176
+    },
+    "households-total": {
+     "v": 137,
+     "m": 80
+    }
+   },
+   "unavailable": {
+    "median-gross-rent": "estimate is the code -666666666: no sample observations or too few"
+   }
+  },
+  {
+   "id": "inverness",
+   "name": "Inverness",
+   "kind": "cdp",
+   "kindLabel": "Census-designated place",
+   "geoid": "0636616",
+   "values": {
+    "population-total": {
+     "v": 1346,
+     "m": 280
+    },
+    "median-age": {
+     "v": 68.9,
+     "m": 13.8
+    },
+    "population-under-18": {
+     "v": 40,
+     "m": 41
+    },
+    "population-65-plus": {
+     "v": 701,
+     "m": 182.794967
+    },
+    "median-household-income": {
+     "v": 80176,
+     "m": 40471
+    },
+    "poverty-rate": {
+     "v": 4.754829,
+     "m": 4.346529
+    },
+    "median-gross-rent": {
+     "v": 1829,
+     "m": 879
+    },
+    "rent-burden-rate": {
+     "v": 71.978022,
+     "m": 32.475308
+    },
+    "disability-rate": {
+     "v": 24.294205,
+     "m": 9.807895
+    },
+    "households-without-internet-rate": {
+     "v": 0,
+     "m": 1.660735
+    },
+    "population-poverty-status-determined": {
+     "v": 1346,
+     "m": 280
+    },
+    "renter-households": {
+     "v": 182,
+     "m": 104
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 1346,
+     "m": 280
+    },
+    "households-total": {
+     "v": 843,
+     "m": 168
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "kentfield",
+   "name": "Kentfield",
+   "kind": "cdp",
+   "kindLabel": "Census-designated place",
+   "geoid": "0638114",
+   "values": {
+    "population-total": {
+     "v": 6900,
+     "m": 630
+    },
+    "median-age": {
+     "v": 48.8,
+     "m": 3.1
+    },
+    "population-under-18": {
+     "v": 1578,
+     "m": 285
+    },
+    "population-65-plus": {
+     "v": 1766,
+     "m": 255.69122
+    },
+    "median-household-income": {
+     "v": 249896,
+     "m": 24802
+    },
+    "poverty-rate": {
+     "v": 3.901944,
+     "m": 2.703671
+    },
+    "median-gross-rent": {
+     "v": 2741,
+     "m": 374
+    },
+    "rent-burden-rate": {
+     "v": 40,
+     "m": 13.932712
+    },
+    "disability-rate": {
+     "v": 8.340586,
+     "m": 2.013568
+    },
+    "households-without-internet-rate": {
+     "v": 4.404145,
+     "m": 3.453394
+    },
+    "population-poverty-status-determined": {
+     "v": 6894,
+     "m": 629
+    },
+    "renter-households": {
+     "v": 515,
+     "m": 128
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 6894,
+     "m": 629
+    },
+    "households-total": {
+     "v": 2702,
+     "m": 258
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "lagunitas-forest-knolls-cdp",
+   "name": "Lagunitas-Forest Knolls",
+   "kind": "cdp",
+   "kindLabel": "Census-designated place",
+   "geoid": "0639283",
+   "values": {
+    "population-total": {
+     "v": 1626,
+     "m": 441
+    },
+    "median-age": {
+     "v": 53.6,
+     "m": 8.9
+    },
+    "population-under-18": {
+     "v": 213,
+     "m": 123
+    },
+    "population-65-plus": {
+     "v": 573,
+     "m": 207.089353
+    },
+    "median-household-income": {
+     "v": 130682,
+     "m": 22434
+    },
+    "poverty-rate": {
+     "v": 4.428044,
+     "m": 3.424027
+    },
+    "median-gross-rent": {
+     "v": 2387,
+     "m": 1961
+    },
+    "rent-burden-rate": {
+     "v": 51.813472,
+     "m": 39.376526
+    },
+    "disability-rate": {
+     "v": 11.316113,
+     "m": 6.374913
+    },
+    "households-without-internet-rate": {
+     "v": 0,
+     "m": 1.711491
+    },
+    "population-poverty-status-determined": {
+     "v": 1626,
+     "m": 441
+    },
+    "renter-households": {
+     "v": 193,
+     "m": 136
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 1626,
+     "m": 441
+    },
+    "households-total": {
+     "v": 818,
+     "m": 212
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "lucas-valley-marinwood-cdp",
+   "name": "Lucas Valley-Marinwood",
+   "kind": "cdp",
+   "kindLabel": "Census-designated place",
+   "geoid": "0644399",
+   "values": {
+    "population-total": {
+     "v": 6473,
+     "m": 654
+    },
+    "median-age": {
+     "v": 49.8,
+     "m": 2.5
+    },
+    "population-under-18": {
+     "v": 1190,
+     "m": 304
+    },
+    "population-65-plus": {
+     "v": 1763,
+     "m": 347.051869
+    },
+    "median-household-income": {
+     "v": 200761,
+     "m": 42266
+    },
+    "poverty-rate": {
+     "v": 4.205969,
+     "m": 2.201564
+    },
+    "median-gross-rent": {
+     "min": 3500
+    },
+    "rent-burden-rate": {
+     "v": 45.652174,
+     "m": 20.037295
+    },
+    "disability-rate": {
+     "v": 11.133447,
+     "m": 4.103194
+    },
+    "households-without-internet-rate": {
+     "v": 3.033981,
+     "m": 3.141675
+    },
+    "population-poverty-status-determined": {
+     "v": 6467,
+     "m": 653
+    },
+    "renter-households": {
+     "v": 414,
+     "m": 162
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 6467,
+     "m": 653
+    },
+    "households-total": {
+     "v": 2472,
+     "m": 239
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "marin-city",
+   "name": "Marin City",
+   "kind": "cdp",
+   "kindLabel": "Census-designated place",
+   "geoid": "0645820",
+   "values": {
+    "population-total": {
+     "v": 3195,
+     "m": 432
+    },
+    "median-age": {
+     "v": 41.4,
+     "m": 3.1
+    },
+    "population-under-18": {
+     "v": 542,
+     "m": 125
+    },
+    "population-65-plus": {
+     "v": 537,
+     "m": 181.16843
+    },
+    "median-household-income": {
+     "v": 68846,
+     "m": 26081
+    },
+    "poverty-rate": {
+     "v": 16.056338,
+     "m": 8.069882
+    },
+    "median-gross-rent": {
+     "v": 1335,
+     "m": 217
+    },
+    "rent-burden-rate": {
+     "v": 55.394883,
+     "m": 14.983162
+    },
+    "disability-rate": {
+     "v": 15.054773,
+     "m": 6.856692
+    },
+    "households-without-internet-rate": {
+     "v": 7.230559,
+     "m": 6.877184
+    },
+    "population-poverty-status-determined": {
+     "v": 3195,
+     "m": 432
+    },
+    "renter-households": {
+     "v": 899,
+     "m": 219
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 3195,
+     "m": 432
+    },
+    "households-total": {
+     "v": 1466,
+     "m": 214
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "muir-beach",
+   "name": "Muir Beach",
+   "kind": "cdp",
+   "kindLabel": "Census-designated place",
+   "geoid": "0649950",
+   "values": {
+    "population-total": {
+     "v": 311,
+     "m": 83
+    },
+    "median-age": {
+     "v": 63.7,
+     "m": 2.9
+    },
+    "population-under-18": {
+     "v": 21,
+     "m": 20
+    },
+    "population-65-plus": {
+     "v": 134,
+     "m": 51.127292
+    },
+    "median-household-income": {
+     "v": 140227,
+     "m": 68298
+    },
+    "poverty-rate": {
+     "v": 8.038585,
+     "m": 7.412842
+    },
+    "median-gross-rent": {
+     "min": 3500
+    },
+    "rent-burden-rate": {
+     "v": 80,
+     "m": 113.251932
+    },
+    "disability-rate": {
+     "v": 4.180064,
+     "m": 14.836233
+    },
+    "households-without-internet-rate": {
+     "v": 0,
+     "m": 8.641975
+    },
+    "population-poverty-status-determined": {
+     "v": 311,
+     "m": 83
+    },
+    "renter-households": {
+     "v": 20,
+     "m": 17
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 311,
+     "m": 83
+    },
+    "households-total": {
+     "v": 162,
+     "m": 40
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "nicasio",
+   "name": "Nicasio",
+   "kind": "cdp",
+   "kindLabel": "Census-designated place",
+   "geoid": "0651280",
+   "values": {
+    "population-total": {
+     "v": 91,
+     "m": 45
+    },
+    "median-age": {
+     "v": 53.4,
+     "m": 21.5
+    },
+    "population-under-18": {
+     "v": 14,
+     "m": 12
+    },
+    "population-65-plus": {
+     "v": 19,
+     "m": 42.40283
+    },
+    "median-household-income": {
+     "min": 250000
+    },
+    "poverty-rate": {
+     "v": 0,
+     "m": 15.384615
+    },
+    "disability-rate": {
+     "v": 6.593407,
+     "m": 49.159052
+    },
+    "households-without-internet-rate": {
+     "v": 22.580645,
+     "m": 36.151078
+    },
+    "population-poverty-status-determined": {
+     "v": 91,
+     "m": 45
+    },
+    "renter-households": {
+     "v": 0,
+     "m": 14
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 91,
+     "m": 45
+    },
+    "households-total": {
+     "v": 31,
+     "m": 19
+    }
+   },
+   "unavailable": {
+    "median-gross-rent": "estimate is the code -666666666: no sample observations or too few",
+    "rent-burden-rate": "the denominator is 0, so there is no share"
+   }
+  },
+  {
+   "id": "point-reyes-station",
+   "name": "Point Reyes Station",
+   "kind": "cdp",
+   "kindLabel": "Census-designated place",
+   "geoid": "0657960",
+   "values": {
+    "population-total": {
+     "v": 517,
+     "m": 220
+    },
+    "median-age": {
+     "v": 77.4,
+     "m": 8.1
+    },
+    "population-under-18": {
+     "v": 0,
+     "m": 14
+    },
+    "population-65-plus": {
+     "v": 346,
+     "m": 140.49911
+    },
+    "median-household-income": {
+     "v": 112813,
+     "m": 95254
+    },
+    "poverty-rate": {
+     "v": 3.710938,
+     "m": 5.638236
+    },
+    "median-gross-rent": {
+     "v": 1898,
+     "m": 298
+    },
+    "rent-burden-rate": {
+     "v": 75.257732,
+     "m": 42.199508
+    },
+    "disability-rate": {
+     "v": 26.5625,
+     "m": 16.65325
+    },
+    "households-without-internet-rate": {
+     "v": 2.758621,
+     "m": 3.985447
+    },
+    "population-poverty-status-determined": {
+     "v": 512,
+     "m": 220
+    },
+    "renter-households": {
+     "v": 97,
+     "m": 67
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 512,
+     "m": 220
+    },
+    "households-total": {
+     "v": 290,
+     "m": 117
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "san-geronimo",
+   "name": "San Geronimo",
+   "kind": "cdp",
+   "kindLabel": "Census-designated place",
+   "geoid": "0667070",
+   "values": {
+    "population-total": {
+     "v": 583,
+     "m": 299
+    },
+    "median-age": {
+     "v": 46.5,
+     "m": 13.6
+    },
+    "population-under-18": {
+     "v": 112,
+     "m": 89
+    },
+    "population-65-plus": {
+     "v": 133,
+     "m": 91.684241
+    },
+    "median-household-income": {
+     "v": 171932,
+     "m": 106258
+    },
+    "poverty-rate": {
+     "v": 0,
+     "m": 2.413793
+    },
+    "rent-burden-rate": {
+     "v": 100,
+     "m": 121.243557
+    },
+    "disability-rate": {
+     "v": 6.034483,
+     "m": 9.784306
+    },
+    "households-without-internet-rate": {
+     "v": 0,
+     "m": 6.763285
+    },
+    "population-poverty-status-determined": {
+     "v": 580,
+     "m": 299
+    },
+    "renter-households": {
+     "v": 20,
+     "m": 31
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 580,
+     "m": 299
+    },
+    "households-total": {
+     "v": 207,
+     "m": 99
+    }
+   },
+   "unavailable": {
+    "median-gross-rent": "estimate is the code -666666666: no sample observations or too few"
+   }
+  },
+  {
+   "id": "santa-venetia",
+   "name": "Santa Venetia",
+   "kind": "cdp",
+   "kindLabel": "Census-designated place",
+   "geoid": "0670154",
+   "values": {
+    "population-total": {
+     "v": 3725,
+     "m": 620
+    },
+    "median-age": {
+     "v": 56.2,
+     "m": 4.0
+    },
+    "population-under-18": {
+     "v": 462,
+     "m": 219
+    },
+    "population-65-plus": {
+     "v": 1238,
+     "m": 291.427521
+    },
+    "median-household-income": {
+     "v": 126833,
+     "m": 22959
+    },
+    "poverty-rate": {
+     "v": 7.798036,
+     "m": 4.959722
+    },
+    "rent-burden-rate": {
+     "v": 43.418468,
+     "m": 17.396761
+    },
+    "disability-rate": {
+     "v": 18.274399,
+     "m": 6.115271
+    },
+    "households-without-internet-rate": {
+     "v": 4.471545,
+     "m": 4.087239
+    },
+    "population-poverty-status-determined": {
+     "v": 3565,
+     "m": 605
+    },
+    "renter-households": {
+     "v": 509,
+     "m": 181
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 3535,
+     "m": 593
+    },
+    "households-total": {
+     "v": 1722,
+     "m": 209
+    }
+   },
+   "unavailable": {
+    "median-gross-rent": "estimate is the code -666666666: no sample observations or too few"
+   }
+  },
+  {
+   "id": "sleepy-hollow",
+   "name": "Sleepy Hollow",
+   "kind": "cdp",
+   "kindLabel": "Census-designated place",
+   "geoid": "0672184",
+   "values": {
+    "population-total": {
+     "v": 3063,
+     "m": 547
+    },
+    "median-age": {
+     "v": 58.1,
+     "m": 5.3
+    },
+    "population-under-18": {
+     "v": 594,
+     "m": 232
+    },
+    "population-65-plus": {
+     "v": 788,
+     "m": 218.378112
+    },
+    "median-household-income": {
+     "min": 250000
+    },
+    "poverty-rate": {
+     "v": 0.957096,
+     "m": 1.474915
+    },
+    "rent-burden-rate": {
+     "v": 79.259259,
+     "m": 75.500151
+    },
+    "disability-rate": {
+     "v": 9.696376,
+     "m": 4.226696
+    },
+    "households-without-internet-rate": {
+     "v": 0,
+     "m": 1.272727
+    },
+    "population-poverty-status-determined": {
+     "v": 3030,
+     "m": 551
+    },
+    "renter-households": {
+     "v": 135,
+     "m": 179
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 3063,
+     "m": 547
+    },
+    "households-total": {
+     "v": 1100,
+     "m": 235
+    }
+   },
+   "unavailable": {
+    "median-gross-rent": "estimate is the code -666666666: no sample observations or too few"
+   }
+  },
+  {
+   "id": "stinson-beach",
+   "name": "Stinson Beach",
+   "kind": "cdp",
+   "kindLabel": "Census-designated place",
+   "geoid": "0674172",
+   "values": {
+    "population-total": {
+     "v": 255,
+     "m": 110
+    },
+    "median-age": {
+     "v": 71.1,
+     "m": 8.7
+    },
+    "population-under-18": {
+     "v": 0,
+     "m": 14
+    },
+    "population-65-plus": {
+     "v": 150,
+     "m": 82.134037
+    },
+    "median-household-income": {
+     "v": 132857,
+     "m": 122466
+    },
+    "poverty-rate": {
+     "v": 14.509804,
+     "m": 16.499756
+    },
+    "rent-burden-rate": {
+     "v": 100,
+     "m": 404.145188
+    },
+    "disability-rate": {
+     "v": 32.156863,
+     "m": 20.835242
+    },
+    "households-without-internet-rate": {
+     "v": 13.194444,
+     "m": 21.50783
+    },
+    "population-poverty-status-determined": {
+     "v": 255,
+     "m": 110
+    },
+    "renter-households": {
+     "v": 6,
+     "m": 9
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 255,
+     "m": 110
+    },
+    "households-total": {
+     "v": 144,
+     "m": 61
+    }
+   },
+   "unavailable": {
+    "median-gross-rent": "estimate is the code -666666666: no sample observations or too few"
+   }
+  },
+  {
+   "id": "strawberry",
+   "name": "Strawberry",
+   "kind": "cdp",
+   "kindLabel": "Census-designated place",
+   "geoid": "0675315",
+   "values": {
+    "population-total": {
+     "v": 5830,
+     "m": 772
+    },
+    "median-age": {
+     "v": 43.9,
+     "m": 3.4
+    },
+    "population-under-18": {
+     "v": 1282,
+     "m": 332
+    },
+    "population-65-plus": {
+     "v": 1243,
+     "m": 199.419157
+    },
+    "median-household-income": {
+     "v": 157661,
+     "m": 33413
+    },
+    "poverty-rate": {
+     "v": 7.014768,
+     "m": 3.422022
+    },
+    "median-gross-rent": {
+     "v": 2958,
+     "m": 413
+    },
+    "rent-burden-rate": {
+     "v": 54.787617,
+     "m": 7.316062
+    },
+    "disability-rate": {
+     "v": 5.189895,
+     "m": 1.675322
+    },
+    "households-without-internet-rate": {
+     "v": 0,
+     "m": 0.800337
+    },
+    "population-poverty-status-determined": {
+     "v": 5688,
+     "m": 770
+    },
+    "renter-households": {
+     "v": 1389,
+     "m": 289
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 5819,
+     "m": 772
+    },
+    "households-total": {
+     "v": 2374,
+     "m": 263
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "tamalpais-homestead-valley-cdp",
+   "name": "Tamalpais-Homestead Valley",
+   "kind": "cdp",
+   "kindLabel": "Census-designated place",
+   "geoid": "0677805",
+   "values": {
+    "population-total": {
+     "v": 12085,
+     "m": 1077
+    },
+    "median-age": {
+     "v": 44.5,
+     "m": 2.2
+    },
+    "population-under-18": {
+     "v": 3056,
+     "m": 545
+    },
+    "population-65-plus": {
+     "v": 2232,
+     "m": 305.203211
+    },
+    "median-household-income": {
+     "v": 243227,
+     "m": 24690
+    },
+    "poverty-rate": {
+     "v": 3.318163,
+     "m": 1.154283
+    },
+    "median-gross-rent": {
+     "min": 3500
+    },
+    "rent-burden-rate": {
+     "v": 34.638554,
+     "m": 12.191531
+    },
+    "disability-rate": {
+     "v": 6.032271,
+     "m": 1.564693
+    },
+    "households-without-internet-rate": {
+     "v": 1.011879,
+     "m": 1.141989
+    },
+    "population-poverty-status-determined": {
+     "v": 12085,
+     "m": 1077
+    },
+    "renter-households": {
+     "v": 664,
+     "m": 198
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 12085,
+     "m": 1077
+    },
+    "households-total": {
+     "v": 4546,
+     "m": 294
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "tomales",
+   "name": "Tomales",
+   "kind": "cdp",
+   "kindLabel": "Census-designated place",
+   "geoid": "0678890",
+   "values": {
+    "population-total": {
+     "v": 168,
+     "m": 149
+    },
+    "median-age": {
+     "v": 65.6,
+     "m": 0.7
+    },
+    "population-under-18": {
+     "v": 0,
+     "m": 14
+    },
+    "population-65-plus": {
+     "v": 110,
+     "m": 73.532306
+    },
+    "poverty-rate": {
+     "v": 54.761905,
+     "m": 66.246061
+    },
+    "disability-rate": {
+     "v": 0,
+     "m": 28.867513
+    },
+    "households-without-internet-rate": {
+     "v": 0,
+     "m": 26.415094
+    },
+    "population-poverty-status-determined": {
+     "v": 168,
+     "m": 149
+    },
+    "renter-households": {
+     "v": 0,
+     "m": 14
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 168,
+     "m": 149
+    },
+    "households-total": {
+     "v": 53,
+     "m": 42
+    }
+   },
+   "unavailable": {
+    "median-household-income": "estimate is the code -666666666: no sample observations or too few",
+    "median-gross-rent": "estimate is the code -666666666: no sample observations or too few",
+    "rent-burden-rate": "the denominator is 0, so there is no share"
+   }
+  },
+  {
+   "id": "woodacre",
+   "name": "Woodacre",
+   "kind": "cdp",
+   "kindLabel": "Census-designated place",
+   "geoid": "0686216",
+   "values": {
+    "population-total": {
+     "v": 1627,
+     "m": 545
+    },
+    "median-age": {
+     "v": 57.0,
+     "m": 4.4
+    },
+    "population-under-18": {
+     "v": 150,
+     "m": 73
+    },
+    "population-65-plus": {
+     "v": 492,
+     "m": 220.186285
+    },
+    "median-household-income": {
+     "v": 231953,
+     "m": 104482
+    },
+    "poverty-rate": {
+     "v": 8.973571,
+     "m": 6.19288
+    },
+    "rent-burden-rate": {
+     "v": 0,
+     "m": 66.666667
+    },
+    "disability-rate": {
+     "v": 6.207744,
+     "m": 5.136976
+    },
+    "households-without-internet-rate": {
+     "v": 0,
+     "m": 2.24359
+    },
+    "population-poverty-status-determined": {
+     "v": 1627,
+     "m": 545
+    },
+    "renter-households": {
+     "v": 42,
+     "m": 46
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 1627,
+     "m": 545
+    },
+    "households-total": {
+     "v": 624,
+     "m": 170
+    }
+   },
+   "unavailable": {
+    "median-gross-rent": "estimate is the code -666666666: no sample observations or too few"
+   }
+  },
+  {
+   "id": "census-tract-1011",
+   "name": "Census Tract 1011",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041101100",
+   "values": {
+    "population-total": {
+     "v": 2428,
+     "m": 274
+    },
+    "median-age": {
+     "v": 53.6,
+     "m": 6.1
+    },
+    "population-under-18": {
+     "v": 362,
+     "m": 136
+    },
+    "population-65-plus": {
+     "v": 855,
+     "m": 152.305614
+    },
+    "median-household-income": {
+     "v": 208958,
+     "m": 86879
+    },
+    "poverty-rate": {
+     "v": 3.212521,
+     "m": 1.775558
+    },
+    "median-gross-rent": {
+     "v": 3131,
+     "m": 1408
+    },
+    "rent-burden-rate": {
+     "v": 44.761905,
+     "m": 34.129533
+    },
+    "disability-rate": {
+     "v": 8.443163,
+     "m": 3.606037
+    },
+    "households-without-internet-rate": {
+     "v": 2.483901,
+     "m": 2.186895
+    },
+    "population-poverty-status-determined": {
+     "v": 2428,
+     "m": 274
+    },
+    "renter-households": {
+     "v": 105,
+     "m": 66
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 2428,
+     "m": 274
+    },
+    "households-total": {
+     "v": 1087,
+     "m": 133
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1012",
+   "name": "Census Tract 1012",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041101200",
+   "values": {
+    "population-total": {
+     "v": 2808,
+     "m": 427
+    },
+    "median-age": {
+     "v": 49.6,
+     "m": 6.8
+    },
+    "population-under-18": {
+     "v": 493,
+     "m": 159
+    },
+    "population-65-plus": {
+     "v": 533,
+     "m": 130.276629
+    },
+    "median-household-income": {
+     "v": 114646,
+     "m": 22982
+    },
+    "poverty-rate": {
+     "v": 8.18018,
+     "m": 5.378087
+    },
+    "median-gross-rent": {
+     "v": 2273,
+     "m": 448
+    },
+    "rent-burden-rate": {
+     "v": 20.765027,
+     "m": 25.248352
+    },
+    "disability-rate": {
+     "v": 10.327635,
+     "m": 3.922115
+    },
+    "households-without-internet-rate": {
+     "v": 0,
+     "m": 1.357905
+    },
+    "population-poverty-status-determined": {
+     "v": 2775,
+     "m": 412
+    },
+    "renter-households": {
+     "v": 183,
+     "m": 95
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 2808,
+     "m": 427
+    },
+    "households-total": {
+     "v": 1031,
+     "m": 139
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1021",
+   "name": "Census Tract 1021",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041102100",
+   "values": {
+    "population-total": {
+     "v": 2209,
+     "m": 261
+    },
+    "median-age": {
+     "v": 57.0,
+     "m": 4.6
+    },
+    "population-under-18": {
+     "v": 331,
+     "m": 57
+    },
+    "population-65-plus": {
+     "v": 775,
+     "m": 162.576136
+    },
+    "median-household-income": {
+     "v": 127500,
+     "m": 13529
+    },
+    "poverty-rate": {
+     "v": 3.440471,
+     "m": 2.088466
+    },
+    "median-gross-rent": {
+     "v": 2391,
+     "m": 1197
+    },
+    "rent-burden-rate": {
+     "v": 45,
+     "m": 5.701148
+    },
+    "disability-rate": {
+     "v": 14.259846,
+     "m": 5.914334
+    },
+    "households-without-internet-rate": {
+     "v": 1.778656,
+     "m": 2.054735
+    },
+    "population-poverty-status-determined": {
+     "v": 2209,
+     "m": 261
+    },
+    "renter-households": {
+     "v": 180,
+     "m": 86
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 2209,
+     "m": 261
+    },
+    "households-total": {
+     "v": 1012,
+     "m": 165
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1022-02",
+   "name": "Census Tract 1022.02",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041102202",
+   "values": {
+    "population-total": {
+     "v": 5345,
+     "m": 601
+    },
+    "median-age": {
+     "v": 50.4,
+     "m": 3.2
+    },
+    "population-under-18": {
+     "v": 1076,
+     "m": 203
+    },
+    "population-65-plus": {
+     "v": 1055,
+     "m": 270.103684
+    },
+    "median-household-income": {
+     "v": 104432,
+     "m": 27566
+    },
+    "poverty-rate": {
+     "v": 11.094481,
+     "m": 5.222583
+    },
+    "median-gross-rent": {
+     "v": 3109,
+     "m": 350
+    },
+    "rent-burden-rate": {
+     "v": 60.050251,
+     "m": 28.623851
+    },
+    "disability-rate": {
+     "v": 12.834425,
+     "m": 4.845513
+    },
+    "households-without-internet-rate": {
+     "v": 1.31779,
+     "m": 1.512747
+    },
+    "population-poverty-status-determined": {
+     "v": 5345,
+     "m": 601
+    },
+    "renter-households": {
+     "v": 398,
+     "m": 123
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 5345,
+     "m": 601
+    },
+    "households-total": {
+     "v": 1973,
+     "m": 230
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1022-03",
+   "name": "Census Tract 1022.03",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041102203",
+   "values": {
+    "population-total": {
+     "v": 5684,
+     "m": 809
+    },
+    "median-age": {
+     "v": 41.3,
+     "m": 9.9
+    },
+    "population-under-18": {
+     "v": 1414,
+     "m": 518
+    },
+    "population-65-plus": {
+     "v": 1221,
+     "m": 271.265553
+    },
+    "median-household-income": {
+     "v": 83629,
+     "m": 4437
+    },
+    "poverty-rate": {
+     "v": 10.116115,
+     "m": 4.155967
+    },
+    "median-gross-rent": {
+     "v": 2120,
+     "m": 234
+    },
+    "rent-burden-rate": {
+     "v": 68.944571,
+     "m": 20.509369
+    },
+    "disability-rate": {
+     "v": 14.42646,
+     "m": 3.880248
+    },
+    "households-without-internet-rate": {
+     "v": 4.577158,
+     "m": 3.606335
+    },
+    "population-poverty-status-determined": {
+     "v": 5684,
+     "m": 809
+    },
+    "renter-households": {
+     "v": 1317,
+     "m": 299
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 5684,
+     "m": 809
+    },
+    "households-total": {
+     "v": 2294,
+     "m": 318
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1031",
+   "name": "Census Tract 1031",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041103100",
+   "values": {
+    "population-total": {
+     "v": 7321,
+     "m": 654
+    },
+    "median-age": {
+     "v": 50.2,
+     "m": 3.6
+    },
+    "population-under-18": {
+     "v": 1354,
+     "m": 271
+    },
+    "population-65-plus": {
+     "v": 2015,
+     "m": 330.959212
+    },
+    "median-household-income": {
+     "v": 179097,
+     "m": 35851
+    },
+    "poverty-rate": {
+     "v": 3.719404,
+     "m": 2.328191
+    },
+    "median-gross-rent": {
+     "min": 3500
+    },
+    "rent-burden-rate": {
+     "v": 47.368421,
+     "m": 23.350631
+    },
+    "disability-rate": {
+     "v": 13.973501,
+     "m": 3.251165
+    },
+    "households-without-internet-rate": {
+     "v": 2.870264,
+     "m": 2.668963
+    },
+    "population-poverty-status-determined": {
+     "v": 7313,
+     "m": 656
+    },
+    "renter-households": {
+     "v": 361,
+     "m": 118
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 7321,
+     "m": 654
+    },
+    "households-total": {
+     "v": 2613,
+     "m": 210
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1032",
+   "name": "Census Tract 1032",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041103200",
+   "values": {
+    "population-total": {
+     "v": 6288,
+     "m": 721
+    },
+    "median-age": {
+     "v": 55.8,
+     "m": 6.3
+    },
+    "population-under-18": {
+     "v": 937,
+     "m": 335
+    },
+    "population-65-plus": {
+     "v": 2054,
+     "m": 463.460894
+    },
+    "median-household-income": {
+     "v": 93173,
+     "m": 49112
+    },
+    "poverty-rate": {
+     "v": 9.09239,
+     "m": 4.519787
+    },
+    "median-gross-rent": {
+     "v": 2628,
+     "m": 318
+    },
+    "rent-burden-rate": {
+     "v": 71.324423,
+     "m": 14.416861
+    },
+    "disability-rate": {
+     "v": 13.687469,
+     "m": 3.912299
+    },
+    "households-without-internet-rate": {
+     "v": 11.71134,
+     "m": 8.649059
+    },
+    "population-poverty-status-determined": {
+     "v": 6137,
+     "m": 720
+    },
+    "renter-households": {
+     "v": 823,
+     "m": 213
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 6137,
+     "m": 720
+    },
+    "households-total": {
+     "v": 2425,
+     "m": 317
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1041-02",
+   "name": "Census Tract 1041.02",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041104102",
+   "values": {
+    "population-total": {
+     "v": 5480,
+     "m": 926
+    },
+    "median-age": {
+     "v": 35.6,
+     "m": 2.7
+    },
+    "population-under-18": {
+     "v": 1300,
+     "m": 406
+    },
+    "population-65-plus": {
+     "v": 747,
+     "m": 212.15796
+    },
+    "median-household-income": {
+     "v": 92616,
+     "m": 11197
+    },
+    "poverty-rate": {
+     "v": 18.394161,
+     "m": 10.136343
+    },
+    "median-gross-rent": {
+     "v": 2446,
+     "m": 224
+    },
+    "rent-burden-rate": {
+     "v": 75,
+     "m": 18.738068
+    },
+    "disability-rate": {
+     "v": 8.066581,
+     "m": 2.79995
+    },
+    "households-without-internet-rate": {
+     "v": 1.268912,
+     "m": 1.505857
+    },
+    "population-poverty-status-determined": {
+     "v": 5480,
+     "m": 926
+    },
+    "renter-households": {
+     "v": 1112,
+     "m": 261
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 5467,
+     "m": 926
+    },
+    "households-total": {
+     "v": 2049,
+     "m": 236
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1041-03",
+   "name": "Census Tract 1041.03",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041104103",
+   "values": {
+    "population-total": {
+     "v": 2788,
+     "m": 248
+    },
+    "median-age": {
+     "v": 48.5,
+     "m": 3.3
+    },
+    "population-under-18": {
+     "v": 483,
+     "m": 114
+    },
+    "population-65-plus": {
+     "v": 721,
+     "m": 165.326949
+    },
+    "median-household-income": {
+     "v": 166042,
+     "m": 55726
+    },
+    "poverty-rate": {
+     "v": 3.981349,
+     "m": 2.883642
+    },
+    "median-gross-rent": {
+     "v": 2492,
+     "m": 506
+    },
+    "rent-burden-rate": {
+     "v": 58.791209,
+     "m": 29.248332
+    },
+    "disability-rate": {
+     "v": 11.944046,
+     "m": 3.972223
+    },
+    "households-without-internet-rate": {
+     "v": 0.787402,
+     "m": 1.277083
+    },
+    "population-poverty-status-determined": {
+     "v": 2788,
+     "m": 248
+    },
+    "renter-households": {
+     "v": 182,
+     "m": 86
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 2788,
+     "m": 248
+    },
+    "households-total": {
+     "v": 1016,
+     "m": 102
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1041-04",
+   "name": "Census Tract 1041.04",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041104104",
+   "values": {
+    "population-total": {
+     "v": 4793,
+     "m": 768
+    },
+    "median-age": {
+     "v": 47.4,
+     "m": 3.5
+    },
+    "population-under-18": {
+     "v": 1058,
+     "m": 304
+    },
+    "population-65-plus": {
+     "v": 787,
+     "m": 156.028843
+    },
+    "median-household-income": {
+     "v": 156681,
+     "m": 22798
+    },
+    "poverty-rate": {
+     "v": 11.829752,
+     "m": 10.661092
+    },
+    "median-gross-rent": {
+     "v": 2677,
+     "m": 610
+    },
+    "rent-burden-rate": {
+     "v": 57.606838,
+     "m": 22.128281
+    },
+    "disability-rate": {
+     "v": 8.858639,
+     "m": 2.451084
+    },
+    "households-without-internet-rate": {
+     "v": 5.417118,
+     "m": 3.860267
+    },
+    "population-poverty-status-determined": {
+     "v": 4793,
+     "m": 768
+    },
+    "renter-households": {
+     "v": 585,
+     "m": 137
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 4775,
+     "m": 770
+    },
+    "households-total": {
+     "v": 1846,
+     "m": 190
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1042",
+   "name": "Census Tract 1042",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041104200",
+   "values": {
+    "population-total": {
+     "v": 5809,
+     "m": 748
+    },
+    "median-age": {
+     "v": 46.2,
+     "m": 5.1
+    },
+    "population-under-18": {
+     "v": 1088,
+     "m": 304
+    },
+    "population-65-plus": {
+     "v": 1532,
+     "m": 358.666976
+    },
+    "median-household-income": {
+     "v": 112134,
+     "m": 21846
+    },
+    "poverty-rate": {
+     "v": 7.419521,
+     "m": 5.302815
+    },
+    "median-gross-rent": {
+     "v": 3149,
+     "m": 155
+    },
+    "rent-burden-rate": {
+     "v": 60.401891,
+     "m": 19.549054
+    },
+    "disability-rate": {
+     "v": 11.206748,
+     "m": 2.939886
+    },
+    "households-without-internet-rate": {
+     "v": 0,
+     "m": 0.858175
+    },
+    "population-poverty-status-determined": {
+     "v": 5809,
+     "m": 748
+    },
+    "renter-households": {
+     "v": 846,
+     "m": 179
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 5809,
+     "m": 748
+    },
+    "households-total": {
+     "v": 2214,
+     "m": 247
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1043",
+   "name": "Census Tract 1043",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041104300",
+   "values": {
+    "population-total": {
+     "v": 1621,
+     "m": 258
+    },
+    "median-age": {
+     "v": 58.0,
+     "m": 6.8
+    },
+    "population-under-18": {
+     "v": 189,
+     "m": 67
+    },
+    "population-65-plus": {
+     "v": 648,
+     "m": 145.106857
+    },
+    "median-household-income": {
+     "v": 167039,
+     "m": 14445
+    },
+    "poverty-rate": {
+     "v": 6.477483,
+     "m": 5.329955
+    },
+    "median-gross-rent": {
+     "v": 2625,
+     "m": 1842
+    },
+    "rent-burden-rate": {
+     "v": 45.454545,
+     "m": 28.510525
+    },
+    "disability-rate": {
+     "v": 10.672424,
+     "m": 6.126886
+    },
+    "households-without-internet-rate": {
+     "v": 1.547117,
+     "m": 1.816934
+    },
+    "population-poverty-status-determined": {
+     "v": 1621,
+     "m": 258
+    },
+    "renter-households": {
+     "v": 88,
+     "m": 50
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 1621,
+     "m": 258
+    },
+    "households-total": {
+     "v": 711,
+     "m": 94
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1050-01",
+   "name": "Census Tract 1050.01",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041105001",
+   "values": {
+    "population-total": {
+     "v": 4037,
+     "m": 576
+    },
+    "median-age": {
+     "v": 45.2,
+     "m": 4.8
+    },
+    "population-under-18": {
+     "v": 881,
+     "m": 271
+    },
+    "population-65-plus": {
+     "v": 1067,
+     "m": 340.956009
+    },
+    "median-household-income": {
+     "v": 98375,
+     "m": 44270
+    },
+    "poverty-rate": {
+     "v": 20.991326,
+     "m": 7.152803
+    },
+    "median-gross-rent": {
+     "v": 2209,
+     "m": 137
+    },
+    "rent-burden-rate": {
+     "v": 43.63104,
+     "m": 12.48978
+    },
+    "disability-rate": {
+     "v": 13.3829,
+     "m": 3.248878
+    },
+    "households-without-internet-rate": {
+     "v": 9.481481,
+     "m": 13.552622
+    },
+    "population-poverty-status-determined": {
+     "v": 4035,
+     "m": 577
+    },
+    "renter-households": {
+     "v": 683,
+     "m": 229
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 4035,
+     "m": 577
+    },
+    "households-total": {
+     "v": 1350,
+     "m": 206
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1050-02",
+   "name": "Census Tract 1050.02",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041105002",
+   "values": {
+    "population-total": {
+     "v": 2911,
+     "m": 383
+    },
+    "median-age": {
+     "v": 50.9,
+     "m": 7.3
+    },
+    "population-under-18": {
+     "v": 659,
+     "m": 135
+    },
+    "population-65-plus": {
+     "v": 864,
+     "m": 207.48012
+    },
+    "median-household-income": {
+     "v": 136153,
+     "m": 21484
+    },
+    "poverty-rate": {
+     "v": 1.717623,
+     "m": 1.180907
+    },
+    "median-gross-rent": {
+     "min": 3500
+    },
+    "rent-burden-rate": {
+     "v": 70.171149,
+     "m": 25.043521
+    },
+    "disability-rate": {
+     "v": 16.304348,
+     "m": 5.13389
+    },
+    "households-without-internet-rate": {
+     "v": 5.122143,
+     "m": 5.953606
+    },
+    "population-poverty-status-determined": {
+     "v": 2911,
+     "m": 383
+    },
+    "renter-households": {
+     "v": 409,
+     "m": 123
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 2852,
+     "m": 380
+    },
+    "households-total": {
+     "v": 1269,
+     "m": 161
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1060-01",
+   "name": "Census Tract 1060.01",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041106001",
+   "values": {
+    "population-total": {
+     "v": 5258,
+     "m": 895
+    },
+    "median-age": {
+     "v": 42.0,
+     "m": 7.1
+    },
+    "population-under-18": {
+     "v": 603,
+     "m": 327
+    },
+    "population-65-plus": {
+     "v": 1163,
+     "m": 264.801813
+    },
+    "median-household-income": {
+     "v": 125667,
+     "m": 31477
+    },
+    "poverty-rate": {
+     "v": 9.806743,
+     "m": 9.702039
+    },
+    "median-gross-rent": {
+     "v": 3390,
+     "m": 464
+    },
+    "rent-burden-rate": {
+     "v": 53.391473,
+     "m": 22.137562
+    },
+    "disability-rate": {
+     "v": 12.380759,
+     "m": 3.232194
+    },
+    "households-without-internet-rate": {
+     "v": 0.770021,
+     "m": 1.177069
+    },
+    "population-poverty-status-determined": {
+     "v": 4864,
+     "m": 895
+    },
+    "renter-households": {
+     "v": 1032,
+     "m": 239
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 4927,
+     "m": 895
+    },
+    "households-total": {
+     "v": 1948,
+     "m": 234
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1060-02",
+   "name": "Census Tract 1060.02",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041106002",
+   "values": {
+    "population-total": {
+     "v": 5350,
+     "m": 690
+    },
+    "median-age": {
+     "v": 52.1,
+     "m": 3.9
+    },
+    "population-under-18": {
+     "v": 717,
+     "m": 236
+    },
+    "population-65-plus": {
+     "v": 1476,
+     "m": 307.047228
+    },
+    "median-household-income": {
+     "v": 129561,
+     "m": 14545
+    },
+    "poverty-rate": {
+     "v": 9.028892,
+     "m": 4.921773
+    },
+    "median-gross-rent": {
+     "v": 3068,
+     "m": 1429
+    },
+    "rent-burden-rate": {
+     "v": 54.12234,
+     "m": 13.376618
+    },
+    "disability-rate": {
+     "v": 15.401696,
+     "m": 4.68168
+    },
+    "households-without-internet-rate": {
+     "v": 3.434434,
+     "m": 3.155707
+    },
+    "population-poverty-status-determined": {
+     "v": 4984,
+     "m": 686
+    },
+    "renter-households": {
+     "v": 752,
+     "m": 187
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 4954,
+     "m": 678
+    },
+    "households-total": {
+     "v": 2242,
+     "m": 173
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1070",
+   "name": "Census Tract 1070",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041107000",
+   "values": {
+    "population-total": {
+     "v": 6477,
+     "m": 653
+    },
+    "median-age": {
+     "v": 49.8,
+     "m": 2.5
+    },
+    "population-under-18": {
+     "v": 1194,
+     "m": 303
+    },
+    "population-65-plus": {
+     "v": 1763,
+     "m": 347.051869
+    },
+    "median-household-income": {
+     "v": 200761,
+     "m": 42266
+    },
+    "poverty-rate": {
+     "v": 4.205969,
+     "m": 2.201564
+    },
+    "median-gross-rent": {
+     "min": 3500
+    },
+    "rent-burden-rate": {
+     "v": 45.652174,
+     "m": 20.037295
+    },
+    "disability-rate": {
+     "v": 11.133447,
+     "m": 4.103194
+    },
+    "households-without-internet-rate": {
+     "v": 3.033981,
+     "m": 3.141675
+    },
+    "population-poverty-status-determined": {
+     "v": 6467,
+     "m": 653
+    },
+    "renter-households": {
+     "v": 414,
+     "m": 162
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 6467,
+     "m": 653
+    },
+    "households-total": {
+     "v": 2472,
+     "m": 239
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1081",
+   "name": "Census Tract 1081",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041108100",
+   "values": {
+    "population-total": {
+     "v": 6508,
+     "m": 648
+    },
+    "median-age": {
+     "v": 51.8,
+     "m": 3.4
+    },
+    "population-under-18": {
+     "v": 1130,
+     "m": 173
+    },
+    "population-65-plus": {
+     "v": 1644,
+     "m": 327.288863
+    },
+    "median-household-income": {
+     "v": 174444,
+     "m": 36108
+    },
+    "poverty-rate": {
+     "v": 1.814268,
+     "m": 1.247778
+    },
+    "median-gross-rent": {
+     "min": 3500
+    },
+    "rent-burden-rate": {
+     "v": 38.586957,
+     "m": 25.290691
+    },
+    "disability-rate": {
+     "v": 10.424354,
+     "m": 3.775347
+    },
+    "households-without-internet-rate": {
+     "v": 1.834131,
+     "m": 1.661251
+    },
+    "population-poverty-status-determined": {
+     "v": 6504,
+     "m": 647
+    },
+    "renter-households": {
+     "v": 368,
+     "m": 158
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 6504,
+     "m": 647
+    },
+    "households-total": {
+     "v": 2508,
+     "m": 289
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1082-01",
+   "name": "Census Tract 1082.01",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041108201",
+   "values": {
+    "population-total": {
+     "v": 2369,
+     "m": 340
+    },
+    "median-age": {
+     "v": 51.1,
+     "m": 3.8
+    },
+    "population-under-18": {
+     "v": 325,
+     "m": 115
+    },
+    "population-65-plus": {
+     "v": 709,
+     "m": 189.931567
+    },
+    "median-household-income": {
+     "v": 78889,
+     "m": 42666
+    },
+    "poverty-rate": {
+     "v": 11.746988,
+     "m": 4.363985
+    },
+    "median-gross-rent": {
+     "v": 2238,
+     "m": 174
+    },
+    "rent-burden-rate": {
+     "v": 60.188934,
+     "m": 18.605997
+    },
+    "disability-rate": {
+     "v": 20.91222,
+     "m": 6.965103
+    },
+    "households-without-internet-rate": {
+     "v": 3.675048,
+     "m": 5.586533
+    },
+    "population-poverty-status-determined": {
+     "v": 2324,
+     "m": 340
+    },
+    "renter-households": {
+     "v": 741,
+     "m": 145
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 2324,
+     "m": 340
+    },
+    "households-total": {
+     "v": 1034,
+     "m": 142
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1082-02",
+   "name": "Census Tract 1082.02",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041108202",
+   "values": {
+    "population-total": {
+     "v": 4711,
+     "m": 751
+    },
+    "median-age": {
+     "v": 47.9,
+     "m": 11.9
+    },
+    "population-under-18": {
+     "v": 1016,
+     "m": 395
+    },
+    "population-65-plus": {
+     "v": 1211,
+     "m": 343.390448
+    },
+    "median-household-income": {
+     "v": 108056,
+     "m": 39897
+    },
+    "poverty-rate": {
+     "v": 9.92201,
+     "m": 5.283804
+    },
+    "rent-burden-rate": {
+     "v": 44.430993,
+     "m": 25.955118
+    },
+    "disability-rate": {
+     "v": 18.39278,
+     "m": 6.640707
+    },
+    "households-without-internet-rate": {
+     "v": 5.398037,
+     "m": 4.489523
+    },
+    "population-poverty-status-determined": {
+     "v": 4616,
+     "m": 750
+    },
+    "renter-households": {
+     "v": 826,
+     "m": 355
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 4654,
+     "m": 751
+    },
+    "households-total": {
+     "v": 1834,
+     "m": 391
+    }
+   },
+   "unavailable": {
+    "median-gross-rent": "estimate is the code -666666666: no sample observations or too few"
+   }
+  },
+  {
+   "id": "census-tract-1090-01",
+   "name": "Census Tract 1090.01",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041109001",
+   "values": {
+    "population-total": {
+     "v": 3976,
+     "m": 501
+    },
+    "median-age": {
+     "v": 44.2,
+     "m": 5.2
+    },
+    "population-under-18": {
+     "v": 656,
+     "m": 214
+    },
+    "population-65-plus": {
+     "v": 889,
+     "m": 223.75433
+    },
+    "median-household-income": {
+     "v": 151023,
+     "m": 37438
+    },
+    "poverty-rate": {
+     "v": 15.593561,
+     "m": 9.430271
+    },
+    "median-gross-rent": {
+     "v": 2241,
+     "m": 124
+    },
+    "rent-burden-rate": {
+     "v": 61.781946,
+     "m": 16.632993
+    },
+    "disability-rate": {
+     "v": 12.525151,
+     "m": 4.89541
+    },
+    "households-without-internet-rate": {
+     "v": 4.867006,
+     "m": 3.141438
+    },
+    "population-poverty-status-determined": {
+     "v": 3976,
+     "m": 501
+    },
+    "renter-households": {
+     "v": 853,
+     "m": 164
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 3976,
+     "m": 501
+    },
+    "households-total": {
+     "v": 1767,
+     "m": 152
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1090-02",
+   "name": "Census Tract 1090.02",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041109002",
+   "values": {
+    "population-total": {
+     "v": 4512,
+     "m": 575
+    },
+    "median-age": {
+     "v": 46.1,
+     "m": 3.5
+    },
+    "population-under-18": {
+     "v": 838,
+     "m": 184
+    },
+    "population-65-plus": {
+     "v": 1063,
+     "m": 181.449718
+    },
+    "median-household-income": {
+     "v": 155718,
+     "m": 22210
+    },
+    "poverty-rate": {
+     "v": 3.280518,
+     "m": 2.261338
+    },
+    "median-gross-rent": {
+     "v": 1675,
+     "m": 1043
+    },
+    "rent-burden-rate": {
+     "v": 49.405772,
+     "m": 11.886634
+    },
+    "disability-rate": {
+     "v": 8.532801,
+     "m": 2.097522
+    },
+    "households-without-internet-rate": {
+     "v": 0.738916,
+     "m": 0.93003
+    },
+    "population-poverty-status-determined": {
+     "v": 4481,
+     "m": 563
+    },
+    "renter-households": {
+     "v": 589,
+     "m": 168
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 4512,
+     "m": 575
+    },
+    "households-total": {
+     "v": 2030,
+     "m": 289
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1101",
+   "name": "Census Tract 1101",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041110100",
+   "values": {
+    "population-total": {
+     "v": 5657,
+     "m": 567
+    },
+    "median-age": {
+     "v": 50.7,
+     "m": 4.6
+    },
+    "population-under-18": {
+     "v": 727,
+     "m": 253
+    },
+    "population-65-plus": {
+     "v": 1580,
+     "m": 360.088878
+    },
+    "median-household-income": {
+     "v": 104066,
+     "m": 37551
+    },
+    "poverty-rate": {
+     "v": 11.56636,
+     "m": 4.301962
+    },
+    "median-gross-rent": {
+     "v": 2326,
+     "m": 101
+    },
+    "rent-burden-rate": {
+     "v": 66.062917,
+     "m": 24.170388
+    },
+    "disability-rate": {
+     "v": 7.287593,
+     "m": 2.642664
+    },
+    "households-without-internet-rate": {
+     "v": 2.963272,
+     "m": 2.484548
+    },
+    "population-poverty-status-determined": {
+     "v": 5101,
+     "m": 566
+    },
+    "renter-households": {
+     "v": 1049,
+     "m": 282
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 5626,
+     "m": 565
+    },
+    "households-total": {
+     "v": 2396,
+     "m": 253
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1102",
+   "name": "Census Tract 1102",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041110200",
+   "values": {
+    "population-total": {
+     "v": 5056,
+     "m": 563
+    },
+    "median-age": {
+     "v": 54.8,
+     "m": 4.2
+    },
+    "population-under-18": {
+     "v": 895,
+     "m": 283
+    },
+    "population-65-plus": {
+     "v": 1826,
+     "m": 358.262474
+    },
+    "median-household-income": {
+     "v": 204931,
+     "m": 59266
+    },
+    "poverty-rate": {
+     "v": 2.768987,
+     "m": 2.193626
+    },
+    "disability-rate": {
+     "v": 11.273734,
+     "m": 3.756007
+    },
+    "households-without-internet-rate": {
+     "v": 2.460956,
+     "m": 2.926801
+    },
+    "population-poverty-status-determined": {
+     "v": 5056,
+     "m": 563
+    },
+    "renter-households": {
+     "v": 0,
+     "m": 19
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 5056,
+     "m": 563
+    },
+    "households-total": {
+     "v": 2113,
+     "m": 179
+    }
+   },
+   "unavailable": {
+    "median-gross-rent": "estimate is the code -666666666: no sample observations or too few",
+    "rent-burden-rate": "the denominator is 0, so there is no share"
+   }
+  },
+  {
+   "id": "census-tract-1110-01",
+   "name": "Census Tract 1110.01",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041111001",
+   "values": {
+    "population-total": {
+     "v": 788,
+     "m": 110
+    },
+    "median-age": {
+     "v": 45.9,
+     "m": 11.8
+    },
+    "population-under-18": {
+     "v": 0,
+     "m": 14
+    },
+    "population-65-plus": {
+     "v": 191,
+     "m": 114.175304
+    },
+    "median-household-income": {
+     "v": 85972,
+     "m": 12949
+    },
+    "poverty-rate": {
+     "v": 18.020305,
+     "m": 13.730868
+    },
+    "median-gross-rent": {
+     "v": 2531,
+     "m": 247
+    },
+    "rent-burden-rate": {
+     "v": 70.325203,
+     "m": 22.981465
+    },
+    "disability-rate": {
+     "v": 17.385787,
+     "m": 13.044709
+    },
+    "households-without-internet-rate": {
+     "v": 10.233393,
+     "m": 10.323791
+    },
+    "population-poverty-status-determined": {
+     "v": 788,
+     "m": 110
+    },
+    "renter-households": {
+     "v": 492,
+     "m": 82
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 788,
+     "m": 110
+    },
+    "households-total": {
+     "v": 557,
+     "m": 74
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1110-02",
+   "name": "Census Tract 1110.02",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041111002",
+   "values": {
+    "population-total": {
+     "v": 4440,
+     "m": 705
+    },
+    "median-age": {
+     "v": 45.9,
+     "m": 6.4
+    },
+    "population-under-18": {
+     "v": 816,
+     "m": 348
+    },
+    "population-65-plus": {
+     "v": 767,
+     "m": 249.387249
+    },
+    "median-household-income": {
+     "v": 93756,
+     "m": 6291
+    },
+    "poverty-rate": {
+     "v": 7.527372,
+     "m": 4.019247
+    },
+    "median-gross-rent": {
+     "v": 2252,
+     "m": 109
+    },
+    "rent-burden-rate": {
+     "v": 54.392971,
+     "m": 13.42863
+    },
+    "disability-rate": {
+     "v": 6.130356,
+     "m": 3.213019
+    },
+    "households-without-internet-rate": {
+     "v": 0,
+     "m": 0.661939
+    },
+    "population-poverty-status-determined": {
+     "v": 4384,
+     "m": 704
+    },
+    "renter-households": {
+     "v": 1252,
+     "m": 318
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 4388,
+     "m": 704
+    },
+    "households-total": {
+     "v": 2115,
+     "m": 294
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1121",
+   "name": "Census Tract 1121",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041112100",
+   "values": {
+    "population-total": {
+     "v": 4397,
+     "m": 579
+    },
+    "median-age": {
+     "v": 39.9,
+     "m": 4.4
+    },
+    "population-under-18": {
+     "v": 905,
+     "m": 296
+    },
+    "population-65-plus": {
+     "v": 717,
+     "m": 201.727539
+    },
+    "median-household-income": {
+     "v": 99450,
+     "m": 23346
+    },
+    "poverty-rate": {
+     "v": 21.696611,
+     "m": 10.724439
+    },
+    "median-gross-rent": {
+     "v": 2392,
+     "m": 370
+    },
+    "rent-burden-rate": {
+     "v": 60.594059,
+     "m": 13.30897
+    },
+    "disability-rate": {
+     "v": 9.16534,
+     "m": 3.309278
+    },
+    "households-without-internet-rate": {
+     "v": 3.506018,
+     "m": 3.539567
+    },
+    "population-poverty-status-determined": {
+     "v": 4397,
+     "m": 579
+    },
+    "renter-households": {
+     "v": 1010,
+     "m": 218
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 4397,
+     "m": 579
+    },
+    "households-total": {
+     "v": 1911,
+     "m": 199
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1122-02",
+   "name": "Census Tract 1122.02",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041112202",
+   "values": {
+    "population-total": {
+     "v": 6247,
+     "m": 1026
+    },
+    "median-age": {
+     "v": 32.3,
+     "m": 6.9
+    },
+    "population-under-18": {
+     "v": 1767,
+     "m": 498
+    },
+    "population-65-plus": {
+     "v": 555,
+     "m": 152.200526
+    },
+    "median-household-income": {
+     "v": 110515,
+     "m": 25125
+    },
+    "poverty-rate": {
+     "v": 17.701963,
+     "m": 9.929585
+    },
+    "median-gross-rent": {
+     "v": 2372,
+     "m": 366
+    },
+    "rent-burden-rate": {
+     "v": 43.240557,
+     "m": 15.612681
+    },
+    "disability-rate": {
+     "v": 5.650712,
+     "m": 2.601913
+    },
+    "households-without-internet-rate": {
+     "v": 10.160819,
+     "m": 10.803842
+    },
+    "population-poverty-status-determined": {
+     "v": 6214,
+     "m": 1022
+    },
+    "renter-households": {
+     "v": 1006,
+     "m": 203
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 6247,
+     "m": 1026
+    },
+    "households-total": {
+     "v": 1368,
+     "m": 186
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1122-03",
+   "name": "Census Tract 1122.03",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041112203",
+   "values": {
+    "population-total": {
+     "v": 2179,
+     "m": 348
+    },
+    "median-age": {
+     "v": 31.6,
+     "m": 4.2
+    },
+    "population-under-18": {
+     "v": 832,
+     "m": 170
+    },
+    "population-65-plus": {
+     "v": 124,
+     "m": 87.715449
+    },
+    "median-household-income": {
+     "v": 68893,
+     "m": 22731
+    },
+    "poverty-rate": {
+     "v": 20.793951,
+     "m": 10.1934
+    },
+    "median-gross-rent": {
+     "v": 2386,
+     "m": 198
+    },
+    "rent-burden-rate": {
+     "v": 75.324675,
+     "m": 23.115014
+    },
+    "disability-rate": {
+     "v": 10.18816,
+     "m": 4.44376
+    },
+    "households-without-internet-rate": {
+     "v": 10.551559,
+     "m": 12.161942
+    },
+    "population-poverty-status-determined": {
+     "v": 2116,
+     "m": 308
+    },
+    "renter-households": {
+     "v": 385,
+     "m": 49
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 2179,
+     "m": 348
+    },
+    "households-total": {
+     "v": 417,
+     "m": 51
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1122-04",
+   "name": "Census Tract 1122.04",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041112204",
+   "values": {
+    "population-total": {
+     "v": 4283,
+     "m": 663
+    },
+    "median-age": {
+     "v": 28.5,
+     "m": 5.2
+    },
+    "population-under-18": {
+     "v": 1544,
+     "m": 358
+    },
+    "population-65-plus": {
+     "v": 144,
+     "m": 115.550855
+    },
+    "median-household-income": {
+     "v": 90811,
+     "m": 59060
+    },
+    "poverty-rate": {
+     "v": 29.021714,
+     "m": 13.638218
+    },
+    "median-gross-rent": {
+     "v": 1945,
+     "m": 177
+    },
+    "rent-burden-rate": {
+     "v": 58.232932,
+     "m": 13.805133
+    },
+    "disability-rate": {
+     "v": 5.300023,
+     "m": 3.146391
+    },
+    "households-without-internet-rate": {
+     "v": 10.174419,
+     "m": 7.999355
+    },
+    "population-poverty-status-determined": {
+     "v": 4283,
+     "m": 663
+    },
+    "renter-households": {
+     "v": 996,
+     "m": 205
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 4283,
+     "m": 663
+    },
+    "households-total": {
+     "v": 1032,
+     "m": 199
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1130",
+   "name": "Census Tract 1130",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041113000",
+   "values": {
+    "population-total": {
+     "v": 3898,
+     "m": 609
+    },
+    "median-age": {
+     "v": 55.4,
+     "m": 6.4
+    },
+    "population-under-18": {
+     "v": 475,
+     "m": 135
+    },
+    "population-65-plus": {
+     "v": 1260,
+     "m": 302.160553
+    },
+    "median-household-income": {
+     "v": 147062,
+     "m": 20328
+    },
+    "poverty-rate": {
+     "v": 5.956354,
+     "m": 2.66616
+    },
+    "median-gross-rent": {
+     "v": 2307,
+     "m": 848
+    },
+    "rent-burden-rate": {
+     "v": 44.94382,
+     "m": 33.041486
+    },
+    "disability-rate": {
+     "v": 9.088575,
+     "m": 3.501406
+    },
+    "households-without-internet-rate": {
+     "v": 0,
+     "m": 0.837822
+    },
+    "population-poverty-status-determined": {
+     "v": 3895,
+     "m": 609
+    },
+    "renter-households": {
+     "v": 267,
+     "m": 140
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 3895,
+     "m": 609
+    },
+    "households-total": {
+     "v": 1671,
+     "m": 218
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1141",
+   "name": "Census Tract 1141",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041114100",
+   "values": {
+    "population-total": {
+     "v": 4987,
+     "m": 317
+    },
+    "median-age": {
+     "v": 48.5,
+     "m": 2.3
+    },
+    "population-under-18": {
+     "v": 883,
+     "m": 192
+    },
+    "population-65-plus": {
+     "v": 999,
+     "m": 257.827462
+    },
+    "median-household-income": {
+     "v": 164706,
+     "m": 42409
+    },
+    "poverty-rate": {
+     "v": 13.234409,
+     "m": 6.523078
+    },
+    "median-gross-rent": {
+     "v": 2498,
+     "m": 1533
+    },
+    "rent-burden-rate": {
+     "v": 44.927536,
+     "m": 23.133544
+    },
+    "disability-rate": {
+     "v": 7.840385,
+     "m": 3.849084
+    },
+    "households-without-internet-rate": {
+     "v": 1.407129,
+     "m": 1.637675
+    },
+    "population-poverty-status-determined": {
+     "v": 4987,
+     "m": 317
+    },
+    "renter-households": {
+     "v": 552,
+     "m": 187
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 4987,
+     "m": 317
+    },
+    "households-total": {
+     "v": 2132,
+     "m": 173
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1142",
+   "name": "Census Tract 1142",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041114200",
+   "values": {
+    "population-total": {
+     "v": 2915,
+     "m": 322
+    },
+    "median-age": {
+     "v": 49.4,
+     "m": 3.5
+    },
+    "population-under-18": {
+     "v": 496,
+     "m": 106
+    },
+    "population-65-plus": {
+     "v": 810,
+     "m": 201.734975
+    },
+    "median-household-income": {
+     "v": 133750,
+     "m": 28061
+    },
+    "poverty-rate": {
+     "v": 8.790072,
+     "m": 4.691064
+    },
+    "median-gross-rent": {
+     "v": 2257,
+     "m": 241
+    },
+    "rent-burden-rate": {
+     "v": 56.722689,
+     "m": 16.70611
+    },
+    "disability-rate": {
+     "v": 12.099276,
+     "m": 3.931213
+    },
+    "households-without-internet-rate": {
+     "v": 2.192639,
+     "m": 2.332731
+    },
+    "population-poverty-status-determined": {
+     "v": 2901,
+     "m": 322
+    },
+    "renter-households": {
+     "v": 476,
+     "m": 169
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 2901,
+     "m": 322
+    },
+    "households-total": {
+     "v": 1277,
+     "m": 162
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1150",
+   "name": "Census Tract 1150",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041115000",
+   "values": {
+    "population-total": {
+     "v": 7742,
+     "m": 543
+    },
+    "median-age": {
+     "v": 49.6,
+     "m": 3.7
+    },
+    "population-under-18": {
+     "v": 1723,
+     "m": 265
+    },
+    "population-65-plus": {
+     "v": 1809,
+     "m": 327.327054
+    },
+    "median-household-income": {
+     "v": 198036,
+     "m": 30430
+    },
+    "poverty-rate": {
+     "v": 4.113678,
+     "m": 2.513653
+    },
+    "median-gross-rent": {
+     "min": 3500
+    },
+    "rent-burden-rate": {
+     "v": 41.365462,
+     "m": 31.263536
+    },
+    "disability-rate": {
+     "v": 8.243959,
+     "m": 2.593121
+    },
+    "households-without-internet-rate": {
+     "v": 2.175346,
+     "m": 1.96823
+    },
+    "population-poverty-status-determined": {
+     "v": 7706,
+     "m": 546
+    },
+    "renter-households": {
+     "v": 498,
+     "m": 256
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 7739,
+     "m": 543
+    },
+    "households-total": {
+     "v": 3034,
+     "m": 268
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1160",
+   "name": "Census Tract 1160",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041116000",
+   "values": {
+    "population-total": {
+     "v": 3167,
+     "m": 382
+    },
+    "median-age": {
+     "v": 48.3,
+     "m": 3.8
+    },
+    "population-under-18": {
+     "v": 656,
+     "m": 162
+    },
+    "population-65-plus": {
+     "v": 745,
+     "m": 145.39945
+    },
+    "median-household-income": {
+     "v": 182381,
+     "m": 28754
+    },
+    "poverty-rate": {
+     "v": 4.507937,
+     "m": 2.707261
+    },
+    "median-gross-rent": {
+     "v": 2400,
+     "m": 168
+    },
+    "rent-burden-rate": {
+     "v": 61.21372,
+     "m": 18.799643
+    },
+    "disability-rate": {
+     "v": 7.436709,
+     "m": 2.809289
+    },
+    "households-without-internet-rate": {
+     "v": 1.74772,
+     "m": 1.967411
+    },
+    "population-poverty-status-determined": {
+     "v": 3150,
+     "m": 382
+    },
+    "renter-households": {
+     "v": 379,
+     "m": 96
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 3160,
+     "m": 383
+    },
+    "households-total": {
+     "v": 1316,
+     "m": 136
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1170",
+   "name": "Census Tract 1170",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041117000",
+   "values": {
+    "population-total": {
+     "v": 4903,
+     "m": 594
+    },
+    "median-age": {
+     "v": 42.7,
+     "m": 6.9
+    },
+    "population-under-18": {
+     "v": 1216,
+     "m": 450
+    },
+    "population-65-plus": {
+     "v": 1022,
+     "m": 243.821656
+    },
+    "median-household-income": {
+     "v": 154458,
+     "m": 35628
+    },
+    "poverty-rate": {
+     "v": 10.446848,
+     "m": 5.884044
+    },
+    "median-gross-rent": {
+     "v": 2727,
+     "m": 360
+    },
+    "rent-burden-rate": {
+     "v": 69.966997,
+     "m": 19.50182
+    },
+    "disability-rate": {
+     "v": 8.957356,
+     "m": 3.211897
+    },
+    "households-without-internet-rate": {
+     "v": 0,
+     "m": 0.684932
+    },
+    "population-poverty-status-determined": {
+     "v": 4901,
+     "m": 595
+    },
+    "renter-households": {
+     "v": 909,
+     "m": 212
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 4901,
+     "m": 595
+    },
+    "households-total": {
+     "v": 2044,
+     "m": 172
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1181",
+   "name": "Census Tract 1181",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041118100",
+   "values": {
+    "population-total": {
+     "v": 2606,
+     "m": 355
+    },
+    "median-age": {
+     "v": 42.3,
+     "m": 3.8
+    },
+    "population-under-18": {
+     "v": 822,
+     "m": 215
+    },
+    "population-65-plus": {
+     "v": 491,
+     "m": 109.160432
+    },
+    "median-household-income": {
+     "min": 250000
+    },
+    "poverty-rate": {
+     "v": 4.75825,
+     "m": 2.289124
+    },
+    "median-gross-rent": {
+     "min": 3500
+    },
+    "rent-burden-rate": {
+     "v": 30.909091,
+     "m": 21.232825
+    },
+    "disability-rate": {
+     "v": 6.638526,
+     "m": 3.123242
+    },
+    "households-without-internet-rate": {
+     "v": 0,
+     "m": 1.670644
+    },
+    "population-poverty-status-determined": {
+     "v": 2606,
+     "m": 355
+    },
+    "renter-households": {
+     "v": 110,
+     "m": 51
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 2606,
+     "m": 355
+    },
+    "households-total": {
+     "v": 838,
+     "m": 90
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1191",
+   "name": "Census Tract 1191",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041119100",
+   "values": {
+    "population-total": {
+     "v": 4839,
+     "m": 456
+    },
+    "median-age": {
+     "v": 47.8,
+     "m": 3.7
+    },
+    "population-under-18": {
+     "v": 1182,
+     "m": 213
+    },
+    "population-65-plus": {
+     "v": 1121,
+     "m": 190.27086
+    },
+    "median-household-income": {
+     "v": 244702,
+     "m": 30018
+    },
+    "poverty-rate": {
+     "v": 3.926431,
+     "m": 2.598297
+    },
+    "median-gross-rent": {
+     "v": 2732,
+     "m": 432
+    },
+    "rent-burden-rate": {
+     "v": 45.454545,
+     "m": 14.981291
+    },
+    "disability-rate": {
+     "v": 7.666873,
+     "m": 2.345206
+    },
+    "households-without-internet-rate": {
+     "v": 5.728314,
+     "m": 4.925827
+    },
+    "population-poverty-status-determined": {
+     "v": 4839,
+     "m": 456
+    },
+    "renter-households": {
+     "v": 440,
+     "m": 124
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 4839,
+     "m": 456
+    },
+    "households-total": {
+     "v": 1833,
+     "m": 198
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1192-01",
+   "name": "Census Tract 1192.01",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041119201",
+   "values": {
+    "population-total": {
+     "v": 3655,
+     "m": 351
+    },
+    "median-age": {
+     "v": 55.9,
+     "m": 1.9
+    },
+    "population-under-18": {
+     "v": 378,
+     "m": 86
+    },
+    "population-65-plus": {
+     "v": 1444,
+     "m": 244.787663
+    },
+    "median-household-income": {
+     "v": 92381,
+     "m": 17557
+    },
+    "poverty-rate": {
+     "v": 4.917112,
+     "m": 2.624869
+    },
+    "median-gross-rent": {
+     "v": 2677,
+     "m": 128
+    },
+    "rent-burden-rate": {
+     "v": 54.297694,
+     "m": 11.974505
+    },
+    "disability-rate": {
+     "v": 13.739815,
+     "m": 3.91177
+    },
+    "households-without-internet-rate": {
+     "v": 4.216867,
+     "m": 3.084954
+    },
+    "population-poverty-status-determined": {
+     "v": 3559,
+     "m": 351
+    },
+    "renter-households": {
+     "v": 1431,
+     "m": 189
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 3559,
+     "m": 351
+    },
+    "households-total": {
+     "v": 1992,
+     "m": 195
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1192-02",
+   "name": "Census Tract 1192.02",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041119202",
+   "values": {
+    "population-total": {
+     "v": 3759,
+     "m": 378
+    },
+    "median-age": {
+     "v": 49.0,
+     "m": 2.5
+    },
+    "population-under-18": {
+     "v": 773,
+     "m": 144
+    },
+    "population-65-plus": {
+     "v": 889,
+     "m": 183.703566
+    },
+    "median-household-income": {
+     "min": 250000
+    },
+    "poverty-rate": {
+     "v": 8.100187,
+     "m": 6.718827
+    },
+    "median-gross-rent": {
+     "min": 3500
+    },
+    "rent-burden-rate": {
+     "v": 60.839161,
+     "m": 36.011977
+    },
+    "disability-rate": {
+     "v": 8.819611,
+     "m": 2.805926
+    },
+    "households-without-internet-rate": {
+     "v": 0.965517,
+     "m": 1.445054
+    },
+    "population-poverty-status-determined": {
+     "v": 3753,
+     "m": 377
+    },
+    "renter-households": {
+     "v": 143,
+     "m": 79
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 3753,
+     "m": 377
+    },
+    "households-total": {
+     "v": 1450,
+     "m": 145
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1200-01",
+   "name": "Census Tract 1200.01",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041120001",
+   "values": {
+    "population-total": {
+     "v": 1592,
+     "m": 336
+    },
+    "median-age": {
+     "v": 45.0,
+     "m": 4.8
+    },
+    "population-under-18": {
+     "v": 361,
+     "m": 139
+    },
+    "population-65-plus": {
+     "v": 263,
+     "m": 78.733728
+    },
+    "median-household-income": {
+     "v": 152167,
+     "m": 67085
+    },
+    "poverty-rate": {
+     "v": 4.145729,
+     "m": 3.730418
+    },
+    "median-gross-rent": {
+     "v": 3091,
+     "m": 232
+    },
+    "rent-burden-rate": {
+     "v": 55.895197,
+     "m": 21.591499
+    },
+    "disability-rate": {
+     "v": 6.595477,
+     "m": 3.890366
+    },
+    "households-without-internet-rate": {
+     "v": 1.694915,
+     "m": 1.954259
+    },
+    "population-poverty-status-determined": {
+     "v": 1592,
+     "m": 336
+    },
+    "renter-households": {
+     "v": 458,
+     "m": 120
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 1592,
+     "m": 336
+    },
+    "households-total": {
+     "v": 708,
+     "m": 126
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1200-02",
+   "name": "Census Tract 1200.02",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041120002",
+   "values": {
+    "population-total": {
+     "v": 4804,
+     "m": 469
+    },
+    "median-age": {
+     "v": 47.8,
+     "m": 5.3
+    },
+    "population-under-18": {
+     "v": 989,
+     "m": 239
+    },
+    "population-65-plus": {
+     "v": 1232,
+     "m": 265.757408
+    },
+    "median-household-income": {
+     "v": 235313,
+     "m": 67749
+    },
+    "poverty-rate": {
+     "v": 8.139051,
+     "m": 3.661655
+    },
+    "median-gross-rent": {
+     "v": 2878,
+     "m": 698
+    },
+    "rent-burden-rate": {
+     "v": 49.013158,
+     "m": 21.484107
+    },
+    "disability-rate": {
+     "v": 8.180683,
+     "m": 2.410249
+    },
+    "households-without-internet-rate": {
+     "v": 1.277641,
+     "m": 1.517734
+    },
+    "population-poverty-status-determined": {
+     "v": 4804,
+     "m": 469
+    },
+    "renter-households": {
+     "v": 608,
+     "m": 171
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 4804,
+     "m": 469
+    },
+    "households-total": {
+     "v": 2035,
+     "m": 208
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1211",
+   "name": "Census Tract 1211",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041121100",
+   "values": {
+    "population-total": {
+     "v": 5573,
+     "m": 494
+    },
+    "median-age": {
+     "v": 46.2,
+     "m": 3.5
+    },
+    "population-under-18": {
+     "v": 1322,
+     "m": 262
+    },
+    "population-65-plus": {
+     "v": 1157,
+     "m": 254.232177
+    },
+    "median-household-income": {
+     "v": 215798,
+     "m": 61946
+    },
+    "poverty-rate": {
+     "v": 6.405886,
+     "m": 3.870285
+    },
+    "median-gross-rent": {
+     "min": 3500
+    },
+    "rent-burden-rate": {
+     "v": 36.708861,
+     "m": 15.070928
+    },
+    "disability-rate": {
+     "v": 6.172618,
+     "m": 2.689645
+    },
+    "households-without-internet-rate": {
+     "v": 0,
+     "m": 0.793651
+    },
+    "population-poverty-status-determined": {
+     "v": 5573,
+     "m": 494
+    },
+    "renter-households": {
+     "v": 790,
+     "m": 229
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 5573,
+     "m": 494
+    },
+    "households-total": {
+     "v": 2394,
+     "m": 275
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1212",
+   "name": "Census Tract 1212",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041121200",
+   "values": {
+    "population-total": {
+     "v": 6374,
+     "m": 639
+    },
+    "median-age": {
+     "v": 48.6,
+     "m": 3.4
+    },
+    "population-under-18": {
+     "v": 1304,
+     "m": 337
+    },
+    "population-65-plus": {
+     "v": 1182,
+     "m": 310.472221
+    },
+    "median-household-income": {
+     "v": 216731,
+     "m": 35968
+    },
+    "poverty-rate": {
+     "v": 3.529609,
+     "m": 2.378821
+    },
+    "median-gross-rent": {
+     "min": 3500
+    },
+    "rent-burden-rate": {
+     "v": 45.028759,
+     "m": 10.976636
+    },
+    "disability-rate": {
+     "v": 9.874477,
+     "m": 3.4475
+    },
+    "households-without-internet-rate": {
+     "v": 0.773395,
+     "m": 1.348812
+    },
+    "population-poverty-status-determined": {
+     "v": 5978,
+     "m": 642
+    },
+    "renter-households": {
+     "v": 1217,
+     "m": 403
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 5975,
+     "m": 644
+    },
+    "households-total": {
+     "v": 2586,
+     "m": 374
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1220",
+   "name": "Census Tract 1220",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041122000",
+   "values": {
+    "population-total": {
+     "v": 1694,
+     "m": 261
+    },
+    "median-age": {
+     "v": 46.6,
+     "m": 4.0
+    },
+    "population-under-18": {
+     "v": 85,
+     "m": 142
+    },
+    "population-65-plus": {
+     "v": 258,
+     "m": 83.420621
+    },
+    "poverty-rate": {
+     "v": 0,
+     "m": 11.864407
+    },
+    "rent-burden-rate": {
+     "v": 100,
+     "m": 134.715063
+    },
+    "disability-rate": {
+     "v": 0,
+     "m": 41.099511
+    },
+    "households-without-internet-rate": {
+     "v": 0,
+     "m": 77.777778
+    },
+    "population-poverty-status-determined": {
+     "v": 118,
+     "m": 194
+    },
+    "renter-households": {
+     "v": 18,
+     "m": 28
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 118,
+     "m": 194
+    },
+    "households-total": {
+     "v": 18,
+     "m": 28
+    }
+   },
+   "unavailable": {
+    "median-household-income": "estimate is the code -666666666: no sample observations or too few",
+    "median-gross-rent": "estimate is the code -666666666: no sample observations or too few"
+   }
+  },
+  {
+   "id": "census-tract-1230",
+   "name": "Census Tract 1230",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041123000",
+   "values": {
+    "population-total": {
+     "v": 2354,
+     "m": 326
+    },
+    "median-age": {
+     "v": 48.9,
+     "m": 5.7
+    },
+    "population-under-18": {
+     "v": 574,
+     "m": 154
+    },
+    "population-65-plus": {
+     "v": 585,
+     "m": 99.287461
+    },
+    "median-household-income": {
+     "min": 250000
+    },
+    "poverty-rate": {
+     "v": 5.887372,
+     "m": 3.706477
+    },
+    "median-gross-rent": {
+     "min": 3500
+    },
+    "rent-burden-rate": {
+     "v": 63.028169,
+     "m": 13.433182
+    },
+    "disability-rate": {
+     "v": 8.368734,
+     "m": 3.059122
+    },
+    "households-without-internet-rate": {
+     "v": 0,
+     "m": 1.571268
+    },
+    "population-poverty-status-determined": {
+     "v": 2344,
+     "m": 328
+    },
+    "renter-households": {
+     "v": 284,
+     "m": 75
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 2354,
+     "m": 326
+    },
+    "households-total": {
+     "v": 891,
+     "m": 103
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1241",
+   "name": "Census Tract 1241",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041124100",
+   "values": {
+    "population-total": {
+     "v": 5152,
+     "m": 534
+    },
+    "median-age": {
+     "v": 50.0,
+     "m": 3.0
+    },
+    "population-under-18": {
+     "v": 1155,
+     "m": 183
+    },
+    "population-65-plus": {
+     "v": 1053,
+     "m": 210.292653
+    },
+    "median-household-income": {
+     "v": 245986,
+     "m": 28374
+    },
+    "poverty-rate": {
+     "v": 3.165918,
+     "m": 2.143453
+    },
+    "median-gross-rent": {
+     "min": 3500
+    },
+    "rent-burden-rate": {
+     "v": 40.935673,
+     "m": 11.917989
+    },
+    "disability-rate": {
+     "v": 5.337733,
+     "m": 2.334569
+    },
+    "households-without-internet-rate": {
+     "v": 0,
+     "m": 0.925926
+    },
+    "population-poverty-status-determined": {
+     "v": 5117,
+     "m": 539
+    },
+    "renter-households": {
+     "v": 684,
+     "m": 202
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 5152,
+     "m": 534
+    },
+    "households-total": {
+     "v": 2052,
+     "m": 227
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1242",
+   "name": "Census Tract 1242",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041124200",
+   "values": {
+    "population-total": {
+     "v": 5573,
+     "m": 497
+    },
+    "median-age": {
+     "v": 54.4,
+     "m": 2.9
+    },
+    "population-under-18": {
+     "v": 921,
+     "m": 189
+    },
+    "population-65-plus": {
+     "v": 1819,
+     "m": 359.856916
+    },
+    "median-household-income": {
+     "v": 235161,
+     "m": 76527
+    },
+    "poverty-rate": {
+     "v": 1.10009,
+     "m": 1.005113
+    },
+    "median-gross-rent": {
+     "min": 3500
+    },
+    "rent-burden-rate": {
+     "v": 46.090535,
+     "m": 24.59017
+    },
+    "disability-rate": {
+     "v": 8.944995,
+     "m": 3.593508
+    },
+    "households-without-internet-rate": {
+     "v": 0,
+     "m": 0.863636
+    },
+    "population-poverty-status-determined": {
+     "v": 5545,
+     "m": 496
+    },
+    "renter-households": {
+     "v": 486,
+     "m": 175
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 5545,
+     "m": 496
+    },
+    "households-total": {
+     "v": 2200,
+     "m": 243
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1250",
+   "name": "Census Tract 1250",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041125000",
+   "values": {
+    "population-total": {
+     "v": 4893,
+     "m": 709
+    },
+    "median-age": {
+     "v": 43.0,
+     "m": 2.3
+    },
+    "population-under-18": {
+     "v": 1149,
+     "m": 327
+    },
+    "population-65-plus": {
+     "v": 1072,
+     "m": 184.138535
+    },
+    "median-household-income": {
+     "v": 148646,
+     "m": 38809
+    },
+    "poverty-rate": {
+     "v": 7.619449,
+     "m": 3.987545
+    },
+    "median-gross-rent": {
+     "v": 2896,
+     "m": 341
+    },
+    "rent-burden-rate": {
+     "v": 54.650133,
+     "m": 6.427909
+    },
+    "disability-rate": {
+     "v": 4.956985,
+     "m": 1.796808
+    },
+    "households-without-internet-rate": {
+     "v": 0,
+     "m": 0.720535
+    },
+    "population-poverty-status-determined": {
+     "v": 4751,
+     "m": 709
+    },
+    "renter-households": {
+     "v": 1129,
+     "m": 267
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 4882,
+     "m": 709
+    },
+    "households-total": {
+     "v": 1943,
+     "m": 241
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1261",
+   "name": "Census Tract 1261",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041126100",
+   "values": {
+    "population-total": {
+     "v": 6171,
+     "m": 389
+    },
+    "median-age": {
+     "v": 45.2,
+     "m": 2.2
+    },
+    "population-under-18": {
+     "v": 1495,
+     "m": 217
+    },
+    "population-65-plus": {
+     "v": 1068,
+     "m": 226.389046
+    },
+    "median-household-income": {
+     "v": 227566,
+     "m": 41189
+    },
+    "poverty-rate": {
+     "v": 3.727111,
+     "m": 2.386779
+    },
+    "median-gross-rent": {
+     "min": 3500
+    },
+    "rent-burden-rate": {
+     "v": 25.763612,
+     "m": 14.392822
+    },
+    "disability-rate": {
+     "v": 6.076811,
+     "m": 2.521411
+    },
+    "households-without-internet-rate": {
+     "v": 0.587002,
+     "m": 0.963226
+    },
+    "population-poverty-status-determined": {
+     "v": 6171,
+     "m": 389
+    },
+    "renter-households": {
+     "v": 753,
+     "m": 212
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 6171,
+     "m": 389
+    },
+    "households-total": {
+     "v": 2385,
+     "m": 190
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1262",
+   "name": "Census Tract 1262",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041126200",
+   "values": {
+    "population-total": {
+     "v": 4292,
+     "m": 503
+    },
+    "median-age": {
+     "v": 50.1,
+     "m": 4.2
+    },
+    "population-under-18": {
+     "v": 607,
+     "m": 143
+    },
+    "population-65-plus": {
+     "v": 1206,
+     "m": 287.37606
+    },
+    "median-household-income": {
+     "v": 147089,
+     "m": 21581
+    },
+    "poverty-rate": {
+     "v": 12.823529,
+     "m": 8.429704
+    },
+    "median-gross-rent": {
+     "v": 2834,
+     "m": 594
+    },
+    "rent-burden-rate": {
+     "v": 49.934297,
+     "m": 17.71641
+    },
+    "disability-rate": {
+     "v": 11.058824,
+     "m": 4.319814
+    },
+    "households-without-internet-rate": {
+     "v": 1.465969,
+     "m": 1.720709
+    },
+    "population-poverty-status-determined": {
+     "v": 4250,
+     "m": 502
+    },
+    "renter-households": {
+     "v": 761,
+     "m": 147
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 4250,
+     "m": 502
+    },
+    "households-total": {
+     "v": 1910,
+     "m": 203
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1270",
+   "name": "Census Tract 1270",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041127000",
+   "values": {
+    "population-total": {
+     "v": 4573,
+     "m": 513
+    },
+    "median-age": {
+     "v": 49.4,
+     "m": 4.3
+    },
+    "population-under-18": {
+     "v": 754,
+     "m": 164
+    },
+    "population-65-plus": {
+     "v": 1113,
+     "m": 216.900899
+    },
+    "median-household-income": {
+     "v": 200978,
+     "m": 54200
+    },
+    "poverty-rate": {
+     "v": 6.931992,
+     "m": 3.343967
+    },
+    "median-gross-rent": {
+     "v": 2769,
+     "m": 982
+    },
+    "rent-burden-rate": {
+     "v": 34.055728,
+     "m": 21.300736
+    },
+    "disability-rate": {
+     "v": 7.391209,
+     "m": 2.542024
+    },
+    "households-without-internet-rate": {
+     "v": 1.030369,
+     "m": 1.186824
+    },
+    "population-poverty-status-determined": {
+     "v": 4573,
+     "m": 513
+    },
+    "renter-households": {
+     "v": 646,
+     "m": 219
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 4573,
+     "m": 513
+    },
+    "households-total": {
+     "v": 1844,
+     "m": 218
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1281",
+   "name": "Census Tract 1281",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041128100",
+   "values": {
+    "population-total": {
+     "v": 7172,
+     "m": 871
+    },
+    "median-age": {
+     "v": 46.9,
+     "m": 4.1
+    },
+    "population-under-18": {
+     "v": 1717,
+     "m": 379
+    },
+    "population-65-plus": {
+     "v": 1410,
+     "m": 280.517379
+    },
+    "median-household-income": {
+     "v": 229813,
+     "m": 29422
+    },
+    "poverty-rate": {
+     "v": 2.635248,
+     "m": 1.76996
+    },
+    "median-gross-rent": {
+     "v": 2588,
+     "m": 757
+    },
+    "rent-burden-rate": {
+     "v": 16.971279,
+     "m": 14.213847
+    },
+    "disability-rate": {
+     "v": 6.887897,
+     "m": 2.351214
+    },
+    "households-without-internet-rate": {
+     "v": 1.149013,
+     "m": 1.792247
+    },
+    "population-poverty-status-determined": {
+     "v": 7172,
+     "m": 871
+    },
+    "renter-households": {
+     "v": 383,
+     "m": 147
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 7172,
+     "m": 871
+    },
+    "households-total": {
+     "v": 2785,
+     "m": 255
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1282",
+   "name": "Census Tract 1282",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041128200",
+   "values": {
+    "population-total": {
+     "v": 5174,
+     "m": 730
+    },
+    "median-age": {
+     "v": 44.1,
+     "m": 2.5
+    },
+    "population-under-18": {
+     "v": 1370,
+     "m": 405
+    },
+    "population-65-plus": {
+     "v": 919,
+     "m": 165.954813
+    },
+    "median-household-income": {
+     "min": 250000
+    },
+    "poverty-rate": {
+     "v": 3.826826,
+     "m": 1.345247
+    },
+    "median-gross-rent": {
+     "min": 3500
+    },
+    "rent-burden-rate": {
+     "v": 44.350282,
+     "m": 18.235635
+    },
+    "disability-rate": {
+     "v": 6.010823,
+     "m": 2.224805
+    },
+    "households-without-internet-rate": {
+     "v": 0.725765,
+     "m": 0.878562
+    },
+    "population-poverty-status-determined": {
+     "v": 5174,
+     "m": 730
+    },
+    "renter-households": {
+     "v": 354,
+     "m": 135
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 5174,
+     "m": 730
+    },
+    "households-total": {
+     "v": 1929,
+     "m": 184
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1290",
+   "name": "Census Tract 1290",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041129000",
+   "values": {
+    "population-total": {
+     "v": 2979,
+     "m": 426
+    },
+    "median-age": {
+     "v": 40.8,
+     "m": 2.0
+    },
+    "population-under-18": {
+     "v": 542,
+     "m": 125
+    },
+    "population-65-plus": {
+     "v": 421,
+     "m": 147.074811
+    },
+    "median-household-income": {
+     "v": 58901,
+     "m": 11624
+    },
+    "poverty-rate": {
+     "v": 17.220544,
+     "m": 8.617802
+    },
+    "median-gross-rent": {
+     "v": 1323,
+     "m": 212
+    },
+    "rent-burden-rate": {
+     "v": 56.334842,
+     "m": 14.905
+    },
+    "disability-rate": {
+     "v": 14.736489,
+     "m": 7.061962
+    },
+    "households-without-internet-rate": {
+     "v": 8.024224,
+     "m": 7.620351
+    },
+    "population-poverty-status-determined": {
+     "v": 2979,
+     "m": 426
+    },
+    "renter-households": {
+     "v": 884,
+     "m": 221
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 2979,
+     "m": 426
+    },
+    "households-total": {
+     "v": 1321,
+     "m": 205
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1302-01",
+   "name": "Census Tract 1302.01",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041130201",
+   "values": {
+    "population-total": {
+     "v": 3367,
+     "m": 356
+    },
+    "median-age": {
+     "v": 57.9,
+     "m": 3.2
+    },
+    "population-under-18": {
+     "v": 197,
+     "m": 89
+    },
+    "population-65-plus": {
+     "v": 1241,
+     "m": 244.938768
+    },
+    "median-household-income": {
+     "v": 205259,
+     "m": 35152
+    },
+    "poverty-rate": {
+     "v": 8.191838,
+     "m": 6.165234
+    },
+    "median-gross-rent": {
+     "min": 3500
+    },
+    "rent-burden-rate": {
+     "v": 32.978723,
+     "m": 12.434149
+    },
+    "disability-rate": {
+     "v": 14.018414,
+     "m": 4.79188
+    },
+    "households-without-internet-rate": {
+     "v": 2.365237,
+     "m": 2.242064
+    },
+    "population-poverty-status-determined": {
+     "v": 3357,
+     "m": 355
+    },
+    "renter-households": {
+     "v": 658,
+     "m": 132
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 3367,
+     "m": 356
+    },
+    "households-total": {
+     "v": 1818,
+     "m": 187
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1302-03",
+   "name": "Census Tract 1302.03",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041130203",
+   "values": {
+    "population-total": {
+     "v": 2177,
+     "m": 404
+    },
+    "median-age": {
+     "v": 43.3,
+     "m": 15.3
+    },
+    "population-under-18": {
+     "v": 177,
+     "m": 85
+    },
+    "population-65-plus": {
+     "v": 651,
+     "m": 215.863383
+    },
+    "median-household-income": {
+     "v": 182658,
+     "m": 60271
+    },
+    "poverty-rate": {
+     "v": 9.028098,
+     "m": 8.025885
+    },
+    "median-gross-rent": {
+     "min": 3500
+    },
+    "rent-burden-rate": {
+     "v": 52.697095,
+     "m": 22.205272
+    },
+    "disability-rate": {
+     "v": 8.497933,
+     "m": 3.508628
+    },
+    "households-without-internet-rate": {
+     "v": 5.848435,
+     "m": 3.924245
+    },
+    "population-poverty-status-determined": {
+     "v": 2171,
+     "m": 403
+    },
+    "renter-households": {
+     "v": 482,
+     "m": 148
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 2177,
+     "m": 404
+    },
+    "households-total": {
+     "v": 1214,
+     "m": 196
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1302-04",
+   "name": "Census Tract 1302.04",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041130204",
+   "values": {
+    "population-total": {
+     "v": 2396,
+     "m": 265
+    },
+    "median-age": {
+     "v": 55.7,
+     "m": 3.3
+    },
+    "population-under-18": {
+     "v": 250,
+     "m": 96
+    },
+    "population-65-plus": {
+     "v": 704,
+     "m": 138.408815
+    },
+    "median-household-income": {
+     "v": 167330,
+     "m": 29897
+    },
+    "poverty-rate": {
+     "v": 6.63606,
+     "m": 3.93888
+    },
+    "median-gross-rent": {
+     "v": 3365,
+     "m": 564
+    },
+    "rent-burden-rate": {
+     "v": 39.015817,
+     "m": 13.180428
+    },
+    "disability-rate": {
+     "v": 6.218698,
+     "m": 3.226517
+    },
+    "households-without-internet-rate": {
+     "v": 1.276276,
+     "m": 1.493556
+    },
+    "population-poverty-status-determined": {
+     "v": 2396,
+     "m": 265
+    },
+    "renter-households": {
+     "v": 569,
+     "m": 144
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 2396,
+     "m": 265
+    },
+    "households-total": {
+     "v": 1332,
+     "m": 161
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1311",
+   "name": "Census Tract 1311",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041131100",
+   "values": {
+    "population-total": {
+     "v": 1380,
+     "m": 245
+    },
+    "median-age": {
+     "v": 40.5,
+     "m": 8.6
+    },
+    "population-under-18": {
+     "v": 291,
+     "m": 131
+    },
+    "population-65-plus": {
+     "v": 269,
+     "m": 105.099952
+    },
+    "median-household-income": {
+     "v": 185104,
+     "m": 43863
+    },
+    "poverty-rate": {
+     "v": 8.662026,
+     "m": 7.699956
+    },
+    "median-gross-rent": {
+     "min": 3500
+    },
+    "rent-burden-rate": {
+     "v": 47.058824,
+     "m": 23.566037
+    },
+    "disability-rate": {
+     "v": 3.122731,
+     "m": 5.586897
+    },
+    "households-without-internet-rate": {
+     "v": 0,
+     "m": 3.036876
+    },
+    "population-poverty-status-determined": {
+     "v": 1293,
+     "m": 256
+    },
+    "renter-households": {
+     "v": 136,
+     "m": 52
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 1377,
+     "m": 245
+    },
+    "households-total": {
+     "v": 461,
+     "m": 86
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1321",
+   "name": "Census Tract 1321",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041132100",
+   "values": {
+    "population-total": {
+     "v": 1627,
+     "m": 298
+    },
+    "median-age": {
+     "v": 64.2,
+     "m": 8.7
+    },
+    "population-under-18": {
+     "v": 115,
+     "m": 58
+    },
+    "population-65-plus": {
+     "v": 765,
+     "m": 180.161039
+    },
+    "median-household-income": {
+     "v": 101736,
+     "m": 50129
+    },
+    "poverty-rate": {
+     "v": 9.711125,
+     "m": 5.883287
+    },
+    "median-gross-rent": {
+     "v": 1947,
+     "m": 930
+    },
+    "rent-burden-rate": {
+     "v": 58.536585,
+     "m": 25.89491
+    },
+    "disability-rate": {
+     "v": 17.762754,
+     "m": 6.460644
+    },
+    "households-without-internet-rate": {
+     "v": 12.797992,
+     "m": 9.28982
+    },
+    "population-poverty-status-determined": {
+     "v": 1627,
+     "m": 298
+    },
+    "renter-households": {
+     "v": 164,
+     "m": 79
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 1627,
+     "m": 298
+    },
+    "households-total": {
+     "v": 797,
+     "m": 134
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1322",
+   "name": "Census Tract 1322",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041132200",
+   "values": {
+    "population-total": {
+     "v": 1634,
+     "m": 313
+    },
+    "median-age": {
+     "v": 62.5,
+     "m": 9.3
+    },
+    "population-under-18": {
+     "v": 97,
+     "m": 60
+    },
+    "population-65-plus": {
+     "v": 795,
+     "m": 192.171798
+    },
+    "median-household-income": {
+     "v": 81602,
+     "m": 45419
+    },
+    "poverty-rate": {
+     "v": 4.161567,
+     "m": 3.584396
+    },
+    "median-gross-rent": {
+     "v": 1811,
+     "m": 299
+    },
+    "rent-burden-rate": {
+     "v": 54.609929,
+     "m": 24.686239
+    },
+    "disability-rate": {
+     "v": 23.684211,
+     "m": 8.433219
+    },
+    "households-without-internet-rate": {
+     "v": 0.817996,
+     "m": 1.218825
+    },
+    "population-poverty-status-determined": {
+     "v": 1634,
+     "m": 313
+    },
+    "renter-households": {
+     "v": 282,
+     "m": 114
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 1634,
+     "m": 313
+    },
+    "households-total": {
+     "v": 978,
+     "m": 169
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-1330",
+   "name": "Census Tract 1330",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041133000",
+   "values": {
+    "population-total": {
+     "v": 2817,
+     "m": 461
+    },
+    "median-age": {
+     "v": 56.7,
+     "m": 8.4
+    },
+    "population-under-18": {
+     "v": 320,
+     "m": 206
+    },
+    "population-65-plus": {
+     "v": 876,
+     "m": 173.450281
+    },
+    "median-household-income": {
+     "v": 114167,
+     "m": 28141
+    },
+    "poverty-rate": {
+     "v": 7.035714,
+     "m": 5.159469
+    },
+    "median-gross-rent": {
+     "v": 1903,
+     "m": 384
+    },
+    "rent-burden-rate": {
+     "v": 43.236715,
+     "m": 25.063799
+    },
+    "disability-rate": {
+     "v": 10.909091,
+     "m": 3.587945
+    },
+    "households-without-internet-rate": {
+     "v": 8.61204,
+     "m": 7.501189
+    },
+    "population-poverty-status-determined": {
+     "v": 2800,
+     "m": 457
+    },
+    "renter-households": {
+     "v": 414,
+     "m": 135
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 2805,
+     "m": 460
+    },
+    "households-total": {
+     "v": 1196,
+     "m": 177
+    }
+   },
+   "unavailable": {}
+  },
+  {
+   "id": "census-tract-9901",
+   "name": "Census Tract 9901",
+   "kind": "tract",
+   "kindLabel": "Census tract",
+   "geoid": "06041990100",
+   "values": {
+    "population-total": {
+     "v": 0,
+     "m": 14
+    },
+    "population-under-18": {
+     "v": 0,
+     "m": 14
+    },
+    "population-65-plus": {
+     "v": 0,
+     "m": 48.497423
+    },
+    "population-poverty-status-determined": {
+     "v": 0,
+     "m": 14
+    },
+    "renter-households": {
+     "v": 0,
+     "m": 14
+    },
+    "civilian-noninstitutionalized-population": {
+     "v": 0,
+     "m": 14
+    },
+    "households-total": {
+     "v": 0,
+     "m": 14
+    }
+   },
+   "unavailable": {
+    "median-age": "estimate is the code -666666666: no sample observations or too few",
+    "median-household-income": "estimate is the code -666666666: no sample observations or too few",
+    "poverty-rate": "the denominator is 0, so there is no share",
+    "median-gross-rent": "estimate is the code -666666666: no sample observations or too few",
+    "rent-burden-rate": "the denominator is 0, so there is no share",
+    "disability-rate": "the denominator is 0, so there is no share",
+    "households-without-internet-rate": "the denominator is 0, so there is no share"
+   }
+  }
+ ]
+}

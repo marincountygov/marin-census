@@ -24,6 +24,9 @@ command -v python3 >/dev/null 2>&1 || {
 bash -n "$ROOT_DIR/scripts/check.sh"
 python3 "$ROOT_DIR/scripts/sync-security-meta.py" --check
 python3 "$ROOT_DIR/tests/validate_template.py"
+# The page reads data/census.json, built from the files copied from marin-data (data/source/). It must be current.
+python3 "$ROOT_DIR/scripts/build_data.py" --check
+python3 "$ROOT_DIR/tests/test_build_data.py" 2>&1 | tail -1
 python3 "$ROOT_DIR/tests/test_security_meta.py"
 python3 "$ROOT_DIR/vendor/marinos/audit-buttons.py" "$ROOT_DIR" --fail
 # Lists copy, download, file reading and upload code the app does itself instead of the shell's helpers; it must list nothing.
@@ -34,6 +37,8 @@ python3 "$ROOT_DIR/vendor/marinos/audit-filter-column.py" "$ROOT_DIR" --fail
 if command -v node >/dev/null 2>&1; then
   node --check "$ROOT_DIR/vendor/marinos/marinos.js"
   node --check "$ROOT_DIR/assets/app.js"
+  node --check "$ROOT_DIR/assets/format.js"
+  node "$ROOT_DIR/tests/format.test.js" | tail -1
   printf 'JavaScript syntax: PASS\n'
 else
   printf 'SKIP: Node is unavailable; JavaScript syntax was not checked.\n' >&2
@@ -42,6 +47,7 @@ fi
 if [[ "$RUN_BROWSER" == 1 ]]; then
   python3 "$ROOT_DIR/tests/browser_smoke.py"
   python3 "$ROOT_DIR/tests/browser_security.py"
+  python3 "$ROOT_DIR/tests/browser_census.py"
 else
   printf 'SKIP: Browser tests not requested; run with --browser to include them.\n'
 fi

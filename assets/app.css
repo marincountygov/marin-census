@@ -36,3 +36,83 @@ html[data-locked] body > *:not(.gate) {
 .gate input {
   margin: 0;
 }
+
+/* The line above the results (assets/results-line.js). */
+.mm-results-summary {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem 0 0.5rem;
+}
+
+.mm-results-summary p,
+.mm-results-summary [data-filter-results] {
+  margin: 0;
+  font-size: 0.9375rem;
+  font-weight: 400;
+}
+
+.results-line__count {
+  color: var(--app-text);
+}
+
+.results-line__filters,
+.results-line__slash {
+  color: var(--app-muted);
+}
+
+/* A table opened at the size of the screen (assets/table-fullscreen.js): its buttons stay above it. */
+html.has-expanded {
+  overflow: hidden;
+}
+
+.is-expanded {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  box-sizing: border-box;
+  overflow: auto;
+  padding: 1.5rem;
+  background: var(--pico-background-color, #fff);
+}
+
+/* The statistics. A value, and under it its margin of error or what it is out of. */
+.table-scroll {
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+
+.table-scroll table {
+  margin: 0;
+}
+
+.census-cell {
+  white-space: nowrap;
+}
+
+.census-value,
+.census-margin {
+  display: block;
+}
+
+.census-margin {
+  color: var(--app-muted);
+  font-size: 0.875rem;
+}
+
+.census-cell--missing .census-value {
+  color: var(--app-muted);
+}
+
+#place-table .census-cell,
+#place-table td {
+  white-space: normal;
+}
+
+.census-source {
+  margin-top: 1.5rem;
+}
+
+.census-source h2 {
+  font-size: 1.125rem;
+}
+

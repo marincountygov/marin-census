@@ -14,6 +14,9 @@
     <link rel="stylesheet" href="assets/app.css">
     <script src="assets/gate.js"></script>
     <script src="vendor/marinos/marinos.js" defer></script>
+    <script src="assets/results-line.js" defer></script>
+    <script src="assets/table-fullscreen.js" defer></script>
+    <script src="assets/format.js" defer></script>
     <script src="assets/app.js" defer></script>
   </head>
   <body>
@@ -38,14 +41,76 @@
     <main id="main" class="container app-main">
       <!-- Keep the primary workflow first; the shell uses it as the default view. -->
       <section id="start" class="app-page-heading" data-tab-section="start" aria-labelledby="start-heading">
-        <h2 id="start-heading">Marin Census</h2>
-        <p>Marin Census is in development.</p>
+        <h2 id="start-heading" class="visually-hidden">Places</h2>
+        <p id="census-loading" role="status">Loading Marin Census…</p>
+        <p id="census-error" role="alert" hidden>Marin Census could not be loaded right now.</p>
+
+        <div id="census-places" class="search-layout" hidden>
+          <div class="search-side" data-filter-column="filters.json" data-filter-name="places"></div>
+          <div class="search-results">
+            <div class="mm-results-summary"><p class="app-help-text" id="census-count" tabindex="-1" data-filter-results></p></div>
+            <div id="census-table-region">
+              <div class="action-toolbar">
+                <div class="action-group" role="group" aria-label="Table actions">
+                  <div class="menu">
+                    <button type="button" class="action-button menu-toggle" data-icon="download" aria-expanded="false" aria-controls="download-panel" aria-label="Download, choose a format" title="Download"><svg class="menu-toggle__caret" aria-hidden="true" viewBox="0 0 16 16"><path d="M4 6l4 4 4-4"/></svg></button>
+                    <div id="download-panel" class="menu-panel" hidden>
+                      <button type="button" data-button-kind="menu-item" data-download="csv" data-scope="places">CSV</button>
+                      <button type="button" data-button-kind="menu-item" data-download="json" data-scope="places">JSON</button>
+                    </div>
+                  </div>
+                  <button type="button" class="action-button" data-icon="maximize" data-fullscreen-target="#census-table-region" aria-label="Fullscreen" title="Fullscreen"></button>
+                </div>
+              </div>
+              <div class="table-scroll">
+                <table id="census-table">
+                  <caption class="visually-hidden">Marin statistics by place</caption>
+                  <thead></thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+            </div>
+            <section class="census-source" aria-labelledby="source-heading">
+              <h2 id="source-heading">Source</h2>
+              <p data-census-source></p>
+            </section>
+          </div>
+        </div>
+
+        <div id="census-place" hidden>
+          <h2 id="place-heading" tabindex="-1"></h2>
+          <div id="place-table-region">
+            <div class="action-toolbar">
+              <div class="action-group" role="group" aria-label="Table actions">
+                <div class="menu">
+                  <button type="button" class="action-button menu-toggle" data-icon="download" aria-expanded="false" aria-controls="place-download-panel" aria-label="Download, choose a format" title="Download"><svg class="menu-toggle__caret" aria-hidden="true" viewBox="0 0 16 16"><path d="M4 6l4 4 4-4"/></svg></button>
+                  <div id="place-download-panel" class="menu-panel" hidden>
+                    <button type="button" data-button-kind="menu-item" data-download="csv" data-scope="place">CSV</button>
+                    <button type="button" data-button-kind="menu-item" data-download="json" data-scope="place">JSON</button>
+                  </div>
+                </div>
+                <button type="button" class="action-button" data-icon="maximize" data-fullscreen-target="#place-table-region" aria-label="Fullscreen" title="Fullscreen"></button>
+              </div>
+            </div>
+            <div class="table-scroll">
+              <table id="place-table">
+                <caption class="visually-hidden">Statistics for this place</caption>
+                <thead></thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+          <section class="census-source" aria-labelledby="place-source-heading">
+            <h2 id="place-source-heading">Source</h2>
+            <p data-census-source></p>
+          </section>
+        </div>
       </section>
 
       <!-- Supply app-owned content only; the shell generates sections and headings. -->
       <marin-app-info app-name="Marin Census" repo="marin-census" security-src="security.json">
         <template data-about>
-          <p>Marin Census will help County staff understand Marin's people, communities, housing and economy using public data. It is an alpha: the statistics are still being prepared and are not shown yet.</p>
+          <p>Marin Census shows public statistics about Marin's people, communities and housing for the county, its cities and towns, Census-designated places and census tracts. The numbers are estimates from the U.S. Census Bureau's American Community Survey. It is an alpha, and more measures and sources will follow.</p>
         </template>
         <template data-accessibility>
           <p>This alpha has not had an accessibility review. Use the feedback form to report a problem.</p>
