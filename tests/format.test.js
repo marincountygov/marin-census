@@ -74,3 +74,9 @@ test("a table as text, html and markdown, escaped and with the source after it",
   assert.ok(out.text.startsWith("Places\n\nPlace\tPopulation\nA | B\t1,000"));
   assert.equal(f.formats("T", ["a"], [["b"]]).html.includes("<p>"), false);
 });
+
+test("markdown escapes a backslash before a pipe, so the pipe stays a pipe", () => {
+  const out = f.formats("T", ["a"], [["x\\|y"], ["c:\\dir"]]);
+  assert.ok(out.markdown.includes("| x\\\\\\|y |"), out.markdown);
+  assert.ok(out.markdown.includes("| c:\\\\dir |"), out.markdown);
+});

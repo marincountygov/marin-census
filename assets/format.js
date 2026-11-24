@@ -56,7 +56,8 @@
   }
 
   const escapeHtml = (value) => String(value).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
-  const mdCell = (value) => String(value).replace(/\|/g, "\\|").replace(/\s*\n\s*/g, " ");
+  // A backslash is escaped first, so a backslash in the text cannot turn the escape of a pipe after it into a plain pipe.
+  const mdCell = (value) => String(value).replace(/\\/g, "\\\\").replace(/\|/g, "\\|").replace(/\s*\n\s*/g, " ");
 
   // A table as the three formats every Copy and Download menu offers (Text, HTML, Markdown). `rows` are arrays of text.
   // `source` is a line of text (or empty) that follows the table. No classes or styles: it pastes cleanly into a CMS or Word.
