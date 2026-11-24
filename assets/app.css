@@ -1,0 +1,38 @@
+/*
+  App-specific styles only.
+  Load order: vendor/marinos/marinos.css, then this file.
+
+  The shell bundles the shared Marin UI/Pico baseline and shell components.
+  Use the components and tokens provided by the pinned shell before adding CSS.
+  Scope new rules to the application's workflow or its own class prefix.
+  Do not override shell-owned header, banner, footer, or information-section
+  layout here. Shared fixes belong upstream in marin-app-shell (or marin-ui),
+  followed by a reviewed shell release, not an edit to vendor/marinos/.
+*/
+
+/* The login screen (assets/gate.js): while it shows, nothing else on the page does. */
+html[data-locked] body > *:not(.gate) {
+  display: none !important;
+}
+
+.gate {
+  display: grid;
+  gap: 0.75rem;
+  width: min(22rem, calc(100% - 2rem));
+  margin: 12vh auto 0;
+  padding: 1.5rem;
+}
+
+.gate__title {
+  margin: 0 0 0.5rem;
+  font-size: 1.5rem;
+}
+
+.gate__error {
+  margin: 0;
+  color: var(--app-danger-text, var(--app-danger));
+}
+
+.gate input {
+  margin: 0;
+}
