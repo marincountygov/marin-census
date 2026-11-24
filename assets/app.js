@@ -418,12 +418,9 @@
   // The shell shows the section the hash names and marks its own navigation. This marks #page-tabs the same way.
 
   function syncPageTabs() {
-    const tabs = document.querySelector('#page-tabs');
-    const names = [...tabs.querySelectorAll("a[href^='#']")].map((a) => a.getAttribute('href').slice(1));
-    const raw = window.location.hash.slice(1);
-    const current = names.includes(raw) ? raw : names[0];
-    tabs.querySelectorAll("a[href^='#']").forEach((link) => {
-      if (link.getAttribute('href') === `#${current}`) link.setAttribute('aria-current', 'page');
+    const current = window.location.hash === '#data' ? 'data' : 'start';
+    document.querySelectorAll('#page-tabs a[data-tab]').forEach((link) => {
+      if (link.dataset.tab === current) link.setAttribute('aria-current', 'page');
       else link.removeAttribute('aria-current');
     });
   }
@@ -512,6 +509,7 @@
     wireActionBars();
     syncPageTabs();
     window.addEventListener('hashchange', syncPageTabs);
+    // Places is home: a link to ./ (a fresh page, like the title), so it leaves a place's page and clears the filters.
     document.querySelector('#page-tabs').addEventListener('click', (event) => {
       if (event.target.closest("a[href^='#']")) window.scrollTo({ top: 0, behavior: 'instant' });
     });
