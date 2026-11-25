@@ -82,8 +82,8 @@
   // The charts drawn in the preview (Chart.js, as in Marin Mentions). A chart's picture (a PNG) is taken from the drawn
   // chart when a report is made for Copy or Download, so it is always the chart as it is on the page now.
   let live = [];
+  let chartItems = []; // the Charts items in the Copy and Download menus, shown when the report has charts
   const pictures = new Map();
-  const DOWNLOAD_ICON = ['M12 15V3', 'M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4', 'm7 10 5 5 5-5'];
 
   function capturePictures() {
     live.forEach(({ canvas, spec }) => {
@@ -123,31 +123,20 @@
     return made.errors.length ? null : made.report;
   }
 
-  // A chart card as Mentions has it: an app card with the title as its heading, the chart on a canvas that has its name and
-  // its words for a screen reader, and a button that downloads it as a PNG. Drawn from our own numbers, with DOM calls
+  // A chart card as Mentions has it: an app card with the title as its heading and the chart on a canvas that has its name and
+  // its words for a screen reader. Copying and downloading the charts are items of the toolbar's Copy and Download menus. Drawn from our own numbers, with DOM calls
   // that set text and never markup.
   function chartCard(chartSpec) {
     const canvas = ctx.el('canvas', { role: 'img' });
     canvas.setAttribute('aria-label', `${chartSpec.title}. ${chartSpec.summary}`);
-    const button = ctx.el('button', { type: 'button', className: 'action-button chart-download', title: `Download ${chartSpec.title} as PNG` });
-    button.setAttribute('aria-label', `Download ${chartSpec.title} as PNG`);
-    const icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    icon.setAttribute('viewBox', '0 0 24 24');
-    icon.setAttribute('aria-hidden', 'true');
-    DOWNLOAD_ICON.forEach((d) => {
-      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-      path.setAttribute('d', d);
-      icon.append(path);
-    });
-    button.append(icon);
     const card = ctx.el('section', { className: 'app-card report-chart' }, ctx.el('h3', { textContent: chartSpec.title }), ctx.el('div', { className: 'chart-box' }, canvas));
     if (chartSpec.note) card.append(ctx.el('p', { className: 'app-help-text', textContent: chartSpec.note }));
     // the same numbers as a table for a screen reader, in a wrapper that hides it from the eye
     const cell = (tag, value, scope) => { const node = ctx.el(tag, { textContent: value }); if (scope) node.setAttribute('scope', scope); return node; };
     const table = ctx.el('table', {}, ctx.el('thead', {}, ctx.el('tr', {}, cell('th', 'Place', 'col'), cell('th', chartSpec.title, 'col'))), ctx.el('tbody', {}, chartSpec.bars.map((b) => ctx.el('tr', {}, cell('th', b.label, 'row'), cell('td', b.detail)))));
     table.setAttribute('aria-label', `Data for ${chartSpec.title}`);
-    card.append(ctx.el('div', { className: 'visually-hidden' }, table), button);
-    return { card, canvas, button };
+    card.append(ctx.el('div', { className: 'visually-hidden' }, table));
+    return { card, canvas };
   }
 
   // The preview is drawn from the report itself, which is plain data (a title, sections of heads and rows, sources), with
@@ -165,11 +154,10 @@
       if (section.title) region.append(text('h3', section.title));
       const spec = !state.opened && built && built.sections[index] && built.sections[index]._chartSpec;
       if (spec && spec.bars.length && window.Chart) {
-        const { card, canvas, button } = chartCard(spec);
+        const { card, canvas } = chartCard(spec);
         region.append(card);
         const item = { canvas, spec, chart: window.MarinCensusChart.render(ctx.F, canvas, spec) };
         live.push(item);
-        button.addEventListener('click', () => downloadChart(item));
         return; // the chart's own table stays in Copy and Download, not in the preview
       } else if (spec) {
         region.append(text('p', spec.summary)); // no bar to draw
@@ -216,7 +204,7 @@
       note.hidden = false;
     }
     drawReport(region, report);
-    $('copy-charts-button').hidden = $('download-all-png-button').hidden = !live.length;
+    chartItems.forEach((item) => { item.hidden = !live.length; });
     // The report is a region named by its own title, so a screen reader can jump to it.
     const heading = region.querySelector('h2');
     if (heading) {
@@ -587,14 +575,11 @@
     $('undo-report').addEventListener('click', restore);
     $('skip-to-report').addEventListener('click', () => { const region = $('report-preview'); region.scrollIntoView({ block: 'start' }); region.focus(); });
     $('add-section').addEventListener('click', addSection);
-    // A tiny stagger between the downloads, as Mentions has: some browsers allow only one per tick.
-    $('copy-charts-button').addEventListener('click', copyCharts);
-    $('download-all-png-button').addEventListener('click', () => live.forEach((item, index) => setTimeout(() => downloadChart(item), index * 150)));
     // The charts take the page's colors when they are drawn, so a change of color scheme draws them again.
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', () => { pictures.clear(); preview(); });
 
     window.marinUpload({ button: $('open-report'), input: $('report-file'), accept: ['.json'], maxBytes: 4000000, overlay: false, onFile: openFile, onMessage: say });
-    ctx.actionBar(document.querySelector('[data-actions="report"]'), {
+    const bar = ctx.actionBar(document.querySelector('[data-actions="report"]'), {
       fileName: 'marin-census-report',
       fullscreen: '#report-preview-region',
       formats: () => {
@@ -605,6 +590,18 @@
       csv: () => csvText(window.marinReports.csvRows(currentReport() || { sections: [] })),
       json: () => window.marinReports.toJson(currentReport() || window.marinReports.create({}).report),
     });
+    // Every copy is an item of Copy and every download an item of Download, so a function is in one place. The charts are items too.
+    const addItem = (menu, label, run) => {
+      const toggle = bar.actions.querySelector(`.menu-toggle[aria-controls^="${menu}-panel"]`);
+      const item = ctx.el('button', { type: 'button', textContent: label, hidden: true });
+      item.dataset.buttonKind = 'menu-item';
+      item.addEventListener('click', run);
+      document.getElementById(toggle.getAttribute('aria-controls')).append(item);
+      chartItems.push(item);
+    };
+    addItem('copy', 'Charts', copyCharts);
+    // A tiny stagger between the downloads, as Mentions has: some browsers allow only one per tick.
+    addItem('download', 'Charts (PNG)', () => live.forEach((item, index) => setTimeout(() => downloadChart(item), index * 150)));
   }
 
   start();

@@ -567,8 +567,4 @@ fieldset.report-fields > legend {
   max-width: 100%;
 }
 
-.chart-download {
-  display: flex;
-  margin: 0.75rem auto 0;
-}
 
