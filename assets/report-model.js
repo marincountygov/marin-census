@@ -20,7 +20,7 @@
 
   // Keeps only places and measures that exist, in the order of the data.
   function clean(data, s) {
-    const places = data.places.map((p) => p.id).filter((id) => (s.places || []).includes(id));
+    const places = byName(data).filter((id) => (s.places || []).includes(id));
     const measures = data.measures.map((m) => m.id).filter((id) => (s.measures || []).includes(id));
     return {
       title: String(s.title || '').slice(0, 200),
@@ -41,6 +41,8 @@
     return measures.filter((id) => wanted.includes(id));
   }
 
+  // Place ids from A to Z by name (numbers in order), the order of every list of places and of a table's places.
+  const byName = (data) => data.places.slice().sort((a, b) => a.name.localeCompare(b.name, 'en', { numeric: true })).map((p) => p.id);
   const placeOf = (data, id) => data.places.find((p) => p.id === id);
   const variableOf = (data, id) => data.variables.find((v) => v.id === id);
 
@@ -208,7 +210,7 @@
     }).filter((s) => s.places.length && s.measures.length);
   }
 
-  const api = { LIMITS, CHARTS, newSection, clean, autoTitle, acrossOf, tableCount, chartKey, buildSection, buildReport, sourceOf, encode, decode };
+  const api = { byName, LIMITS, CHARTS, newSection, clean, autoTitle, acrossOf, tableCount, chartKey, buildSection, buildReport, sourceOf, encode, decode };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else window.MarinCensusReportModel = api;
 })();

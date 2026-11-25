@@ -181,6 +181,13 @@ def main():
         require("report=" in page.url and page.url.endswith("#reports"), "the report is in the address")
         head = preview.locator("thead th").all_inner_texts()
         require(head == ["Measure", "Marin County", "Novato", "San Rafael"], f"places across the top: {head}")
+        section.locator('[data-kind="county"]').first.uncheck()
+        head = preview.locator("thead th").all_inner_texts()
+        require(head == ["Measure", "Novato", "San Rafael"], f"unchecking the County area type takes the county out of the table: {head}")
+        section.locator('[data-kind="county"]').first.check()
+        head = preview.locator("thead th").all_inner_texts()
+        require(head == ["Measure", "Marin County", "Novato", "San Rafael"], f"and checking it brings the county back: {head}")
+        require(section.locator(".report-checks--places label").evaluate_all("els => els.map(e => e.textContent.trim())").__len__() == 95 and section.locator(".report-checks--places label").first.inner_text().strip() == "Alto", "places are listed A to Z")
         require("\u00b1" in preview.locator("tbody tr").first.inner_text(), "the report shows margins of error")
         require("American Community Survey" in preview.inner_text(), "the report ends with the source")
 
@@ -336,7 +343,7 @@ def main():
         require(label.startswith("Poverty rate by place (percent). ") and "highest" in label, f"the canvas has the title and the words: {label[:90]!r}")
         legend = page.evaluate("() => Chart.getChart(document.querySelector('#report-preview canvas')).options.plugins.legend.labels.generateLabels().map((l) => l.text)")
         require(legend == ["Estimate", "90% margin of error"], f"the chart has a legend: {legend}")
-        require(page.evaluate("() => Chart.getChart(document.querySelector('#report-preview canvas')).data.labels.length") in (12, 13), "a bar for each place chosen")
+        require(page.evaluate("() => Chart.getChart(document.querySelector('#report-preview canvas')).data.labels.length") == 11, "a bar for each place chosen")
         require(page.locator("#report-preview .report-chart + .table-scroll").count() == 0, "a chart has no table after it in the preview")
         require(card.locator("button").count() == 0, "a chart card has no buttons of its own: its functions are in Copy and Download")
         require(page.locator("#copy-charts-button, #download-all-png-button, [aria-label='Chart actions']").count() == 0, "there is no separate group of chart buttons")
@@ -344,7 +351,7 @@ def main():
         with page.expect_download() as download:
             page.locator("#reports").get_by_role("button", name="Charts (PNG)").click()
         require(download.value.suggested_filename.startswith("Marin Census - Poverty rate by place (percent) - ") and download.value.suggested_filename.endswith(".png"), f"the PNG is named: {download.value.suggested_filename}")
-        require(card.locator(".visually-hidden table tbody tr").count() in (12, 13), "a table of the same numbers is there for a screen reader")
+        require(card.locator(".visually-hidden table tbody tr").count() == 11, "a table of the same numbers is there for a screen reader")
         require(card.locator(".visually-hidden").evaluate("(e) => e.getBoundingClientRect().width <= 1"), "and it is hidden from the eye")
         # several charts: one for each measure chosen
         sec.locator('[data-chart-measure="median-age"]').check()

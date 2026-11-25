@@ -25,6 +25,10 @@ Read `marin-ui/docs/components.md` ("Filter column", "Results header", "Cards") 
 
 The Reports tab is the only place that chooses measures or compares places; keep that out of the list. A report is made by the shell's core (`window.marinReports`), never by hand: `assets/report-model.js` (pure, tested in Node) turns sections into the report object, `assets/reports.js` is the screens and the address. A cell's raw value carries `{ value, margin }` or a one-sided bound (`min`/`max`), so the CSV keeps both, and a value the Census does not give is empty, never zero. A section has no limit on places or measures: more than 11 across (the core allows 12 columns) become several tables, the core holds 10 tables, and the page says when some are left out. A list of choices never scrolls inside the page: show it in full, or narrow it with a filter, and put a border round a group so its edges are clear. The core's HTML has inline styles for pasting into Word; the preview drops them because the page's policy forbids inline styles. Do not add inline styles or write report HTML anywhere else.
 
+## Order
+
+Every list of choices in a filter is A to Z by label (the filter column's area types, a section's area types and places), and a report's tables list places A to Z (`M.byName`). Do not set `"order": "data"` in `filters.json`. Measures stay in topic order, since they are not filter labels. A chart ranks its bars by value.
+
 ## Source line
 
 The source is the dataset's name and link, nothing else: no margin-of-error or confidence-level sentence. The margin's level is in the column headings (place page) and the chart legend.

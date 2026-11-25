@@ -62,9 +62,15 @@
     if (sections.length) state.sections = sections;
   }
 
+  // The places a section's report holds: the places chosen whose area type is checked. An area type that is unchecked takes
+  // its places out of the report, and checking it brings them back.
+  function reportSections() {
+    return state.sections.map((s) => (s.kinds ? { ...s, places: s.places.filter((id) => s.kinds.includes(state.data.places.find((p) => p.id === id).kind)) } : s));
+  }
+
   function writeAddress() {
     const params = new URLSearchParams(window.location.search);
-    const kept = state.sections.map((s) => M.clean(state.data, s)).filter((s) => s.places.length && s.measures.length);
+    const kept = reportSections().map((s) => M.clean(state.data, s)).filter((s) => s.places.length && s.measures.length);
     const encoded = M.encode(state.data, kept);
     // The report as it opens (one section on Marin County with the headline measures) needs no address.
     const isDefault = encoded === M.encode(state.data, [M.clean(state.data, M.newSection(state.data))]);
@@ -118,7 +124,7 @@
   function currentReport() {
     if (state.opened) return state.opened;
     capturePictures();
-    built = M.buildReport(state.data, ctx.F, state.sections, { title: state.title, prepared: window.marinReports.pacificToday(), chartImage: (key) => pictures.get(key) || null });
+    built = M.buildReport(state.data, ctx.F, reportSections(), { title: state.title, prepared: window.marinReports.pacificToday(), chartImage: (key) => pictures.get(key) || null });
     const made = window.marinReports.create(built);
     return made.errors.length ? null : made.report;
   }
@@ -291,17 +297,16 @@
       selectAll('chart measures', 'Select all', 'chart'), ctx.el('ul', { className: 'report-checks' }, chartItems), chartCount), id('charts-count'));
     chartGroup.dataset.chartGroup = 'true';
 
-    // places: area types and a search narrow the list, as the list's filter column does; Select all takes what is shown
-    const shownKinds = openKinds(section);
-    const kindBoxes = Object.entries(data.kinds).map(([kind, label]) => {
+    // places: the area types narrow the list and the report, as the list's filter column does; Select all takes what is shown
+    if (!section.kinds) section.kinds = [...openKinds(section)];
+    const shownKinds = new Set(section.kinds);
+    const kindBoxes = Object.entries(data.kinds).sort((a, b) => a[1].localeCompare(b[1], 'en')).map(([kind, label]) => {
       const input = ctx.el('input', { type: 'checkbox', checked: shownKinds.has(kind) });
       input.dataset.kind = kind;
       const count = data.places.filter((p) => p.kind === kind).length;
       return ctx.el('li', {}, ctx.el('label', {}, input, ` ${label} `, ctx.el('span', { className: 'report-muted', textContent: `(${count})` })));
     });
-    const search = ctx.el('input', { type: 'search', id: id('place-search'), autocomplete: 'off' });
-    search.dataset.field = 'place-search';
-    const placeList = ctx.el('ul', { className: 'report-checks report-checks--places' }, data.places.map((p) => {
+    const placeList = ctx.el('ul', { className: 'report-checks report-checks--places' }, M.byName(data).map((placeId) => data.places.find((p) => p.id === placeId)).map((p) => {
       const item = checkbox('place', p.id, p.name, section.places.includes(p.id));
       item.dataset.kind = p.kind;
       return item;
@@ -338,7 +343,6 @@
         describedBy(ctx.el('fieldset', { className: 'app-field report-group' },
           ctx.el('legend', { textContent: 'Places' }),
           ctx.el('fieldset', { className: 'app-field report-kinds' }, ctx.el('legend', { textContent: 'Area types' }), ctx.el('ul', { className: 'report-checks' }, kindBoxes)),
-          ctx.el('div', { className: 'search-input-field' }, ctx.el('label', { htmlFor: id('place-search'), textContent: 'Search' }), search),
           selectAll('places', 'Select all'), placeList, placeCount), id('places-count')),
         describedBy(ctx.el('fieldset', { className: 'app-field report-group' },
           ctx.el('legend', { textContent: 'Measures' }),
@@ -367,11 +371,10 @@
     li.querySelectorAll('[data-act]').forEach((button) => button.setAttribute('aria-label', `${names[button.dataset.act]}, section ${number}`));
 
     const kinds = new Set([...li.querySelectorAll('input[data-kind]')].filter((box) => box.checked).map((box) => box.dataset.kind));
-    const words = li.querySelector('[data-field="place-search"]').value.trim().toLowerCase();
     let shown = 0;
     let shownChosen = 0;
     li.querySelectorAll('.report-checks--places li').forEach((item) => {
-      const visible = kinds.has(item.dataset.kind) && (!words || item.textContent.toLowerCase().includes(words));
+      const visible = kinds.has(item.dataset.kind);
       item.hidden = !visible;
       if (visible) {
         shown += 1;
@@ -398,7 +401,7 @@
     mixed(li.querySelector('[data-all="chart"]'), chartChosen, chartShown);
   }
 
-  // How many places the list shows after the area types or the search narrow it.
+  // How many places the list shows after the area types narrow it.
   function announceShown(li) {
     const n = Number(li.dataset.shown);
     announce(n === 0 ? 'No places match.' : `${n} ${n === 1 ? 'place' : 'places'} shown.`);
@@ -434,7 +437,7 @@
     } else if (t.dataset.measure !== undefined) {
       section.measures = t.checked ? [...section.measures, t.dataset.measure] : section.measures.filter((x) => x !== t.dataset.measure);
     } else if (t.dataset.all === 'places') {
-      // Select all takes the places the list shows now (the area types and the search), and clearing leaves them out.
+      // Select all takes the places the list shows now (the area types), and clearing leaves them out.
       const shown = [...li.querySelectorAll('.report-checks--places li')].filter((item) => !item.hidden).map((item) => item.querySelector('input').dataset.place);
       section.places = t.checked ? [...new Set([...section.places, ...shown])] : section.places.filter((id) => !shown.includes(id));
       li.querySelectorAll('.report-checks--places li').forEach((item) => { const box = item.querySelector('input'); box.checked = section.places.includes(box.dataset.place); });
@@ -442,9 +445,11 @@
       section.measures = t.checked ? state.data.measures.map((m) => m.id) : [];
       li.querySelectorAll('[data-measure]').forEach((box) => { box.checked = t.checked; });
     } else if (t.dataset.kind !== undefined) {
+      section.kinds = [...li.querySelectorAll('input[data-kind]')].filter((box) => box.checked).map((box) => box.dataset.kind);
       refresh(li, section);
       announceShown(li);
-      return; // the area types only narrow the list; the report is the same
+      changed(); // an unchecked area type takes its places out of the report
+      return;
     } else if (t.dataset.field === 'orientation') {
       section.orientation = t.value;
     } else if (t.dataset.field === 'margins') {
@@ -477,9 +482,6 @@
       section.title = t.value;
       refresh(li, section);
       changed();
-    } else if (t.dataset.field === 'place-search') {
-      refresh(li, byUid(li.dataset.uid));
-      announceShown(li);
     }
   }
 

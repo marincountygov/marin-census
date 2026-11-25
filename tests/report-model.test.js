@@ -16,10 +16,11 @@ test('a new section starts on Marin County with the headline measures', () => {
   assert.equal(s.margins, true);
 });
 
-test('clean drops what does not exist and keeps the data order, with no limit on how many', () => {
+test('clean drops what does not exist and keeps the places A to Z, with no limit on how many', () => {
   const all = data.places.map((p) => p.id);
   const s = M.clean(data, { places: ['nowhere', ...all.slice().reverse()], measures: ['nope', ...data.measures.map((m) => m.id)], title: 'x'.repeat(300), orientation: 'sideways' });
-  assert.deepEqual(s.places, all);
+  assert.deepEqual(s.places, M.byName(data));
+  assert.deepEqual(M.byName(data).slice(0, 3), ['alto', 'belvedere', 'black-point-green-point-cdp']);
   assert.equal(s.measures.length, data.measures.length);
   assert.equal(s.orientation, 'auto');
   assert.equal(s.title.length, 200);
@@ -108,7 +109,7 @@ test('the report ends with the source and nothing else', () => {
 test('the address holds the sections and reads them back; everything is written as *', () => {
   const sections = [section({ title: 'A | B ~ C', orientation: 'measures', margins: false })];
   assert.deepEqual(M.decode(M.encode(data, sections), data), sections.map((s) => M.clean(data, s)));
-  const all = [{ places: data.places.map((p) => p.id), measures: data.measures.map((m) => m.id), orientation: 'auto', margins: true, title: '', chart: 'none', chartMeasures: [] }];
+  const all = [{ places: M.byName(data), measures: data.measures.map((m) => m.id), orientation: 'auto', margins: true, title: '', chart: 'none', chartMeasures: [] }];
   assert.equal(M.encode(data, all), '*|*|a|1|');
   assert.deepEqual(M.decode('*|*|a|1|', data), all);
   assert.deepEqual(M.decode('', data), []);
