@@ -86,7 +86,40 @@
     return made.errors.length ? null : made.report;
   }
 
-  // The preview is the report core's own HTML. Its inline styles are for pasting into Word; the page's policy does not
+  // The report core escapes everything it draws, but its output is HTML text, and an HTML string put into a page is where a
+  // mistake becomes a script. So the preview never uses innerHTML. The core's HTML is parsed in a document of its own, and
+  // the page is built from it with DOM calls, element by element, from the short list of what a report has: headings,
+  // paragraphs, tables and links. Other elements are dropped (a script or a frame with all it holds) or reduced to their
+  // text; only scope, a table's name and a web or email link survive as attributes.
+  const KEEP = new Set(['h1', 'h2', 'h3', 'h4', 'p', 'table', 'thead', 'tbody', 'tr', 'th', 'td', 'a']);
+  const DROP = new Set(['script', 'style', 'template', 'iframe', 'object', 'embed', 'link', 'meta']);
+
+  function copyInto(parent, source) {
+    source.childNodes.forEach((node) => {
+      if (node.nodeType === Node.TEXT_NODE) { parent.append(document.createTextNode(node.nodeValue)); return; }
+      if (node.nodeType !== Node.ELEMENT_NODE) return;
+      const name = node.tagName.toLowerCase();
+      if (DROP.has(name)) return;
+      if (!KEEP.has(name)) { copyInto(parent, node); return; }
+      const copy = document.createElement(name);
+      if (name === 'th' && ['col', 'row'].includes(node.getAttribute('scope'))) copy.setAttribute('scope', node.getAttribute('scope'));
+      if (name === 'table' && node.getAttribute('aria-label')) copy.setAttribute('aria-label', node.getAttribute('aria-label'));
+      if (name === 'a') {
+        const href = node.getAttribute('href') || '';
+        if (/^(https?:|mailto:)/i.test(href)) { copy.setAttribute('href', href); copy.setAttribute('rel', 'noopener'); }
+      }
+      copyInto(copy, node);
+      parent.append(copy);
+    });
+  }
+
+  function drawReport(region, html) {
+    const parsed = new DOMParser().parseFromString(html, 'text/html');
+    region.replaceChildren();
+    copyInto(region, parsed.body);
+  }
+
+  // The preview is the report core's own document. Its inline styles are for pasting into Word; the page's policy does not
   // allow inline styles, so the preview drops them and the stylesheet aligns the numbers.
   function preview() {
     const report = currentReport();
@@ -103,10 +136,9 @@
       note.textContent = `A report holds ${M.LIMITS.tables} tables and this one needs ${built.tables}, so the last ${built.tables - M.LIMITS.tables} are left out. Choose fewer places or measures, or remove a section.`;
       note.hidden = false;
     }
-    // The core's HTML is made to paste into Word: inline styles and the border, cellpadding and cellspacing attributes. The
-    // page's policy forbids inline styles, and the attributes would draw a dark border unlike every other table, so the
-    // preview drops them and puts each table in the same scrolling box and border style as the rest of the app.
-    region.innerHTML = window.marinReports.renderHtml(report, { titleLevel: 2 }).replace(/ (style|border|cellpadding|cellspacing)="[^"]*"/g, '');
+    // The core's HTML is made to paste into Word (inline styles, border and cellpadding attributes). The preview is built
+    // from it without those, and each table goes in the same scrolling box and border style as the rest of the app.
+    drawReport(region, window.marinReports.renderHtml(report, { titleLevel: 2 }));
     region.querySelectorAll('table').forEach((table) => {
       const box = ctx.el('div', { className: 'table-scroll' });
       table.replaceWith(box);

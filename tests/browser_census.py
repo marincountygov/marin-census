@@ -305,6 +305,22 @@ def main():
             page.wait_for_timeout(600)
         require("Opened" in page.locator("#report-status").inner_text(), "a saved report file opens")
 
+        # a report file is untrusted: markup in it is shown as text and never runs
+        evil = '{"schema":"1.0","title":"<img src=x onerror=window.__xss=1>","sections":[{"type":"table","title":"<script>window.__xss=1</script>","head":["<b>Measure</b>","V"],"rows":[["<iframe src=javascript:window.__xss=1></iframe>","<a href=javascript:window.__xss=1>x</a>"]]}],"sources":[{"label":"Source <i>x</i>","url":"javascript:window.__xss=1"}]}'
+        page.goto(base + "#reports")
+        page.wait_for_selector(".report-section")
+        with tempfile.TemporaryDirectory() as folder:
+            evil_path = Path(folder) / "evil.json"
+            evil_path.write_text(evil, encoding="utf-8")
+            page.locator("#report-file").set_input_files(str(evil_path))
+            page.wait_for_timeout(600)
+        shown = page.locator("#report-preview")
+        require(page.evaluate("window.__xss") is None, "markup in a report file does not run")
+        require(shown.locator("img, script, iframe, b, i").count() == 0, "markup in a report file is not made into elements")
+        require("<img src=x" in shown.inner_text() and "<b>Measure</b>" in shown.inner_text(), "markup in a report file is shown as text")
+        require(shown.locator("a[href^=javascript]").count() == 0, "a javascript link is not kept")
+        require(shown.locator("table th[scope=col]").count() >= 2, "the table keeps its headings")
+
         # the Data tab
         page.goto(base + "#data")
         page.wait_for_selector("#measures-table tbody tr")
