@@ -23,6 +23,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 SOURCE = ROOT / "data" / "source"
 OUT = ROOT / "data" / "census.json"
+SEARCH = ROOT / "search-index.json"  # the list MarinOS search reads (the searchIndex of this app's catalog entry)
+BASE = "https://marincountygov.github.io/marin-census/"
 GS_LOCAL, GEOID = "gs:local", "census-geoid"
 KINDS = {
     "county": "County",
@@ -198,16 +200,29 @@ def text(data):
     return json.dumps(data, indent=1, ensure_ascii=False) + "\n"
 
 
+def search_index(data):
+    """The list MarinOS search reads: every place (opens its page) and every measure (opens the Data tab).
+    Same shape as Marin Docs' list: k kind, n name, d description, h address under `base`."""
+    entries = [{"k": "Statistic", "n": p["name"], "d": p["kindLabel"], "h": f"?place={p['id']}"} for p in data["places"]]
+    entries += [{"k": "Statistic", "n": m["name"], "d": m["topic"], "h": "#data"} for m in data["measures"]]
+    return {"schemaVersion": "1.0.0", "title": "Marin Census search list", "base": BASE, "entries": entries}
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
-    out = text(build())
+    data = build()
+    out = text(data)
+    index = text(search_index(data))
     if args.check:
         if not OUT.is_file() or OUT.read_text(encoding="utf-8") != out:
             sys.exit("data/census.json is out of date. Run: python3 scripts/build_data.py")
-        print("ok: data/census.json is current")
+        if not SEARCH.is_file() or SEARCH.read_text(encoding="utf-8") != index:
+            sys.exit("search-index.json is out of date. Run: python3 scripts/build_data.py")
+        print("ok: data/census.json and search-index.json are current")
     else:
         OUT.write_text(out, encoding="utf-8")
-        data = json.loads(out)
+        SEARCH.write_text(index, encoding="utf-8")
         print(f"wrote data/census.json: {len(data['places'])} places, {len(data['variables'])} variables, {OUT.stat().st_size:,} bytes")
+        print(f"wrote search-index.json: {len(json.loads(index)['entries'])} entries")

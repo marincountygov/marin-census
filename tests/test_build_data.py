@@ -17,6 +17,15 @@ class CensusData(unittest.TestCase):
     def test_file_is_current(self):
         self.assertEqual((ROOT / "data" / "census.json").read_text(encoding="utf-8"), build_data.text(build_data.build()))
 
+    def test_search_index_is_current_and_lists_every_place_and_measure(self):
+        index = json.loads((ROOT / "search-index.json").read_text(encoding="utf-8"))
+        self.assertEqual((ROOT / "search-index.json").read_text(encoding="utf-8"), build_data.text(build_data.search_index(DATA)))
+        self.assertEqual(index["base"], "https://marincountygov.github.io/marin-census/")
+        self.assertEqual(len(index["entries"]), len(DATA["places"]) + len(DATA["measures"]))
+        novato = [e for e in index["entries"] if e["n"] == "Novato"]
+        self.assertEqual(novato, [{"k": "Statistic", "n": "Novato", "d": "City or town", "h": "?place=novato"}])
+        self.assertTrue(all(e["h"].startswith("?place=") or e["h"] == "#data" for e in index["entries"]))
+
     def test_areas_by_kind(self):
         kinds = [p["kind"] for p in DATA["places"]]
         self.assertEqual({k: kinds.count(k) for k in set(kinds)}, {"county": 1, "city": 11, "cdp": 20, "tract": 63})

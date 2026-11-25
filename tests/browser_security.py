@@ -11,8 +11,6 @@ from urllib.parse import urlsplit
 
 from browser_smoke import ROOT, CATALOG, COMMITS, serve, ready, require
 
-# The login (assets/gate.js) opens for the tab when this is set, so the tests can reach the page.
-UNLOCK = "try { window.sessionStorage.setItem('marin-census-unlocked', '1'); } catch (e) {}"
 API_URL = "https://api.github.com/repos/marincountygov/APP_REPO/commits?per_page=15"
 CATALOG_URL = "https://marincountygov.github.io/marin-os/catalog.json"
 BLOCKED_URL = "https://blocked.example/security-probe"
@@ -51,7 +49,6 @@ def run(in_memory: bool = False) -> None:
         browser = pw.chromium.launch(**options)
         try:
             context = browser.new_context()
-            context.add_init_script(UNLOCK)
             context.set_default_timeout(10000)
             requests = []
             unexpected = []
