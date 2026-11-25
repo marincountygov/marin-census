@@ -86,41 +86,41 @@
     return made.errors.length ? null : made.report;
   }
 
-  // The report core escapes everything it draws, but its output is HTML text, and an HTML string put into a page is where a
-  // mistake becomes a script. So the preview never uses innerHTML. The core's HTML is parsed in a document of its own, and
-  // the page is built from it with DOM calls, element by element, from the short list of what a report has: headings,
-  // paragraphs, tables and links. Other elements are dropped (a script or a frame with all it holds) or reduced to their
-  // text; only scope, a table's name and a web or email link survive as attributes.
-  const KEEP = new Set(['h1', 'h2', 'h3', 'h4', 'p', 'table', 'thead', 'tbody', 'tr', 'th', 'td', 'a']);
-  const DROP = new Set(['script', 'style', 'template', 'iframe', 'object', 'embed', 'link', 'meta']);
-
-  function copyInto(parent, source) {
-    source.childNodes.forEach((node) => {
-      if (node.nodeType === Node.TEXT_NODE) { parent.append(document.createTextNode(node.nodeValue)); return; }
-      if (node.nodeType !== Node.ELEMENT_NODE) return;
-      const name = node.tagName.toLowerCase();
-      if (DROP.has(name)) return;
-      if (!KEEP.has(name)) { copyInto(parent, node); return; }
-      const copy = document.createElement(name);
-      if (name === 'th' && ['col', 'row'].includes(node.getAttribute('scope'))) copy.setAttribute('scope', node.getAttribute('scope'));
-      if (name === 'table' && node.getAttribute('aria-label')) copy.setAttribute('aria-label', node.getAttribute('aria-label'));
-      if (name === 'a') {
-        const href = node.getAttribute('href') || '';
-        if (/^(https?:|mailto:)/i.test(href)) { copy.setAttribute('href', href); copy.setAttribute('rel', 'noopener'); }
-      }
-      copyInto(copy, node);
-      parent.append(copy);
+  // The preview is drawn from the report itself, which is plain data (a title, sections of heads and rows, sources), with
+  // DOM calls that set text and never markup. No HTML string is parsed or inserted, so nothing in a saved report file or a
+  // shared link can become an element, an attribute or a script. Copy and Download hold the core's own text, HTML and
+  // Markdown of the same report. A link is made only for the dataset's own address; any other source is shown as text.
+  function drawReport(region, report) {
+    const text = (tag, value) => ctx.el(tag, { textContent: value });
+    region.replaceChildren(text('h2', report.title));
+    if (report.prepared) region.append(text('p', `Prepared ${window.marinReports.formatDate(report.prepared)}`));
+    if (report.filters) region.append(text('p', report.filters));
+    report.sections.forEach((section) => {
+      if (section.title) region.append(text('h3', section.title));
+      if (section.chart && section.chart.summary) region.append(text('p', section.chart.summary)); // a chart's picture is not drawn here
+      const head = ctx.el('tr', {}, section.head.map((h) => { const th = text('th', h); th.setAttribute('scope', 'col'); return th; }));
+      const rows = section.rows.map((row) => ctx.el('tr', {}, row.map((cell, i) => {
+        const node = text(i ? 'td' : 'th', cell);
+        if (!i) node.setAttribute('scope', 'row');
+        return node;
+      })));
+      const table = ctx.el('table', {}, ctx.el('thead', {}, head), ctx.el('tbody', {}, rows));
+      if (section.title) table.setAttribute('aria-label', section.title);
+      region.append(ctx.el('div', { className: 'table-scroll' }, table));
     });
+    if (report.sources.length) {
+      const own = ctx.data.source.url;
+      const line = ctx.el('p', {}, 'Source: ');
+      report.sources.forEach((source, i) => {
+        if (i) line.append('; ');
+        if (own && source.url === own) line.append(ctx.el('a', { href: own, textContent: source.label }));
+        else line.append(source.label);
+      });
+      region.append(line);
+    }
   }
 
-  function drawReport(region, html) {
-    const parsed = new DOMParser().parseFromString(html, 'text/html');
-    region.replaceChildren();
-    copyInto(region, parsed.body);
-  }
-
-  // The preview is the report core's own document. Its inline styles are for pasting into Word; the page's policy does not
-  // allow inline styles, so the preview drops them and the stylesheet aligns the numbers.
+  // The preview: the report as a document. The stylesheet aligns the numbers and gives each table the app's border.
   function preview() {
     const report = currentReport();
     const region = $('report-preview');
@@ -136,14 +136,7 @@
       note.textContent = `A report holds ${M.LIMITS.tables} tables and this one needs ${built.tables}, so the last ${built.tables - M.LIMITS.tables} are left out. Choose fewer places or measures, or remove a section.`;
       note.hidden = false;
     }
-    // The core's HTML is made to paste into Word (inline styles, border and cellpadding attributes). The preview is built
-    // from it without those, and each table goes in the same scrolling box and border style as the rest of the app.
-    drawReport(region, window.marinReports.renderHtml(report, { titleLevel: 2 }));
-    region.querySelectorAll('table').forEach((table) => {
-      const box = ctx.el('div', { className: 'table-scroll' });
-      table.replaceWith(box);
-      box.append(table);
-    });
+    drawReport(region, report);
     // The report is a region named by its own title, so a screen reader can jump to it.
     const heading = region.querySelector('h2');
     if (heading) {

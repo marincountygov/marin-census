@@ -280,7 +280,12 @@ def main():
         # outputs: Copy, Download CSV and the report file
         page.locator('#reports button[aria-label="Copy, choose a format"]').click()
         page.locator("#reports").get_by_role("button", name="Markdown").first.click()
-        require("| Place |" in page.evaluate("navigator.clipboard.readText()"), "Copy Markdown holds the table")
+        markdown = page.evaluate("navigator.clipboard.readText()")
+        require("| Place |" in markdown, "Copy Markdown holds the table")
+        # the preview and what Copy holds are the same report: the first table's cells match
+        md_rows = [[c.strip() for c in line.strip().strip("|").split(" | ")] for line in markdown.splitlines() if line.startswith("| ") and "---" not in line][: page.locator("#report-preview table").first.locator("tr").count()]
+        shown_rows = page.locator("#report-preview table").first.evaluate("t => [...t.querySelectorAll('tr')].map((r) => [...r.children].map((c) => c.textContent.trim()))")
+        require(md_rows == shown_rows, f"the preview matches Copy: {md_rows[:2]} vs {shown_rows[:2]}")
         page.locator('#reports button[aria-label="Download, choose a format"]').click()
         with page.expect_download() as csv_download:
             page.locator('#reports [data-download="csv"]').click()
