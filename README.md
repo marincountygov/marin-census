@@ -1,6 +1,6 @@
 # Marin Census
 
-Public statistics about Marin's people, communities and housing.
+Public statistics about Marin's people and communities.
 
 - **Audience:** County staff
 - **Owner:** County of Marin
