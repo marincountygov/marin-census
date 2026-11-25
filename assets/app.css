@@ -558,62 +558,17 @@ fieldset.report-fields > legend {
   padding: 0;
 }
 
-/* A chart in the report: bars in the accent color, the margin of error as a whisker, text in the page's colors. */
+/* A chart in the report is a card like the ones in Marin Mentions: the title, the chart on a canvas, a download button. */
 .report-chart {
   margin: 1rem 0;
 }
 
-.report-chart svg {
-  display: block;
+.report-chart canvas {
   max-width: 100%;
-  height: auto;
 }
 
-.report-chart figcaption {
-  margin-top: 0.5rem;
-  font-size: 0.9375rem;
-}
-
-.chart-bar {
-  fill: var(--app-accent);
-}
-
-.chart-whisker,
-.chart-axis {
-  stroke: var(--app-text);
-  stroke-width: 1.5;
-}
-
-.chart-grid {
-  stroke: var(--app-border);
-  stroke-width: 1;
-}
-
-.chart-heading {
-  fill: var(--app-text);
-  font: 700 15px system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-}
-
-.chart-text {
-  fill: var(--app-text);
-  font: 12px system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-}
-
-/* Forced colors replaces a color with a system one: the bars take the highlight, the lines and words the text color. */
-@media (forced-colors: active) {
-  .chart-bar {
-    fill: Highlight;
-  }
-
-  .chart-whisker,
-  .chart-axis,
-  .chart-grid {
-    stroke: CanvasText;
-  }
-
-  .chart-text,
-  .chart-heading {
-    fill: CanvasText;
-  }
+.chart-download {
+  display: flex;
+  margin: 0.75rem auto 0;
 }
 

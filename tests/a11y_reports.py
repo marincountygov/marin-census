@@ -215,18 +215,17 @@ def main():
             page.locator("#add-section").click()
             page.locator(".report-section").last.locator('[data-field="chart"]').select_option("bars")
             page.wait_for_timeout(400)
-            ids = page.evaluate("[...document.querySelectorAll('#report-preview svg')].map((s) => [s.getAttribute('aria-labelledby'), s.getAttribute('aria-describedby')])")
-            flat = [i for pair in ids for i in pair]
-            check(len(ids) == 3 and len(set(flat)) == 6 and all(page.locator("#" + i).count() == 1 for i in flat), f"{scheme}: each of the {len(ids)} charts is named and described by ids of its own")
+            names = page.evaluate("[...document.querySelectorAll('#report-preview canvas')].map((c) => [c.getAttribute('role'), c.getAttribute('aria-label'), c.closest('.app-card').querySelector('h3').textContent])")
+            check(len(names) == 3 and all(r == "img" and l.startswith(h + ". ") for r, l, h in names), f"{scheme}: each of the {len(names)} charts is an image named by its title and described")
             ratios = page.evaluate(r"""() => {
                 const parse = (c) => c.match(/[\d.]+/g).slice(0, 3).map(Number);
                 const lum = ([r, g, b]) => { const f = (v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); }; return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b); };
                 const ratio = (a, b) => { const x = lum(parse(a)), y = lum(parse(b)); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); };
-                const bg = getComputedStyle(document.body).backgroundColor;
-                const svg = document.querySelector('#report-preview svg');
-                return { bar: ratio(getComputedStyle(svg.querySelector('.chart-bar')).fill, bg), line: ratio(getComputedStyle(svg.querySelector('.chart-whisker')).stroke, bg), text: ratio(getComputedStyle(svg.querySelector('.chart-text')).fill, bg) };
+                const card = document.querySelector('#report-preview .app-card');
+                const bg = getComputedStyle(card).backgroundColor;
+                return { bar: ratio('rgb(7, 119, 207)', bg), text: ratio(Chart.defaults.color, bg) };
             }""")
-            check(ratios["bar"] >= 3 and ratios["line"] >= 3 and ratios["text"] >= 4.5, f"{scheme}: chart contrast {ratios}")
+            check(ratios["bar"] >= 3 and ratios["text"] >= 4.5, f"{scheme}: chart contrast {ratios}")
             axe_scan(page, f"report with two charts, {scheme}")
             context.close()
 

@@ -48,15 +48,15 @@ test('the sentence names the highest and the lowest with their values', () => {
   assert.equal(s.title, 'Total population by place (people)');
 });
 
-test('the axis starts at zero and ends at a round number above the longest bar and its whisker', () => {
-  const s = C.spec(F, places(['san-rafael', 'novato']), variable('population-total'));
-  assert.equal(s.axis.ticks[0], 0);
-  assert.ok(s.axis.max >= s.bars[0].value + s.bars[0].margin);
-  assert.deepEqual(C.scale(0).ticks, [0, 0.25, 0.5, 0.75, 1]);
-  assert.equal(C.scale(61000).max, 80000);
-  assert.equal(C.scale(8.3).max, 10);
-  assert.equal(C.scale(0.7).max, 0.8);
-  assert.equal(C.scale(270000).max, 300000);
+test('each bar has the words for its tooltip: the estimate and its margin of error', () => {
+  const s = C.spec(F, places(['novato']), variable('median-age'));
+  assert.match(s.bars[0].detail, /^[\d.]+ ± [\d.]+$/);
+  assert.equal(C.spec(F, places(['novato']), variable('median-age'), { margins: false }).bars[0].detail, s.bars[0].text);
+});
+
+test('the visible note is only what a person needs to know about places left out', () => {
+  assert.equal(C.spec(F, places(['novato']), variable('population-total')).note, '');
+  assert.equal(C.spec(F, places(['belvedere', 'novato']), variable('median-household-income')).note, '1 place has no exact value and is not drawn.');
 });
 
 test('columns are the other direction of the same bars', () => {

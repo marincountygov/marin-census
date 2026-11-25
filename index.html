@@ -17,6 +17,7 @@
     <script src="assets/results-line.js" defer></script>
     <script src="assets/table-fullscreen.js" defer></script>
     <script src="assets/format.js" defer></script>
+    <script src="vendor/chart.min.js" defer></script>
     <script src="assets/chart.js" defer></script>
     <script src="assets/report-model.js" defer></script>
     <script src="assets/app.js" defer></script>
@@ -117,7 +118,13 @@
             </aside>
           </div>
           <div class="search-results" id="report-preview-region">
-            <div class="action-toolbar"><div data-actions="report"></div></div>
+            <div class="action-toolbar">
+              <div class="action-group" role="group" aria-label="Chart actions">
+                <button type="button" class="action-button" id="copy-charts-button" hidden aria-label="Copy charts" title="Copy charts"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg></button>
+                <button type="button" class="action-button" id="download-all-png-button" hidden aria-label="Download all charts as PNG" title="Download all charts as PNG"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/></svg></button>
+              </div>
+              <div data-actions="report"></div>
+            </div>
             <p id="report-note" class="app-alert app-alert--warning" role="status" hidden></p>
             <div id="report-preview" class="report-preview" role="region" aria-label="Report" tabindex="-1"></div>
           </div>

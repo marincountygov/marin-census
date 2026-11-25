@@ -79,25 +79,75 @@
 
   let built = null; // the report object last made from the sections
 
-  // A chart's picture (a PNG) is made after the page draws, and kept by what the chart draws. Copy and Download use it
-  // when it is ready; until then the chart is in the report as its sentence.
+  // The charts drawn in the preview (Chart.js, as in Marin Mentions). A chart's picture (a PNG) is taken from the drawn
+  // chart when a report is made for Copy or Download, so it is always the chart as it is on the page now.
+  let live = [];
   const pictures = new Map();
-  const making = new Set();
-  function makePictures() {
-    if (!built) return;
-    built.sections.forEach((table) => {
-      const spec = table._chartSpec;
-      if (!spec || !spec.bars.length || pictures.has(spec.key) || making.has(spec.key)) return;
-      making.add(spec.key);
-      window.MarinCensusChart.png(ctx.F, spec).then((picture) => { pictures.set(spec.key, picture); making.delete(spec.key); });
+  const DOWNLOAD_ICON = ['M12 15V3', 'M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4', 'm7 10 5 5 5-5'];
+
+  function capturePictures() {
+    live.forEach(({ canvas, spec }) => {
+      if (canvas.isConnected && canvas.clientWidth) pictures.set(spec.key, window.MarinCensusChart.exportImage(canvas, spec.title));
     });
+  }
+
+  const chartFile = (title) => `Marin Census - ${title} - ${window.marinReports.pacificToday()}.png`;
+
+  function downloadChart(item) {
+    window.MarinCensusChart.exportImage(item.canvas, item.spec.title).canvas.toBlob((blob) => {
+      if (blob) window.marinDownload({ content: blob, name: chartFile(item.spec.title) });
+    });
+  }
+
+  // Copy for every chart, as Mentions has it: each chart as a picture under its title and its words, through the shell's
+  // rich copy, so a paste into an email or a document keeps the pictures.
+  async function copyCharts() {
+    capturePictures();
+    const esc = (value) => String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    const items = live.filter((item) => pictures.get(item.spec.key) && pictures.get(item.spec.key).image);
+    if (!items.length) { announce('There are no charts to copy.'); return; }
+    const plain = items.map((item) => `${item.spec.title}\n${item.spec.summary}`).join('\n\n');
+    const html = `<div>${items.map((item) => {
+      const picture = pictures.get(item.spec.key);
+      return `<b>${esc(item.spec.title)}</b><br>${esc(item.spec.summary)}<br><img src="${picture.image}" alt="${esc(item.spec.title)}" width="${picture.width}" height="${picture.height}">`;
+    }).join('<br><br>')}</div>`;
+    const copied = await window.marinCopyRich(plain, html);
+    announce(copied ? 'Copied charts to clipboard.' : "Couldn't copy the charts. Download them as PNG instead.");
   }
 
   function currentReport() {
     if (state.opened) return state.opened;
+    capturePictures();
     built = M.buildReport(state.data, ctx.F, state.sections, { title: state.title, prepared: window.marinReports.pacificToday(), chartImage: (key) => pictures.get(key) || null });
     const made = window.marinReports.create(built);
     return made.errors.length ? null : made.report;
+  }
+
+  // A chart card as Mentions has it: an app card with the title as its heading, the chart on a canvas that has its name and
+  // its words for a screen reader, and a button that downloads it as a PNG. Drawn from our own numbers, with DOM calls
+  // that set text and never markup.
+  function chartCard(chartSpec) {
+    const canvas = ctx.el('canvas', { role: 'img' });
+    canvas.setAttribute('aria-label', `${chartSpec.title}. ${chartSpec.summary}`);
+    const button = ctx.el('button', { type: 'button', className: 'action-button chart-download', title: `Download ${chartSpec.title} as PNG` });
+    button.setAttribute('aria-label', `Download ${chartSpec.title} as PNG`);
+    const icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    icon.setAttribute('viewBox', '0 0 24 24');
+    icon.setAttribute('aria-hidden', 'true');
+    DOWNLOAD_ICON.forEach((d) => {
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('d', d);
+      icon.append(path);
+    });
+    button.append(icon);
+    const card = ctx.el('section', { className: 'app-card report-chart' }, ctx.el('h3', { textContent: chartSpec.title }), ctx.el('div', { className: 'chart-box' }, canvas));
+    if (chartSpec.note) card.append(ctx.el('p', { className: 'app-help-text', textContent: chartSpec.note }));
+    // the same numbers as a table for a screen reader, in a wrapper that hides it from the eye
+    const cell = (tag, value, scope) => { const node = ctx.el(tag, { textContent: value }); if (scope) node.setAttribute('scope', scope); return node; };
+    const table = ctx.el('table', {}, ctx.el('thead', {}, ctx.el('tr', {}, cell('th', 'Place', 'col'), cell('th', chartSpec.title, 'col'))), ctx.el('tbody', {}, chartSpec.bars.map((b) => ctx.el('tr', {}, cell('th', b.label, 'row'), cell('td', b.detail)))));
+    table.setAttribute('aria-label', `Data for ${chartSpec.title}`);
+    card.append(ctx.el('div', { className: 'visually-hidden' }, table), button);
+    return { card, canvas, button };
   }
 
   // The preview is drawn from the report itself, which is plain data (a title, sections of heads and rows, sources), with
@@ -109,15 +159,20 @@
     region.replaceChildren(text('h2', report.title));
     if (report.prepared) region.append(text('p', `Prepared ${window.marinReports.formatDate(report.prepared)}`));
     if (report.filters) region.append(text('p', report.filters));
+    live.forEach(({ chart }) => chart.destroy());
+    live = [];
     report.sections.forEach((section, index) => {
       if (section.title) region.append(text('h3', section.title));
       const spec = !state.opened && built && built.sections[index] && built.sections[index]._chartSpec;
-      if (spec && spec.bars.length) {
-        // the chart is drawn from our own numbers, as an SVG with a name and a description, and its sentence under it
-        region.append(ctx.el('figure', { className: 'report-chart' }, window.MarinCensusChart.draw(ctx.F, spec, 'page').node, ctx.el('figcaption', { textContent: spec.summary })));
+      if (spec && spec.bars.length && window.Chart) {
+        const { card, canvas, button } = chartCard(spec);
+        region.append(card);
+        const item = { canvas, spec, chart: window.MarinCensusChart.render(ctx.F, canvas, spec) };
+        live.push(item);
+        button.addEventListener('click', () => downloadChart(item));
         return; // the chart's own table stays in Copy and Download, not in the preview
       } else if (spec) {
-        region.append(text('p', spec.summary));
+        region.append(text('p', spec.summary)); // no bar to draw
       } else if (section.chart && section.chart.summary) {
         region.append(text('p', section.chart.summary)); // a chart in a saved file: its sentence; its picture is not drawn
       }
@@ -161,7 +216,7 @@
       note.hidden = false;
     }
     drawReport(region, report);
-    makePictures();
+    $('copy-charts-button').hidden = $('download-all-png-button').hidden = !live.length;
     // The report is a region named by its own title, so a screen reader can jump to it.
     const heading = region.querySelector('h2');
     if (heading) {
@@ -532,6 +587,11 @@
     $('undo-report').addEventListener('click', restore);
     $('skip-to-report').addEventListener('click', () => { const region = $('report-preview'); region.scrollIntoView({ block: 'start' }); region.focus(); });
     $('add-section').addEventListener('click', addSection);
+    // A tiny stagger between the downloads, as Mentions has: some browsers allow only one per tick.
+    $('copy-charts-button').addEventListener('click', copyCharts);
+    $('download-all-png-button').addEventListener('click', () => live.forEach((item, index) => setTimeout(() => downloadChart(item), index * 150)));
+    // The charts take the page's colors when they are drawn, so a change of color scheme draws them again.
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', () => { pictures.clear(); preview(); });
 
     window.marinUpload({ button: $('open-report'), input: $('report-file'), accept: ['.json'], maxBytes: 4000000, overlay: false, onFile: openFile, onMessage: say });
     ctx.actionBar(document.querySelector('[data-actions="report"]'), {
