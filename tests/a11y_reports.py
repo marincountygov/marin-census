@@ -214,7 +214,7 @@ def main():
             axe_scan(page, label)
             context.close()
 
-        # ---- forced colors: a checked box must look different from an unchecked one ----------------------------
+        # ---- forced colors: a checked box shows a mark (the shell's 2.4.0 base draws the browser's own box there) ------
         context, page = open_reports(forced="active")
         # Is a checked box drawn with a mark? Look for dark pixels inside the box, away from its border (needs Pillow).
         try:
@@ -227,7 +227,7 @@ def main():
                     w, h = picture.size
                     inner = [picture.getpixel((x, y)) for x in range(w // 4 + 2, w - w // 4 - 2) for y in range(h // 4 + 2, h - h // 4 - 2)]
                     if not any(v < 100 for v in inner):
-                        print("KNOWN ISSUE (marin-ui, every app): in forced colors a checked checkbox has no mark, so it looks unchecked. Fix upstream.")
+                        check(False, "in forced colors a checked checkbox has no mark, so it looks unchecked")
                     break
         except ImportError:
             print("SKIP: forced-colors checkbox look (needs Pillow).")
