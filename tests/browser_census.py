@@ -333,7 +333,7 @@ def main():
         require("Estimate" in legend and "90% margin of error" in legend, f"the chart has a legend: {legend[:80]!r}")
         require("highest" in figure.locator("svg desc").text_content() and "highest" in figure.locator("figcaption").inner_text(), "the chart has a description and a sentence")
         require(figure.locator(".chart-bar").count() == 12 + 0 or figure.locator(".chart-bar").count() == 13, f"a bar for each place chosen: {figure.locator('.chart-bar').count()}")
-        require(page.locator("#report-preview figure.report-chart + .table-scroll table th").first.inner_text() == "Place", "the chart is followed by a table of its numbers")
+        require(page.locator("#report-preview figure.report-chart + .table-scroll").count() == 0, "a chart has no table after it in the preview")
         # several charts: one for each measure chosen
         sec.locator('[data-chart-measure="median-age"]').check()
         require(page.locator("#report-preview figure.report-chart").count() == 2, "a second measure makes a second chart")

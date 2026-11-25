@@ -115,6 +115,7 @@
       if (spec && spec.bars.length) {
         // the chart is drawn from our own numbers, as an SVG with a name and a description, and its sentence under it
         region.append(ctx.el('figure', { className: 'report-chart' }, window.MarinCensusChart.draw(ctx.F, spec, 'page').node, ctx.el('figcaption', { textContent: spec.summary })));
+        return; // the chart's own table stays in Copy and Download, not in the preview
       } else if (spec) {
         region.append(text('p', spec.summary));
       } else if (section.chart && section.chart.summary) {
