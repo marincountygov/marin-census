@@ -62,9 +62,15 @@
     if (sections.length) state.sections = sections;
   }
 
+  // The places a section's report holds: the places chosen whose area type is checked. An area type that is unchecked takes
+  // its places out of the report, and checking it brings them back.
+  function reportSections() {
+    return state.sections.map((s) => (s.kinds ? { ...s, places: s.places.filter((id) => s.kinds.includes(state.data.places.find((p) => p.id === id).kind)) } : s));
+  }
+
   function writeAddress() {
     const params = new URLSearchParams(window.location.search);
-    const kept = state.sections.map((s) => M.clean(state.data, s)).filter((s) => s.places.length && s.measures.length);
+    const kept = reportSections().map((s) => M.clean(state.data, s)).filter((s) => s.places.length && s.measures.length);
     const encoded = M.encode(state.data, kept);
     // The report as it opens (one section on Marin County with the headline measures) needs no address.
     const isDefault = encoded === M.encode(state.data, [M.clean(state.data, M.newSection(state.data))]);
@@ -79,11 +85,64 @@
 
   let built = null; // the report object last made from the sections
 
+  // The charts drawn in the preview (Chart.js, as in Marin Mentions). A chart's picture (a PNG) is taken from the drawn
+  // chart when a report is made for Copy or Download, so it is always the chart as it is on the page now.
+  let live = [];
+  let chartItems = []; // the Charts items in the Copy and Download menus, shown when the report has charts
+  const pictures = new Map();
+
+  function capturePictures() {
+    live.forEach(({ canvas, spec }) => {
+      if (canvas.isConnected && canvas.clientWidth) pictures.set(spec.key, window.MarinCensusChart.exportImage(canvas, spec.title));
+    });
+  }
+
+  const chartFile = (title) => `Marin Census - ${title} - ${window.marinReports.pacificToday()}.png`;
+
+  function downloadChart(item) {
+    window.MarinCensusChart.exportImage(item.canvas, item.spec.title).canvas.toBlob((blob) => {
+      if (blob) window.marinDownload({ content: blob, name: chartFile(item.spec.title) });
+    });
+  }
+
+  // Copy for every chart, as Mentions has it: each chart as a picture under its title and its words, through the shell's
+  // rich copy, so a paste into an email or a document keeps the pictures.
+  async function copyCharts() {
+    capturePictures();
+    const esc = (value) => String(value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    const items = live.filter((item) => pictures.get(item.spec.key) && pictures.get(item.spec.key).image);
+    if (!items.length) { announce('There are no charts to copy.'); return; }
+    const plain = items.map((item) => `${item.spec.title}\n${item.spec.summary}`).join('\n\n');
+    const html = `<div>${items.map((item) => {
+      const picture = pictures.get(item.spec.key);
+      return `<b>${esc(item.spec.title)}</b><br>${esc(item.spec.summary)}<br><img src="${picture.image}" alt="${esc(item.spec.title)}" width="${picture.width}" height="${picture.height}">`;
+    }).join('<br><br>')}</div>`;
+    const copied = await window.marinCopyRich(plain, html);
+    announce(copied ? 'Copied charts to clipboard.' : "Couldn't copy the charts. Download them as PNG instead.");
+  }
+
   function currentReport() {
     if (state.opened) return state.opened;
-    built = M.buildReport(state.data, ctx.F, state.sections, { title: state.title, prepared: window.marinReports.pacificToday() });
+    capturePictures();
+    built = M.buildReport(state.data, ctx.F, reportSections(), { title: state.title, prepared: window.marinReports.pacificToday(), chartImage: (key) => pictures.get(key) || null });
     const made = window.marinReports.create(built);
     return made.errors.length ? null : made.report;
+  }
+
+  // A chart card as Mentions has it: an app card with the title as its heading and the chart on a canvas that has its name and
+  // its words for a screen reader. Copying and downloading the charts are items of the toolbar's Copy and Download menus. Drawn from our own numbers, with DOM calls
+  // that set text and never markup.
+  function chartCard(chartSpec) {
+    const canvas = ctx.el('canvas', { role: 'img' });
+    canvas.setAttribute('aria-label', `${chartSpec.title}. ${chartSpec.summary}`);
+    const card = ctx.el('section', { className: 'app-card report-chart' }, ctx.el('h3', { textContent: chartSpec.title }), ctx.el('div', { className: 'chart-box' }, canvas));
+    if (chartSpec.note) card.append(ctx.el('p', { className: 'app-help-text', textContent: chartSpec.note }));
+    // the same numbers as a table for a screen reader, in a wrapper that hides it from the eye
+    const cell = (tag, value, scope) => { const node = ctx.el(tag, { textContent: value }); if (scope) node.setAttribute('scope', scope); return node; };
+    const table = ctx.el('table', {}, ctx.el('thead', {}, ctx.el('tr', {}, cell('th', 'Place', 'col'), cell('th', chartSpec.title, 'col'))), ctx.el('tbody', {}, chartSpec.bars.map((b) => ctx.el('tr', {}, cell('th', b.label, 'row'), cell('td', b.detail)))));
+    table.setAttribute('aria-label', `Data for ${chartSpec.title}`);
+    card.append(ctx.el('div', { className: 'visually-hidden' }, table));
+    return { card, canvas };
   }
 
   // The preview is drawn from the report itself, which is plain data (a title, sections of heads and rows, sources), with
@@ -95,9 +154,22 @@
     region.replaceChildren(text('h2', report.title));
     if (report.prepared) region.append(text('p', `Prepared ${window.marinReports.formatDate(report.prepared)}`));
     if (report.filters) region.append(text('p', report.filters));
-    report.sections.forEach((section) => {
+    live.forEach(({ chart }) => chart.destroy());
+    live = [];
+    report.sections.forEach((section, index) => {
       if (section.title) region.append(text('h3', section.title));
-      if (section.chart && section.chart.summary) region.append(text('p', section.chart.summary)); // a chart's picture is not drawn here
+      const spec = !state.opened && built && built.sections[index] && built.sections[index]._chartSpec;
+      if (spec && spec.bars.length && window.Chart) {
+        const { card, canvas } = chartCard(spec);
+        region.append(card);
+        const item = { canvas, spec, chart: window.MarinCensusChart.render(ctx.F, canvas, spec) };
+        live.push(item);
+        return; // the chart's own table stays in Copy and Download, not in the preview
+      } else if (spec) {
+        region.append(text('p', spec.summary)); // no bar to draw
+      } else if (section.chart && section.chart.summary) {
+        region.append(text('p', section.chart.summary)); // a chart in a saved file: its sentence; its picture is not drawn
+      }
       const head = ctx.el('tr', {}, section.head.map((h) => { const th = text('th', h); th.setAttribute('scope', 'col'); return th; }));
       const rows = section.rows.map((row) => ctx.el('tr', {}, row.map((cell, i) => {
         const node = text(i ? 'td' : 'th', cell);
@@ -133,10 +205,12 @@
       return;
     }
     if (!state.opened && built && built.tables > M.LIMITS.tables) {
-      note.textContent = `A report holds ${M.LIMITS.tables} tables and this one needs ${built.tables}, so the last ${built.tables - M.LIMITS.tables} are left out. Choose fewer places or measures, or remove a section.`;
+      const over = built.tables - M.LIMITS.tables;
+      note.textContent = `A report can hold ${M.LIMITS.tables} tables and charts. This one has ${built.tables}, so ${over === 1 ? 'the last one is' : `the last ${over} are`} not shown. To show ${over === 1 ? 'it' : 'them'}, remove a chart, a section, or some places or measures.`;
       note.hidden = false;
     }
     drawReport(region, report);
+    chartItems.forEach((item) => { item.hidden = !live.length; });
     // The report is a region named by its own title, so a screen reader can jump to it.
     const heading = region.querySelector('h2');
     if (heading) {
@@ -174,9 +248,9 @@
   }
 
   // A "Select all" box: checked when everything it covers is, and mixed when some are.
-  function selectAll(name, text) {
+  function selectAll(name, text, key) {
     const input = ctx.el('input', { type: 'checkbox' });
-    input.dataset.all = name;
+    input.dataset.all = key || name;
     input.setAttribute('aria-label', `${text} ${name}`); // "Select all places": the visible words stay in the name
     return ctx.el('label', { className: 'report-select-all' }, input, ` ${text}`);
   }
@@ -208,18 +282,31 @@
     layout.setAttribute('aria-describedby', 'report-layout-hint');
     const margins = ctx.el('input', { type: 'checkbox', checked: section.margins });
     margins.dataset.field = 'margins';
+    const chart = ctx.el('select', { id: id('chart') }, [['none', 'None'], ['bars', 'Bars'], ['columns', 'Columns']].map(([value, text]) => ctx.el('option', { value, textContent: text, selected: (section.chart || 'none') === value })));
+    chart.dataset.field = 'chart';
+    // the measures that get a chart: any of the section's measures, each a chart with a table of its own
+    const chartItems = data.measures.map((m) => {
+      const item = checkbox('chartMeasure', m.id, m.name, (section.chartMeasures || []).includes(m.id));
+      item.dataset.measureId = m.id;
+      return item;
+    });
+    const chartCount = ctx.el('p', { id: id('charts-count'), className: 'report-count' });
+    chartCount.dataset.count = 'charts';
+    const chartGroup = describedBy(ctx.el('fieldset', { className: 'app-field report-group' },
+      ctx.el('legend', { textContent: 'Chart measures' }),
+      selectAll('chart measures', 'Select all', 'chart'), ctx.el('ul', { className: 'report-checks' }, chartItems), chartCount), id('charts-count'));
+    chartGroup.dataset.chartGroup = 'true';
 
-    // places: area types and a search narrow the list, as the list's filter column does; Select all takes what is shown
-    const shownKinds = openKinds(section);
-    const kindBoxes = Object.entries(data.kinds).map(([kind, label]) => {
+    // places: the area types narrow the list and the report, as the list's filter column does; Select all takes what is shown
+    if (!section.kinds) section.kinds = [...openKinds(section)];
+    const shownKinds = new Set(section.kinds);
+    const kindBoxes = Object.entries(data.kinds).sort((a, b) => b[1].localeCompare(a[1], 'en')).map(([kind, label]) => {
       const input = ctx.el('input', { type: 'checkbox', checked: shownKinds.has(kind) });
       input.dataset.kind = kind;
       const count = data.places.filter((p) => p.kind === kind).length;
       return ctx.el('li', {}, ctx.el('label', {}, input, ` ${label} `, ctx.el('span', { className: 'report-muted', textContent: `(${count})` })));
     });
-    const search = ctx.el('input', { type: 'search', id: id('place-search'), autocomplete: 'off' });
-    search.dataset.field = 'place-search';
-    const placeList = ctx.el('ul', { className: 'report-checks report-checks--places' }, data.places.map((p) => {
+    const placeList = ctx.el('ul', { className: 'report-checks report-checks--places' }, M.byName(data).map((placeId) => data.places.find((p) => p.id === placeId)).map((p) => {
       const item = checkbox('place', p.id, p.name, section.places.includes(p.id));
       item.dataset.kind = p.kind;
       return item;
@@ -250,15 +337,16 @@
       ctx.el('fieldset', { className: 'app-form-grid report-fields' }, legend,
         field('Title', title, id('title')),
         field('Layout', layout, id('layout')),
-        ctx.el('div', { className: 'app-field' }, ctx.el('label', {}, margins, ' Show margins of error')),
+        field('Chart', chart, id('chart')),
+        chartGroup,
         describedBy(ctx.el('fieldset', { className: 'app-field report-group' },
           ctx.el('legend', { textContent: 'Places' }),
           ctx.el('fieldset', { className: 'app-field report-kinds' }, ctx.el('legend', { textContent: 'Area types' }), ctx.el('ul', { className: 'report-checks' }, kindBoxes)),
-          ctx.el('div', { className: 'search-input-field' }, ctx.el('label', { htmlFor: id('place-search'), textContent: 'Search' }), search),
           selectAll('places', 'Select all'), placeList, placeCount), id('places-count')),
         describedBy(ctx.el('fieldset', { className: 'app-field report-group' },
           ctx.el('legend', { textContent: 'Measures' }),
-          selectAll('measures', 'Select all'), topics, measureCount), id('measures-count'))),
+          selectAll('measures', 'Select all'), topics, measureCount), id('measures-count')),
+        ctx.el('div', { className: 'app-field' }, ctx.el('label', {}, margins, ' Show margins of error'))),
       actions);
     li.append(details);
     return li;
@@ -283,11 +371,10 @@
     li.querySelectorAll('[data-act]').forEach((button) => button.setAttribute('aria-label', `${names[button.dataset.act]}, section ${number}`));
 
     const kinds = new Set([...li.querySelectorAll('input[data-kind]')].filter((box) => box.checked).map((box) => box.dataset.kind));
-    const words = li.querySelector('[data-field="place-search"]').value.trim().toLowerCase();
     let shown = 0;
     let shownChosen = 0;
     li.querySelectorAll('.report-checks--places li').forEach((item) => {
-      const visible = kinds.has(item.dataset.kind) && (!words || item.textContent.toLowerCase().includes(words));
+      const visible = kinds.has(item.dataset.kind);
       item.hidden = !visible;
       if (visible) {
         shown += 1;
@@ -295,15 +382,34 @@
       }
     });
     li.dataset.shown = String(shown);
+    // The chart measures are some of the section's measures; the group shows only when there is a chart.
+    const charted = section.chart && section.chart !== 'none';
+    li.querySelector('[data-chart-group]').hidden = !charted;
+    let chartShown = 0;
+    let chartChosen = 0;
+    li.querySelectorAll('[data-measure-id]').forEach((item) => {
+      const visible = section.measures.includes(item.dataset.measureId);
+      item.hidden = !visible;
+      const box = item.querySelector('input');
+      box.checked = (section.chartMeasures || []).includes(item.dataset.measureId);
+      if (visible) { chartShown += 1; if (box.checked) chartChosen += 1; }
+    });
+    li.querySelector('[data-count="charts"]').textContent = `${chartChosen} of ${chartShown} measures charted`;
     const mixed = (box, chosen, of) => { box.checked = of > 0 && chosen === of; box.indeterminate = chosen > 0 && chosen < of; };
     mixed(li.querySelector('[data-all="places"]'), shownChosen, shown);
     mixed(li.querySelector('[data-all="measures"]'), section.measures.length, total.measures);
+    mixed(li.querySelector('[data-all="chart"]'), chartChosen, chartShown);
   }
 
-  // How many places the list shows after the area types or the search narrow it.
+  // How many places the list shows after the area types narrow it.
   function announceShown(li) {
     const n = Number(li.dataset.shown);
     announce(n === 0 ? 'No places match.' : `${n} ${n === 1 ? 'place' : 'places'} shown.`);
+  }
+
+  // The charted measures are always some of the section's measures.
+  function keepChartMeasure(section) {
+    section.chartMeasures = state.data.measures.map((m) => m.id).filter((id) => section.measures.includes(id) && (section.chartMeasures || []).includes(id));
   }
 
   function drawSections() {
@@ -331,7 +437,7 @@
     } else if (t.dataset.measure !== undefined) {
       section.measures = t.checked ? [...section.measures, t.dataset.measure] : section.measures.filter((x) => x !== t.dataset.measure);
     } else if (t.dataset.all === 'places') {
-      // Select all takes the places the list shows now (the area types and the search), and clearing leaves them out.
+      // Select all takes the places the list shows now (the area types), and clearing leaves them out.
       const shown = [...li.querySelectorAll('.report-checks--places li')].filter((item) => !item.hidden).map((item) => item.querySelector('input').dataset.place);
       section.places = t.checked ? [...new Set([...section.places, ...shown])] : section.places.filter((id) => !shown.includes(id));
       li.querySelectorAll('.report-checks--places li').forEach((item) => { const box = item.querySelector('input'); box.checked = section.places.includes(box.dataset.place); });
@@ -339,14 +445,30 @@
       section.measures = t.checked ? state.data.measures.map((m) => m.id) : [];
       li.querySelectorAll('[data-measure]').forEach((box) => { box.checked = t.checked; });
     } else if (t.dataset.kind !== undefined) {
+      section.kinds = [...li.querySelectorAll('input[data-kind]')].filter((box) => box.checked).map((box) => box.dataset.kind);
       refresh(li, section);
       announceShown(li);
-      return; // the area types only narrow the list; the report is the same
+      changed(); // an unchecked area type takes its places out of the report
+      return;
     } else if (t.dataset.field === 'orientation') {
       section.orientation = t.value;
     } else if (t.dataset.field === 'margins') {
       section.margins = t.checked;
+    } else if (t.dataset.field === 'chart') {
+      section.chart = t.value;
+      // choosing a chart charts the first measure to start; the person adds the others
+      if (t.value !== 'none' && !(section.chartMeasures || []).length) {
+        const first = state.data.measures.find((m) => section.measures.includes(m.id));
+        section.chartMeasures = first ? [first.id] : [];
+      }
+    } else if (t.dataset.chartMeasure !== undefined) {
+      const wanted = new Set(section.chartMeasures || []);
+      if (t.checked) wanted.add(t.dataset.chartMeasure); else wanted.delete(t.dataset.chartMeasure);
+      section.chartMeasures = state.data.measures.map((m) => m.id).filter((id) => wanted.has(id));
+    } else if (t.dataset.all === 'chart') {
+      section.chartMeasures = t.checked ? state.data.measures.map((m) => m.id).filter((id) => section.measures.includes(id)) : [];
     } else return;
+    keepChartMeasure(section);
     refresh(li, section);
     changed();
   }
@@ -360,9 +482,6 @@
       section.title = t.value;
       refresh(li, section);
       changed();
-    } else if (t.dataset.field === 'place-search') {
-      refresh(li, byUid(li.dataset.uid));
-      announceShown(li);
     }
   }
 
@@ -458,9 +577,11 @@
     $('undo-report').addEventListener('click', restore);
     $('skip-to-report').addEventListener('click', () => { const region = $('report-preview'); region.scrollIntoView({ block: 'start' }); region.focus(); });
     $('add-section').addEventListener('click', addSection);
+    // The charts take the page's colors when they are drawn, so a change of color scheme draws them again.
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', () => { pictures.clear(); preview(); });
 
     window.marinUpload({ button: $('open-report'), input: $('report-file'), accept: ['.json'], maxBytes: 4000000, overlay: false, onFile: openFile, onMessage: say });
-    ctx.actionBar(document.querySelector('[data-actions="report"]'), {
+    const bar = ctx.actionBar(document.querySelector('[data-actions="report"]'), {
       fileName: 'marin-census-report',
       fullscreen: '#report-preview-region',
       formats: () => {
@@ -471,6 +592,18 @@
       csv: () => csvText(window.marinReports.csvRows(currentReport() || { sections: [] })),
       json: () => window.marinReports.toJson(currentReport() || window.marinReports.create({}).report),
     });
+    // Every copy is an item of Copy and every download an item of Download, so a function is in one place. The charts are items too.
+    const addItem = (menu, label, run) => {
+      const toggle = bar.actions.querySelector(`.menu-toggle[aria-controls^="${menu}-panel"]`);
+      const item = ctx.el('button', { type: 'button', textContent: label, hidden: true });
+      item.dataset.buttonKind = 'menu-item';
+      item.addEventListener('click', run);
+      document.getElementById(toggle.getAttribute('aria-controls')).append(item);
+      chartItems.push(item);
+    };
+    addItem('copy', 'Charts', copyCharts);
+    // A tiny stagger between the downloads, as Mentions has: some browsers allow only one per tick.
+    addItem('download', 'Charts (PNG)', () => live.forEach((item, index) => setTimeout(() => downloadChart(item), index * 150)));
   }
 
   start();

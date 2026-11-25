@@ -16,10 +16,11 @@ test('a new section starts on Marin County with the headline measures', () => {
   assert.equal(s.margins, true);
 });
 
-test('clean drops what does not exist and keeps the data order, with no limit on how many', () => {
+test('clean drops what does not exist and keeps the places A to Z, with no limit on how many', () => {
   const all = data.places.map((p) => p.id);
   const s = M.clean(data, { places: ['nowhere', ...all.slice().reverse()], measures: ['nope', ...data.measures.map((m) => m.id)], title: 'x'.repeat(300), orientation: 'sideways' });
-  assert.deepEqual(s.places, all);
+  assert.deepEqual(s.places, M.byName(data));
+  assert.deepEqual(M.byName(data).slice(0, 3), ['alto', 'belvedere', 'black-point-green-point-cdp']);
   assert.equal(s.measures.length, data.measures.length);
   assert.equal(s.orientation, 'auto');
   assert.equal(s.title.length, 200);
@@ -97,22 +98,70 @@ test('a section with no place or no measure makes no table', () => {
   assert.equal(r.prepared, '2026-11-24');
 });
 
-test('the report ends with the source and the confidence level', () => {
+test('the report ends with the source and nothing else', () => {
   const r = M.buildReport(data, F, [section()], {});
   assert.equal(r.sources.length, 1);
-  assert.match(r.sources[0].label, /American Community Survey 5-year estimates, 2020\u20132024\. Margins of error are at the 90% confidence level\.$/);
+  assert.match(r.sources[0].label, /^U\.S\. Census Bureau, American Community Survey 5-year estimates, 2020\u20132024$/);
+  assert.ok(!/margin|confidence/i.test(r.sources[0].label));
   assert.match(r.sources[0].url, /^https:\/\//);
 });
 
 test('the address holds the sections and reads them back; everything is written as *', () => {
   const sections = [section({ title: 'A | B ~ C', orientation: 'measures', margins: false })];
   assert.deepEqual(M.decode(M.encode(data, sections), data), sections.map((s) => M.clean(data, s)));
-  const all = [{ places: data.places.map((p) => p.id), measures: data.measures.map((m) => m.id), orientation: 'auto', margins: true, title: '' }];
+  const all = [{ places: M.byName(data), measures: data.measures.map((m) => m.id), orientation: 'auto', margins: true, title: '', chart: 'none', chartMeasures: [] }];
   assert.equal(M.encode(data, all), '*|*|a|1|');
   assert.deepEqual(M.decode('*|*|a|1|', data), all);
   assert.deepEqual(M.decode('', data), []);
   assert.deepEqual(M.decode('nowhere|nope|p|1|', data), []);
   assert.equal(M.decode(Array(10).fill('san-rafael|population-total|p|1|').join('~'), data).length, M.LIMITS.sections);
+});
+
+test('each charted measure follows the section as a chart with a table of its own', () => {
+  const sec = section({ chart: 'bars', chartMeasures: ['median-age', 'population-total'], measures: ['population-total', 'median-age'] });
+  const tables = M.buildSection(data, F, sec, () => ({ image: 'data:image/png;base64,AAAA', width: 700, height: 200 }));
+  assert.equal(tables.length, 1 + 2, 'the section table and two charts');
+  assert.equal(M.tableCount(data, sec), 3);
+  const [main, first, second] = tables;
+  assert.ok(!main.chart && !main._chartSpec, 'the section table has no chart');
+  // charts follow in the order of the data, each with its table of the same places
+  assert.equal(first.chart.series[0].name, 'Total population');
+  assert.equal(second.chart.series[0].name, 'Median age');
+  assert.equal(first.title, '', 'the chart has the title, so its table has none');
+  assert.match(first.chart.title, /^Total population by place \(people\)$/);
+  assert.deepEqual(first.head, ['Place', 'Total population']);
+  assert.equal(first.rows.length, 2);
+  assert.equal(first.chart.image, 'data:image/png;base64,AAAA');
+  assert.match(first.chart.summary, /^Total population for 2 places: highest /);
+  assert.deepEqual(M.decode(M.encode(data, [sec]), data), [M.clean(data, sec)]);
+  assert.ok(!M.encode(data, [section()]).includes('|b|'), 'a section with no chart keeps the short form');
+});
+
+test('a chart table lists every place in the chart order, with the places the chart leaves out last', () => {
+  const sec = { places: ['belvedere', 'novato', 'san-rafael'], measures: ['median-household-income'], orientation: 'auto', margins: true, title: '', chart: 'bars', chartMeasures: ['median-household-income'] };
+  const [, chart] = M.buildSection(data, F, sec);
+  assert.deepEqual(chart.rows.map((r) => r[0]), ['San Rafael', 'Novato', 'Belvedere']); // Belvedere is "250,000 or more": not drawn, so last
+  assert.equal(chart.rows[2][1], '$250,000 or more');
+  assert.equal(chart.chart.labels.length, 2);
+});
+
+test('charts need measures of the section; a list can be empty; with no list the first is charted; an older single measure is read', () => {
+  const base = { places: ['novato'], measures: ['median-age', 'poverty-rate'], chart: 'bars' };
+  assert.deepEqual(M.clean(data, { ...base, chartMeasures: ['population-total'] }).chartMeasures, [], 'a measure that is not in the section is dropped');
+  assert.deepEqual(M.clean(data, { ...base, chartMeasures: ['poverty-rate', 'median-age'] }).chartMeasures, ['median-age', 'poverty-rate']);
+  assert.deepEqual(M.clean(data, { ...base, chartMeasure: 'poverty-rate' }).chartMeasures, ['poverty-rate']);
+  assert.deepEqual(M.clean(data, { ...base, chart: 'none', chartMeasures: ['median-age'] }).chartMeasures, []);
+  assert.deepEqual(M.clean(data, { ...base, chartMeasures: [] }).chartMeasures, [], 'an empty list stays empty');
+  assert.deepEqual(M.clean(data, { ...base }).chartMeasures, ['median-age'], 'no list: the first measure');
+  assert.equal(M.clean(data, { ...base, chart: 'pie' }).chart, 'none');
+  assert.deepEqual(M.decode('novato|median-age.poverty-rate|a|1||b|poverty-rate', data)[0].chartMeasures, ['poverty-rate']);
+});
+
+test('the charts count toward the report\'s ten tables', () => {
+  const big = { places: ['novato'], measures: data.measures.map((m) => m.id), orientation: 'places', margins: true, title: '', chart: 'bars', chartMeasures: data.measures.slice(0, 12).map((m) => m.id) };
+  const r = M.buildReport(data, F, [big], {});
+  assert.equal(r.tables, 1 + 12);
+  assert.equal(r.sections.length, M.LIMITS.tables);
 });
 
 test('a table never has more than 12 columns', () => {

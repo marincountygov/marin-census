@@ -129,7 +129,7 @@ def main():
         check(page.evaluate("document.activeElement.id") == "report-preview", "the skip link moves focus to the report")
 
         # a group is described by its count; the report title shows its default; the page title names the tab
-        check(page.locator("fieldset.report-group[aria-describedby]").count() == 4, "Places and Measures are described by their counts")
+        check(page.locator("fieldset.report-group[aria-describedby]").count() == 6, "Places, Measures and Chart measures are described by their counts")
         check(page.locator("#report-title").get_attribute("placeholder") == "Marin Census report", "the report title shows the default as its placeholder")
         check(page.evaluate("document.title") == "Reports | Marin Census", f"the page title names the tab: {page.evaluate('document.title')!r}")
 
@@ -154,13 +154,10 @@ def main():
             first.locator(".report-checks--places label", has_text="Novato").first.locator("input").check()
             page.wait_for_timeout(900)
             check("Report updated" in live.inner_text() and "table" in live.inner_text(), f"ticking a place is announced: {live.inner_text()!r}")
-            first.locator("input[data-field=place-search]").fill("san")
+            first.locator("input[data-kind=county]").uncheck()
             page.wait_for_timeout(900)
-            check("shown" in live.inner_text(), f"a search says how many places show: {live.inner_text()!r}")
-            first.locator("input[data-field=place-search]").fill("zzzz")
-            page.wait_for_timeout(900)
-            check("No places match" in live.inner_text(), f"an empty search says so: {live.inner_text()!r}")
-            first.locator("input[data-field=place-search]").fill("")
+            check("Report updated" in live.inner_text(), f"unchecking an area type changes the report and says so: {live.inner_text()!r}")
+            first.locator("input[data-kind=county]").check()
             page.locator(".report-section").last.locator('button[data-act="up"]').click()
             check("moved up" in page.locator("#report-status").inner_text(), "moving a section says so")
 
@@ -202,6 +199,31 @@ def main():
             clipped = page.evaluate("""() => [...document.querySelectorAll('#report-panel label, #report-panel legend, #report-panel summary, #report-panel button, #report-panel select, #report-panel .app-field')]
                 .filter((e) => e.getClientRects().length && e.clientWidth > 1 && e.scrollWidth > e.clientWidth + 2 && getComputedStyle(e).overflowX !== 'visible') // a visually hidden legend or skip link is 1 px on purpose.map((e) => (e.textContent || '').trim().slice(0, 20))""")
             check(not clipped, f"{label}: text is cut off in {clipped[:3]}")
+            context.close()
+
+        # ---- a chart: axe, its name and description, and contrast (3:1 for the bars and lines, 4.5:1 for its words) ------
+        for scheme in ("light", "dark"):
+            context, page = open_reports(scheme=scheme)
+            sec = page.locator(".report-section").first
+            sec.locator("input[data-kind=cdp]").uncheck()
+            sec.locator('[data-all="places"]').check()
+            sec.locator('[data-field="chart"]').select_option("columns")
+            sec.locator('[data-chart-measure="poverty-rate"]').check()
+            page.locator("#add-section").click()
+            page.locator(".report-section").last.locator('[data-field="chart"]').select_option("bars")
+            page.wait_for_timeout(400)
+            names = page.evaluate("[...document.querySelectorAll('#report-preview canvas')].map((c) => [c.getAttribute('role'), c.getAttribute('aria-label'), c.closest('.app-card').querySelector('h3').textContent])")
+            check(len(names) == 3 and all(r == "img" and l.startswith(h + ". ") for r, l, h in names), f"{scheme}: each of the {len(names)} charts is an image named by its title and described")
+            ratios = page.evaluate(r"""() => {
+                const parse = (c) => c.match(/[\d.]+/g).slice(0, 3).map(Number);
+                const lum = ([r, g, b]) => { const f = (v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); }; return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b); };
+                const ratio = (a, b) => { const x = lum(parse(a)), y = lum(parse(b)); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); };
+                const card = document.querySelector('#report-preview .app-card');
+                const bg = getComputedStyle(card).backgroundColor;
+                return { bar: ratio('rgb(7, 119, 207)', bg), text: ratio(Chart.defaults.color, bg) };
+            }""")
+            check(ratios["bar"] >= 3 and ratios["text"] >= 4.5, f"{scheme}: chart contrast {ratios}")
+            axe_scan(page, f"report with two charts, {scheme}")
             context.close()
 
         # ---- axe on the other states ----------------------------------------------------------------------------

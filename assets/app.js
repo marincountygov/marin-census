@@ -76,14 +76,13 @@
   // ---- the source line ---------------------------------------------------------------------------------------
 
   function sourceLine() {
-    const { label, confidenceLevel } = app.data.source;
-    return `${label}. Margins of error are at the ${F.confidence(confidenceLevel)} confidence level.`;
+    return app.data.source.label;
   }
 
   function drawSource() {
-    const { label, url, confidenceLevel } = app.data.source;
+    const { label, url } = app.data.source;
     document.querySelectorAll('[data-census-source]').forEach((p) => {
-      p.replaceChildren(url ? el('a', { href: url, textContent: label }) : label, `. Margins of error are at the ${F.confidence(confidenceLevel)} confidence level.`);
+      p.replaceChildren(url ? el('a', { href: url, textContent: label }) : label);
     });
   }
 

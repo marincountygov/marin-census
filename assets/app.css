@@ -558,3 +558,18 @@ fieldset.report-fields > legend {
   padding: 0;
 }
 
+/* A chart in the report is a card like the ones in Marin Mentions: the title, the chart on a canvas, a download button. */
+.report-chart {
+  margin: 1rem 0;
+}
+
+.report-chart canvas {
+  max-width: 100%;
+}
+
+
+
+/* The Charts items of the Copy and Download menus show only when the report has charts; the menu's button style would otherwise override hidden. */
+.menu-panel button[hidden] {
+  display: none;
+}

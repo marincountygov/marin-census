@@ -16,4 +16,10 @@ Keep the notices distributed with that release:
 
 Font assets remain under `vendor/fonts/`, outside the replaceable shell directory. Retain their accompanying license information, including `vendor/fonts/open-sans/OFL.txt`. The shell uses these local assets and can fall back to system fonts when they are unavailable.
 
+## Chart.js
+
+- Chart.js 4.5.1, MIT License
+
+The vendored Chart.js bundle (`vendor/chart.min.js`) draws the report charts, the same copy Marin Mentions uses. See `vendor/CHART_LICENSE.md`. Keep its reviewed version.
+
 Add notices for app-specific dependencies here when building the actual workflow.
