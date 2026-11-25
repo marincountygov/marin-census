@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Exercise the Places page and a place's page in a real browser. Run: python3 tests/browser_census.py
 
-Serves the repository over local HTTP, opens the login for the tab, then checks filtering, sorting, the
+Serves the repository over local HTTP, then checks filtering, sorting, the
 open-ended and missing values, downloads, a place page, the Back button and a narrow screen.
 """
 import functools
@@ -13,7 +13,6 @@ from pathlib import Path
 from playwright.sync_api import expect, sync_playwright
 
 ROOT = Path(__file__).resolve().parent.parent
-UNLOCK = "try { window.sessionStorage.setItem('marin-census-unlocked', '1'); } catch (e) {}"
 
 
 def require(condition, message):
@@ -34,15 +33,14 @@ def main():
     errors = []
     with sync_playwright() as p:
         browser = p.chromium.launch()
-        # the login
-        locked = browser.new_page()
-        locked.goto(base)
-        locked.wait_for_selector(".gate")
-        require(locked.locator("main").is_hidden(), "the page shows behind the login")
-        locked.close()
+        # no login: the page is open
+        open_page = browser.new_page()
+        open_page.goto(base)
+        open_page.wait_for_selector("#census-cards li")
+        require(open_page.locator(".gate").count() == 0 and open_page.locator("main").is_visible(), "the page is open with no login")
+        open_page.close()
 
         context = browser.new_context(viewport={"width": 1280, "height": 900}, accept_downloads=True, permissions=["clipboard-read", "clipboard-write"])
-        context.add_init_script(UNLOCK)
         page = context.new_page()
         page.on("pageerror", lambda e: errors.append(str(e)))
         page.on("console", lambda m: errors.append(m.text) if m.type == "error" else None)

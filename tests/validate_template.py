@@ -170,11 +170,7 @@ def main() -> None:
             "Load one shell script and one application script")
     require(sources.index("vendor/marinos/marinos.js") < sources.index("assets/app.js"),
             "The shell must load before the app")
-    require(sources[0] == "assets/gate.js", "The login (assets/gate.js) must be the first script")
     for attrs in scripts:
-        if attrs.get("src") == "assets/gate.js":  # not deferred: it hides the page before it is drawn
-            require("defer" not in attrs and "async" not in attrs, "Load the login script without defer or async")
-            continue
         require("defer" in attrs and "async" not in attrs, "Keep ordered deferred scripts")
     for relative in styles + sources + [info.get("security-src", "security.json")]:
         if relative and not re.match(r"(?:[a-z]+:|//)", relative, re.I):

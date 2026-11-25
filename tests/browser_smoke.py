@@ -17,8 +17,6 @@ from urllib.parse import urlsplit
 from html_fixture import remove_from_html
 
 ROOT = Path(__file__).resolve().parents[1]
-# The login (assets/gate.js) opens for the tab when this is set, so the tests can reach the page.
-UNLOCK = "try { window.sessionStorage.setItem('marin-census-unlocked', '1'); } catch (e) {}"
 PREFIX = "/template-test/"
 MANIFEST = json.loads((ROOT / "vendor/marinos/manifest.json").read_text(encoding="utf-8"))
 SECURITY = json.loads((ROOT / "security.json").read_text(encoding="utf-8"))
@@ -192,7 +190,6 @@ def run(screenshots: Path | None, in_memory: bool = False) -> None:
             if screenshots:
                 screenshots.mkdir(parents=True, exist_ok=True)
             context = browser.new_context(viewport={"width": 1440, "height": 960}, color_scheme="light")
-            context.add_init_script(UNLOCK)
             problems, external = configure(context, base_url)
             page = context.new_page()
             page = navigate(context, page, base_url)
@@ -286,7 +283,6 @@ def run(screenshots: Path | None, in_memory: bool = False) -> None:
 
             for width, mode in ((390, "dark"), (320, "light")):
                 mobile_context = browser.new_context(viewport={"width": width, "height": 844}, color_scheme=mode)
-                mobile_context.add_init_script(UNLOCK)
                 mobile_problems, _ = configure(mobile_context, base_url)
                 mobile = mobile_context.new_page()
                 mobile = navigate(mobile_context, mobile, base_url)
@@ -314,7 +310,6 @@ def run(screenshots: Path | None, in_memory: bool = False) -> None:
 
             disabled = browser.new_context(java_script_enabled=False)
 
-            disabled.add_init_script(UNLOCK)
             disabled_problems, _ = configure(disabled, base_url)
             page = disabled.new_page()
             page = navigate(disabled, page, base_url, javascript=False)

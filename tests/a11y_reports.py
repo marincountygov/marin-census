@@ -17,7 +17,6 @@ from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parent.parent
 AXE = os.environ.get("AXE_CORE")
-UNLOCK = "try { window.sessionStorage.setItem('marin-census-unlocked', '1'); } catch (e) {}"
 TAGS = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"]
 problems = []
 
@@ -81,7 +80,6 @@ def main():
             if forced:
                 kwargs["forced_colors"] = forced
             context = browser.new_context(**kwargs)
-            context.add_init_script(UNLOCK)
             if AXE:
                 context.add_init_script(path=AXE)
             page = context.new_page()

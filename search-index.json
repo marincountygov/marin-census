@@ -1,0 +1,823 @@
+{
+ "schemaVersion": "1.0.0",
+ "title": "Marin Census search list",
+ "base": "https://marincountygov.github.io/marin-census/",
+ "entries": [
+  {
+   "k": "Statistic",
+   "n": "Marin County",
+   "d": "County",
+   "h": "?place=marin-county"
+  },
+  {
+   "k": "Statistic",
+   "n": "Belvedere",
+   "d": "City or town",
+   "h": "?place=belvedere"
+  },
+  {
+   "k": "Statistic",
+   "n": "Corte Madera",
+   "d": "City or town",
+   "h": "?place=corte-madera"
+  },
+  {
+   "k": "Statistic",
+   "n": "Fairfax",
+   "d": "City or town",
+   "h": "?place=fairfax"
+  },
+  {
+   "k": "Statistic",
+   "n": "Larkspur",
+   "d": "City or town",
+   "h": "?place=larkspur"
+  },
+  {
+   "k": "Statistic",
+   "n": "Mill Valley",
+   "d": "City or town",
+   "h": "?place=mill-valley"
+  },
+  {
+   "k": "Statistic",
+   "n": "Novato",
+   "d": "City or town",
+   "h": "?place=novato"
+  },
+  {
+   "k": "Statistic",
+   "n": "Ross",
+   "d": "City or town",
+   "h": "?place=ross"
+  },
+  {
+   "k": "Statistic",
+   "n": "San Anselmo",
+   "d": "City or town",
+   "h": "?place=san-anselmo"
+  },
+  {
+   "k": "Statistic",
+   "n": "San Rafael",
+   "d": "City or town",
+   "h": "?place=san-rafael"
+  },
+  {
+   "k": "Statistic",
+   "n": "Sausalito",
+   "d": "City or town",
+   "h": "?place=sausalito"
+  },
+  {
+   "k": "Statistic",
+   "n": "Tiburon",
+   "d": "City or town",
+   "h": "?place=tiburon"
+  },
+  {
+   "k": "Statistic",
+   "n": "Alto",
+   "d": "Census-designated place",
+   "h": "?place=alto"
+  },
+  {
+   "k": "Statistic",
+   "n": "Black Point-Green Point",
+   "d": "Census-designated place",
+   "h": "?place=black-point-green-point-cdp"
+  },
+  {
+   "k": "Statistic",
+   "n": "Bolinas",
+   "d": "Census-designated place",
+   "h": "?place=bolinas"
+  },
+  {
+   "k": "Statistic",
+   "n": "Dillon Beach",
+   "d": "Census-designated place",
+   "h": "?place=dillon-beach"
+  },
+  {
+   "k": "Statistic",
+   "n": "Inverness",
+   "d": "Census-designated place",
+   "h": "?place=inverness"
+  },
+  {
+   "k": "Statistic",
+   "n": "Kentfield",
+   "d": "Census-designated place",
+   "h": "?place=kentfield"
+  },
+  {
+   "k": "Statistic",
+   "n": "Lagunitas-Forest Knolls",
+   "d": "Census-designated place",
+   "h": "?place=lagunitas-forest-knolls-cdp"
+  },
+  {
+   "k": "Statistic",
+   "n": "Lucas Valley-Marinwood",
+   "d": "Census-designated place",
+   "h": "?place=lucas-valley-marinwood-cdp"
+  },
+  {
+   "k": "Statistic",
+   "n": "Marin City",
+   "d": "Census-designated place",
+   "h": "?place=marin-city"
+  },
+  {
+   "k": "Statistic",
+   "n": "Muir Beach",
+   "d": "Census-designated place",
+   "h": "?place=muir-beach"
+  },
+  {
+   "k": "Statistic",
+   "n": "Nicasio",
+   "d": "Census-designated place",
+   "h": "?place=nicasio"
+  },
+  {
+   "k": "Statistic",
+   "n": "Point Reyes Station",
+   "d": "Census-designated place",
+   "h": "?place=point-reyes-station"
+  },
+  {
+   "k": "Statistic",
+   "n": "San Geronimo",
+   "d": "Census-designated place",
+   "h": "?place=san-geronimo"
+  },
+  {
+   "k": "Statistic",
+   "n": "Santa Venetia",
+   "d": "Census-designated place",
+   "h": "?place=santa-venetia"
+  },
+  {
+   "k": "Statistic",
+   "n": "Sleepy Hollow",
+   "d": "Census-designated place",
+   "h": "?place=sleepy-hollow"
+  },
+  {
+   "k": "Statistic",
+   "n": "Stinson Beach",
+   "d": "Census-designated place",
+   "h": "?place=stinson-beach"
+  },
+  {
+   "k": "Statistic",
+   "n": "Strawberry",
+   "d": "Census-designated place",
+   "h": "?place=strawberry"
+  },
+  {
+   "k": "Statistic",
+   "n": "Tamalpais-Homestead Valley",
+   "d": "Census-designated place",
+   "h": "?place=tamalpais-homestead-valley-cdp"
+  },
+  {
+   "k": "Statistic",
+   "n": "Tomales",
+   "d": "Census-designated place",
+   "h": "?place=tomales"
+  },
+  {
+   "k": "Statistic",
+   "n": "Woodacre",
+   "d": "Census-designated place",
+   "h": "?place=woodacre"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1011",
+   "d": "Census tract",
+   "h": "?place=census-tract-1011"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1012",
+   "d": "Census tract",
+   "h": "?place=census-tract-1012"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1021",
+   "d": "Census tract",
+   "h": "?place=census-tract-1021"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1022.02",
+   "d": "Census tract",
+   "h": "?place=census-tract-1022-02"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1022.03",
+   "d": "Census tract",
+   "h": "?place=census-tract-1022-03"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1031",
+   "d": "Census tract",
+   "h": "?place=census-tract-1031"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1032",
+   "d": "Census tract",
+   "h": "?place=census-tract-1032"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1041.02",
+   "d": "Census tract",
+   "h": "?place=census-tract-1041-02"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1041.03",
+   "d": "Census tract",
+   "h": "?place=census-tract-1041-03"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1041.04",
+   "d": "Census tract",
+   "h": "?place=census-tract-1041-04"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1042",
+   "d": "Census tract",
+   "h": "?place=census-tract-1042"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1043",
+   "d": "Census tract",
+   "h": "?place=census-tract-1043"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1050.01",
+   "d": "Census tract",
+   "h": "?place=census-tract-1050-01"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1050.02",
+   "d": "Census tract",
+   "h": "?place=census-tract-1050-02"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1060.01",
+   "d": "Census tract",
+   "h": "?place=census-tract-1060-01"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1060.02",
+   "d": "Census tract",
+   "h": "?place=census-tract-1060-02"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1070",
+   "d": "Census tract",
+   "h": "?place=census-tract-1070"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1081",
+   "d": "Census tract",
+   "h": "?place=census-tract-1081"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1082.01",
+   "d": "Census tract",
+   "h": "?place=census-tract-1082-01"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1082.02",
+   "d": "Census tract",
+   "h": "?place=census-tract-1082-02"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1090.01",
+   "d": "Census tract",
+   "h": "?place=census-tract-1090-01"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1090.02",
+   "d": "Census tract",
+   "h": "?place=census-tract-1090-02"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1101",
+   "d": "Census tract",
+   "h": "?place=census-tract-1101"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1102",
+   "d": "Census tract",
+   "h": "?place=census-tract-1102"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1110.01",
+   "d": "Census tract",
+   "h": "?place=census-tract-1110-01"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1110.02",
+   "d": "Census tract",
+   "h": "?place=census-tract-1110-02"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1121",
+   "d": "Census tract",
+   "h": "?place=census-tract-1121"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1122.02",
+   "d": "Census tract",
+   "h": "?place=census-tract-1122-02"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1122.03",
+   "d": "Census tract",
+   "h": "?place=census-tract-1122-03"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1122.04",
+   "d": "Census tract",
+   "h": "?place=census-tract-1122-04"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1130",
+   "d": "Census tract",
+   "h": "?place=census-tract-1130"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1141",
+   "d": "Census tract",
+   "h": "?place=census-tract-1141"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1142",
+   "d": "Census tract",
+   "h": "?place=census-tract-1142"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1150",
+   "d": "Census tract",
+   "h": "?place=census-tract-1150"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1160",
+   "d": "Census tract",
+   "h": "?place=census-tract-1160"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1170",
+   "d": "Census tract",
+   "h": "?place=census-tract-1170"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1181",
+   "d": "Census tract",
+   "h": "?place=census-tract-1181"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1191",
+   "d": "Census tract",
+   "h": "?place=census-tract-1191"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1192.01",
+   "d": "Census tract",
+   "h": "?place=census-tract-1192-01"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1192.02",
+   "d": "Census tract",
+   "h": "?place=census-tract-1192-02"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1200.01",
+   "d": "Census tract",
+   "h": "?place=census-tract-1200-01"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1200.02",
+   "d": "Census tract",
+   "h": "?place=census-tract-1200-02"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1211",
+   "d": "Census tract",
+   "h": "?place=census-tract-1211"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1212",
+   "d": "Census tract",
+   "h": "?place=census-tract-1212"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1220",
+   "d": "Census tract",
+   "h": "?place=census-tract-1220"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1230",
+   "d": "Census tract",
+   "h": "?place=census-tract-1230"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1241",
+   "d": "Census tract",
+   "h": "?place=census-tract-1241"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1242",
+   "d": "Census tract",
+   "h": "?place=census-tract-1242"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1250",
+   "d": "Census tract",
+   "h": "?place=census-tract-1250"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1261",
+   "d": "Census tract",
+   "h": "?place=census-tract-1261"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1262",
+   "d": "Census tract",
+   "h": "?place=census-tract-1262"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1270",
+   "d": "Census tract",
+   "h": "?place=census-tract-1270"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1281",
+   "d": "Census tract",
+   "h": "?place=census-tract-1281"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1282",
+   "d": "Census tract",
+   "h": "?place=census-tract-1282"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1290",
+   "d": "Census tract",
+   "h": "?place=census-tract-1290"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1302.01",
+   "d": "Census tract",
+   "h": "?place=census-tract-1302-01"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1302.03",
+   "d": "Census tract",
+   "h": "?place=census-tract-1302-03"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1302.04",
+   "d": "Census tract",
+   "h": "?place=census-tract-1302-04"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1311",
+   "d": "Census tract",
+   "h": "?place=census-tract-1311"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1321",
+   "d": "Census tract",
+   "h": "?place=census-tract-1321"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1322",
+   "d": "Census tract",
+   "h": "?place=census-tract-1322"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 1330",
+   "d": "Census tract",
+   "h": "?place=census-tract-1330"
+  },
+  {
+   "k": "Statistic",
+   "n": "Census Tract 9901",
+   "d": "Census tract",
+   "h": "?place=census-tract-9901"
+  },
+  {
+   "k": "Statistic",
+   "n": "Total population",
+   "d": "Population and households",
+   "h": "#data"
+  },
+  {
+   "k": "Statistic",
+   "n": "Median age",
+   "d": "Population and households",
+   "h": "#data"
+  },
+  {
+   "k": "Statistic",
+   "n": "Population under age 18",
+   "d": "Population and households",
+   "h": "#data"
+  },
+  {
+   "k": "Statistic",
+   "n": "Share of population under age 18",
+   "d": "Population and households",
+   "h": "#data"
+  },
+  {
+   "k": "Statistic",
+   "n": "Population age 65 and over",
+   "d": "Population and households",
+   "h": "#data"
+  },
+  {
+   "k": "Statistic",
+   "n": "Share of population age 65 and over",
+   "d": "Population and households",
+   "h": "#data"
+  },
+  {
+   "k": "Statistic",
+   "n": "Total households",
+   "d": "Population and households",
+   "h": "#data"
+  },
+  {
+   "k": "Statistic",
+   "n": "Average household size",
+   "d": "Population and households",
+   "h": "#data"
+  },
+  {
+   "k": "Statistic",
+   "n": "Living alone rate",
+   "d": "Population and households",
+   "h": "#data"
+  },
+  {
+   "k": "Statistic",
+   "n": "Foreign-born rate",
+   "d": "Community",
+   "h": "#data"
+  },
+  {
+   "k": "Statistic",
+   "n": "Veteran rate",
+   "d": "Community",
+   "h": "#data"
+  },
+  {
+   "k": "Statistic",
+   "n": "Disability rate",
+   "d": "Community",
+   "h": "#data"
+  },
+  {
+   "k": "Statistic",
+   "n": "Hispanic or Latino rate",
+   "d": "Community",
+   "h": "#data"
+  },
+  {
+   "k": "Statistic",
+   "n": "White non-Hispanic rate",
+   "d": "Community",
+   "h": "#data"
+  },
+  {
+   "k": "Statistic",
+   "n": "Language other than English at home rate",
+   "d": "Language",
+   "h": "#data"
+  },
+  {
+   "k": "Statistic",
+   "n": "Limited English proficiency rate",
+   "d": "Language",
+   "h": "#data"
+  },
+  {
+   "k": "Statistic",
+   "n": "Limited English speaking households rate",
+   "d": "Language",
+   "h": "#data"
+  },
+  {
+   "k": "Statistic",
+   "n": "Median household income",
+   "d": "Income and poverty",
+   "h": "#data"
+  },
+  {
+   "k": "Statistic",
+   "n": "Per capita income",
+   "d": "Income and poverty",
+   "h": "#data"
+  },
+  {
+   "k": "Statistic",
+   "n": "Poverty rate",
+   "d": "Income and poverty",
+   "h": "#data"
+  },
+  {
+   "k": "Statistic",
+   "n": "Child poverty rate",
+   "d": "Income and poverty",
+   "h": "#data"
+  },
+  {
+   "k": "Statistic",
+   "n": "Senior poverty rate",
+   "d": "Income and poverty",
+   "h": "#data"
+  },
+  {
+   "k": "Statistic",
+   "n": "Housing units",
+   "d": "Housing",
+   "h": "#data"
+  },
+  {
+   "k": "Statistic",
+   "n": "Homeownership rate",
+   "d": "Housing",
+   "h": "#data"
+  },
+  {
+   "k": "Statistic",
+   "n": "Vacancy rate",
+   "d": "Housing",
+   "h": "#data"
+  },
+  {
+   "k": "Statistic",
+   "n": "Median home value",
+   "d": "Housing",
+   "h": "#data"
+  },
+  {
+   "k": "Statistic",
+   "n": "Median gross rent",
+   "d": "Housing",
+   "h": "#data"
+  },
+  {
+   "k": "Statistic",
+   "n": "Rent burden rate",
+   "d": "Housing",
+   "h": "#data"
+  },
+  {
+   "k": "Statistic",
+   "n": "Owner cost burden rate",
+   "d": "Housing",
+   "h": "#data"
+  },
+  {
+   "k": "Statistic",
+   "n": "Overcrowding rate",
+   "d": "Housing",
+   "h": "#data"
+  },
+  {
+   "k": "Statistic",
+   "n": "Households without internet access rate",
+   "d": "Digital access",
+   "h": "#data"
+  },
+  {
+   "k": "Statistic",
+   "n": "Broadband subscription rate",
+   "d": "Digital access",
+   "h": "#data"
+  },
+  {
+   "k": "Statistic",
+   "n": "Households without a computer rate",
+   "d": "Digital access",
+   "h": "#data"
+  },
+  {
+   "k": "Statistic",
+   "n": "Less than high school rate",
+   "d": "Education",
+   "h": "#data"
+  },
+  {
+   "k": "Statistic",
+   "n": "Bachelor's degree or higher rate",
+   "d": "Education",
+   "h": "#data"
+  },
+  {
+   "k": "Statistic",
+   "n": "Work-from-home rate",
+   "d": "Transportation",
+   "h": "#data"
+  },
+  {
+   "k": "Statistic",
+   "n": "Public transit commute rate",
+   "d": "Transportation",
+   "h": "#data"
+  },
+  {
+   "k": "Statistic",
+   "n": "Households without a vehicle rate",
+   "d": "Transportation",
+   "h": "#data"
+  },
+  {
+   "k": "Statistic",
+   "n": "Labor force participation rate",
+   "d": "Employment",
+   "h": "#data"
+  },
+  {
+   "k": "Statistic",
+   "n": "Unemployment rate",
+   "d": "Employment",
+   "h": "#data"
+  },
+  {
+   "k": "Statistic",
+   "n": "Uninsured rate",
+   "d": "Health",
+   "h": "#data"
+  }
+ ]
+}

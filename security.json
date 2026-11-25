@@ -35,9 +35,8 @@
     }
   },
   "authentication": {
-    "required": true,
-    "provider": "Shared password checked in the browser (assets/gate.js)",
-    "notes": "A login screen on a static site. It keeps casual visitors out of the pages; it is not access control, because the pages and data files are static files that can be requested directly. The statistics it will show are public Census data."
+    "required": false,
+    "notes": "No login. The statistics are public Census data."
   },
   "authorization": { "required": false, "serverSideEnforced": false },
   "data": {
@@ -72,7 +71,7 @@
     {
       "control": "Clickjacking protection (frame-ancestors / X-Frame-Options)",
       "reason": "GitHub Pages cannot serve custom HTTP headers, and meta-delivered CSP ignores frame-ancestors.",
-      "riskDescription": "Low impact: no session state, and this is a read-only browser for public statistics with no user input beyond navigation and the login.",
+      "riskDescription": "Low impact: no session state, and this is a read-only browser for public statistics with no user input beyond navigation.",
       "owner": "County of Marin",
       "expires": "2027-09-25"
     },

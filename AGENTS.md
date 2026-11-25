@@ -48,7 +48,6 @@ Charts are Marin Mentions' charts: Chart.js (`vendor/chart.min.js`, the same cop
 - Do not edit `vendor/marinos/`. Adopt a new shell with its installer and update `platform.shell`.
 - After a reviewed change to `security.json`, run `python3 scripts/sync-security-meta.py --write`.
 - Do not use "view" in button or link text. No breadcrumbs, intro text above the content, or explanatory notes unless asked.
-- Never put the password in a file. Only its SHA-256 hash is kept, in `assets/gate.js`.
 
 ## Before finishing
 
