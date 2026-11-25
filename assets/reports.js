@@ -300,7 +300,7 @@
     // places: the area types narrow the list and the report, as the list's filter column does; Select all takes what is shown
     if (!section.kinds) section.kinds = [...openKinds(section)];
     const shownKinds = new Set(section.kinds);
-    const kindBoxes = Object.entries(data.kinds).sort((a, b) => a[1].localeCompare(b[1], 'en')).map(([kind, label]) => {
+    const kindBoxes = Object.entries(data.kinds).sort((a, b) => b[1].localeCompare(a[1], 'en')).map(([kind, label]) => {
       const input = ctx.el('input', { type: 'checkbox', checked: shownKinds.has(kind) });
       input.dataset.kind = kind;
       const count = data.places.filter((p) => p.kind === kind).length;
@@ -339,14 +339,14 @@
         field('Layout', layout, id('layout')),
         field('Chart', chart, id('chart')),
         chartGroup,
-        ctx.el('div', { className: 'app-field' }, ctx.el('label', {}, margins, ' Show margins of error')),
         describedBy(ctx.el('fieldset', { className: 'app-field report-group' },
           ctx.el('legend', { textContent: 'Places' }),
           ctx.el('fieldset', { className: 'app-field report-kinds' }, ctx.el('legend', { textContent: 'Area types' }), ctx.el('ul', { className: 'report-checks' }, kindBoxes)),
           selectAll('places', 'Select all'), placeList, placeCount), id('places-count')),
         describedBy(ctx.el('fieldset', { className: 'app-field report-group' },
           ctx.el('legend', { textContent: 'Measures' }),
-          selectAll('measures', 'Select all'), topics, measureCount), id('measures-count'))),
+          selectAll('measures', 'Select all'), topics, measureCount), id('measures-count')),
+        ctx.el('div', { className: 'app-field' }, ctx.el('label', {}, margins, ' Show margins of error'))),
       actions);
     li.append(details);
     return li;

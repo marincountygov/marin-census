@@ -27,7 +27,7 @@ The Reports tab is the only place that chooses measures or compares places; keep
 
 ## Order
 
-Every list of choices in a filter is A to Z by label (the filter column's area types, a section's area types and places), and a report's tables list places A to Z (`M.byName`). Do not set `"order": "data"` in `filters.json`. Measures stay in topic order, since they are not filter labels. A chart ranks its bars by value.
+Every list of choices in a filter is A to Z by label (the filter column's area types, a section's area types and places), and a report's tables list places A to Z (`M.byName`). Do not set `"order": "data"` in `filters.json`. Area types are the one exception: they run Z to A (County, City or town, Census-designated place, Census tract), in the filter column (`"order": "data"` in `filters.json`, which is the data's order) and in a section. Measures stay in topic order, since they are not filter labels. A chart ranks its bars by value.
 
 ## Source line
 

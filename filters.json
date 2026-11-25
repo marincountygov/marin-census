@@ -22,7 +22,8 @@
       "options": {
         "from": "data/census.json",
         "records": "places",
-        "valueField": "kindLabel"
+        "valueField": "kindLabel",
+        "order": "data"
       },
       "field": "kindLabel"
     }
