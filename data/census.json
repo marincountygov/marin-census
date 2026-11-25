@@ -42,12 +42,20 @@
    "name": "Digital access"
   },
   {
+   "id": "education",
+   "name": "Education"
+  },
+  {
    "id": "transportation",
    "name": "Transportation"
   },
   {
    "id": "employment",
    "name": "Employment"
+  },
+  {
+   "id": "health",
+   "name": "Health"
   }
  ],
  "measures": [
@@ -92,6 +100,11 @@
    "topic": "Population and households"
   },
   {
+   "id": "living-alone-rate",
+   "name": "Living alone rate",
+   "topic": "Population and households"
+  },
+  {
    "id": "foreign-born-rate",
    "name": "Foreign-born rate",
    "topic": "Community"
@@ -105,6 +118,26 @@
    "id": "disability-rate",
    "name": "Disability rate",
    "topic": "Community"
+  },
+  {
+   "id": "hispanic-or-latino-rate",
+   "name": "Hispanic or Latino rate",
+   "topic": "Community"
+  },
+  {
+   "id": "white-non-hispanic-rate",
+   "name": "White non-Hispanic rate",
+   "topic": "Community"
+  },
+  {
+   "id": "language-other-than-english-rate",
+   "name": "Language other than English at home rate",
+   "topic": "Language"
+  },
+  {
+   "id": "limited-english-rate",
+   "name": "Limited English proficiency rate",
+   "topic": "Language"
   },
   {
    "id": "limited-english-households-rate",
@@ -192,6 +225,16 @@
    "topic": "Digital access"
   },
   {
+   "id": "less-than-high-school-rate",
+   "name": "Less than high school rate",
+   "topic": "Education"
+  },
+  {
+   "id": "bachelors-or-higher-rate",
+   "name": "Bachelor's degree or higher rate",
+   "topic": "Education"
+  },
+  {
    "id": "work-from-home-rate",
    "name": "Work-from-home rate",
    "topic": "Transportation"
@@ -215,6 +258,11 @@
    "id": "unemployment-rate",
    "name": "Unemployment rate",
    "topic": "Employment"
+  },
+  {
+   "id": "uninsured-rate",
+   "name": "Uninsured rate",
+   "topic": "Health"
   }
  ],
  "headlineMeasures": [
@@ -850,6 +898,170 @@
    ],
    "role": "denominator",
    "unit": "persons"
+  },
+  {
+   "id": "language-other-than-english-rate",
+   "name": "Language other than English at home rate",
+   "description": "Share of people 5 and over who speak a language other than English at home.",
+   "statType": "percent",
+   "denominator": "population-5-plus",
+   "censusTables": [
+    "B16004"
+   ],
+   "role": "indicator",
+   "topic": "Language",
+   "unit": "percent"
+  },
+  {
+   "id": "limited-english-rate",
+   "name": "Limited English proficiency rate",
+   "description": "Share of people 5 and over who speak English less than very well.",
+   "statType": "percent",
+   "denominator": "population-5-plus",
+   "censusTables": [
+    "B16004"
+   ],
+   "role": "indicator",
+   "topic": "Language",
+   "unit": "percent"
+  },
+  {
+   "id": "less-than-high-school-rate",
+   "name": "Less than high school rate",
+   "description": "Share of adults 25 and over with no high school diploma or equivalent.",
+   "statType": "percent",
+   "denominator": "population-25-plus",
+   "censusTables": [
+    "B15003"
+   ],
+   "role": "indicator",
+   "topic": "Education",
+   "unit": "percent"
+  },
+  {
+   "id": "bachelors-or-higher-rate",
+   "name": "Bachelor's degree or higher rate",
+   "description": "Share of adults 25 and over with a bachelor's, master's, professional or doctoral degree.",
+   "statType": "percent",
+   "denominator": "population-25-plus",
+   "censusTables": [
+    "B15003"
+   ],
+   "role": "indicator",
+   "topic": "Education",
+   "unit": "percent"
+  },
+  {
+   "id": "hispanic-or-latino-rate",
+   "name": "Hispanic or Latino rate",
+   "description": "Share of residents of Hispanic or Latino origin, of any race.",
+   "statType": "percent",
+   "denominator": "population-hispanic-origin",
+   "censusTables": [
+    "B03002"
+   ],
+   "role": "indicator",
+   "topic": "Community",
+   "unit": "percent"
+  },
+  {
+   "id": "white-non-hispanic-rate",
+   "name": "White non-Hispanic rate",
+   "description": "Share of residents who are White alone and not of Hispanic or Latino origin.",
+   "statType": "percent",
+   "denominator": "population-hispanic-origin",
+   "censusTables": [
+    "B03002"
+   ],
+   "role": "indicator",
+   "topic": "Community",
+   "unit": "percent"
+  },
+  {
+   "id": "living-alone-rate",
+   "name": "Living alone rate",
+   "description": "Share of households with one person living alone.",
+   "statType": "percent",
+   "denominator": "households-type",
+   "censusTables": [
+    "B11001"
+   ],
+   "role": "indicator",
+   "topic": "Population and households",
+   "unit": "percent"
+  },
+  {
+   "id": "uninsured-rate",
+   "name": "Uninsured rate",
+   "description": "Share of the civilian noninstitutionalized population with no health insurance coverage.",
+   "statType": "percent",
+   "denominator": "population-insurance-status",
+   "censusTables": [
+    "B27010"
+   ],
+   "role": "indicator",
+   "topic": "Health",
+   "unit": "percent"
+  },
+  {
+   "id": "population-5-plus",
+   "name": "Population 5 and over",
+   "description": "People in the universe of the language rates.",
+   "statType": "count",
+   "denominator": null,
+   "censusTables": [
+    "B16004"
+   ],
+   "role": "denominator",
+   "unit": "persons"
+  },
+  {
+   "id": "population-25-plus",
+   "name": "Population 25 and over",
+   "description": "People in the universe of the education rates.",
+   "statType": "count",
+   "denominator": null,
+   "censusTables": [
+    "B15003"
+   ],
+   "role": "denominator",
+   "unit": "persons"
+  },
+  {
+   "id": "population-hispanic-origin",
+   "name": "Population by Hispanic origin and race",
+   "description": "People in the universe of the Hispanic and White non-Hispanic rates.",
+   "statType": "count",
+   "denominator": null,
+   "censusTables": [
+    "B03002"
+   ],
+   "role": "denominator",
+   "unit": "persons"
+  },
+  {
+   "id": "households-type",
+   "name": "Households by type",
+   "description": "Households in the universe of the living alone rate.",
+   "statType": "count",
+   "denominator": null,
+   "censusTables": [
+    "B11001"
+   ],
+   "role": "denominator",
+   "unit": "households"
+  },
+  {
+   "id": "population-insurance-status",
+   "name": "Population for whom insurance status is determined",
+   "description": "People in the universe of the uninsured rate.",
+   "statType": "count",
+   "denominator": null,
+   "censusTables": [
+    "B27010"
+   ],
+   "role": "denominator",
+   "unit": "persons"
   }
  ],
  "places": [
@@ -1053,6 +1265,56 @@
     "civilian-labor-force": {
      "v": 133674,
      "m": 1548
+    },
+    "language-other-than-english-rate": {
+     "v": 23.907332,
+     "m": 0.785311
+    },
+    "limited-english-rate": {
+     "v": 9.618722,
+     "m": 0.631562
+    },
+    "less-than-high-school-rate": {
+     "v": 7.245735,
+     "m": 0.659444
+    },
+    "bachelors-or-higher-rate": {
+     "v": 61.126833,
+     "m": 1.259147
+    },
+    "hispanic-or-latino-rate": {
+     "v": 19.465905
+    },
+    "white-non-hispanic-rate": {
+     "v": 65.052778,
+     "m": 0.448504
+    },
+    "living-alone-rate": {
+     "v": 28.930866,
+     "m": 1.159727
+    },
+    "uninsured-rate": {
+     "v": 3.77065,
+     "m": 0.404688
+    },
+    "population-5-plus": {
+     "v": 246644,
+     "m": 44
+    },
+    "population-25-plus": {
+     "v": 189753,
+     "m": 229
+    },
+    "population-hispanic-origin": {
+     "v": 257969
+    },
+    "households-type": {
+     "v": 103018,
+     "m": 725
+    },
+    "population-insurance-status": {
+     "v": 254598,
+     "m": 194
     }
    },
    "unavailable": {}
@@ -1256,6 +1518,58 @@
     "civilian-labor-force": {
      "v": 1068,
      "m": 170
+    },
+    "language-other-than-english-rate": {
+     "v": 11.091314,
+     "m": 4.003175
+    },
+    "limited-english-rate": {
+     "v": 3.608018,
+     "m": 4.392858
+    },
+    "less-than-high-school-rate": {
+     "v": 0.714286,
+     "m": 3.129249
+    },
+    "bachelors-or-higher-rate": {
+     "v": 87.380952,
+     "m": 3.913549
+    },
+    "hispanic-or-latino-rate": {
+     "v": 5.842217,
+     "m": 3.749407
+    },
+    "white-non-hispanic-rate": {
+     "v": 85.074627,
+     "m": 6.70195
+    },
+    "living-alone-rate": {
+     "v": 20.880361,
+     "m": 5.957891
+    },
+    "uninsured-rate": {
+     "v": 0.554371,
+     "m": 1.191494
+    },
+    "population-5-plus": {
+     "v": 2245,
+     "m": 300
+    },
+    "population-25-plus": {
+     "v": 1680,
+     "m": 210
+    },
+    "population-hispanic-origin": {
+     "v": 2345,
+     "m": 329
+    },
+    "households-type": {
+     "v": 886,
+     "m": 103
+    },
+    "population-insurance-status": {
+     "v": 2345,
+     "m": 329
     }
    },
    "unavailable": {}
@@ -1461,6 +1775,58 @@
     "civilian-labor-force": {
      "v": 5061,
      "m": 417
+    },
+    "language-other-than-english-rate": {
+     "v": 14.973319,
+     "m": 4.211529
+    },
+    "limited-english-rate": {
+     "v": 3.105656,
+     "m": 2.050282
+    },
+    "less-than-high-school-rate": {
+     "v": 1.457559,
+     "m": 1.707932
+    },
+    "bachelors-or-higher-rate": {
+     "v": 79.294084,
+     "m": 8.101632
+    },
+    "hispanic-or-latino-rate": {
+     "v": 12.146472,
+     "m": 4.475473
+    },
+    "white-non-hispanic-rate": {
+     "v": 70.249082,
+     "m": 6.101414
+    },
+    "living-alone-rate": {
+     "v": 22.547076,
+     "m": 6.197192
+    },
+    "uninsured-rate": {
+     "v": 1.737145,
+     "m": 1.455069
+    },
+    "population-5-plus": {
+     "v": 9370,
+     "m": 199
+    },
+    "population-25-plus": {
+     "v": 6998,
+     "m": 327
+    },
+    "population-hispanic-origin": {
+     "v": 10077,
+     "m": 20
+    },
+    "households-type": {
+     "v": 4036,
+     "m": 262
+    },
+    "population-insurance-status": {
+     "v": 10074,
+     "m": 28
     }
    },
    "unavailable": {}
@@ -1667,6 +2033,58 @@
     "civilian-labor-force": {
      "v": 4442,
      "m": 360
+    },
+    "language-other-than-english-rate": {
+     "v": 10.290608,
+     "m": 3.267678
+    },
+    "limited-english-rate": {
+     "v": 2.260284,
+     "m": 2.081773
+    },
+    "less-than-high-school-rate": {
+     "v": 1.661243,
+     "m": 1.772088
+    },
+    "bachelors-or-higher-rate": {
+     "v": 70.114746,
+     "m": 6.830096
+    },
+    "hispanic-or-latino-rate": {
+     "v": 6.785524,
+     "m": 2.980242
+    },
+    "white-non-hispanic-rate": {
+     "v": 80.34859,
+     "m": 4.410978
+    },
+    "living-alone-rate": {
+     "v": 27.013783,
+     "m": 6.556138
+    },
+    "uninsured-rate": {
+     "v": 3.292455,
+     "m": 1.950228
+    },
+    "population-5-plus": {
+     "v": 7123,
+     "m": 175
+    },
+    "population-25-plus": {
+     "v": 5839,
+     "m": 237
+    },
+    "population-hispanic-origin": {
+     "v": 7516,
+     "m": 22
+    },
+    "households-type": {
+     "v": 3265,
+     "m": 188
+    },
+    "population-insurance-status": {
+     "v": 7502,
+     "m": 22
     }
    },
    "unavailable": {}
@@ -1873,6 +2291,58 @@
     "civilian-labor-force": {
      "v": 6965,
      "m": 350
+    },
+    "language-other-than-english-rate": {
+     "v": 18.387438,
+     "m": 4.182038
+    },
+    "limited-english-rate": {
+     "v": 5.23147,
+     "m": 1.660315
+    },
+    "less-than-high-school-rate": {
+     "v": 2.794679,
+     "m": 1.776156
+    },
+    "bachelors-or-higher-rate": {
+     "v": 67.886975,
+     "m": 5.291364
+    },
+    "hispanic-or-latino-rate": {
+     "v": 8.845496,
+     "m": 2.862866
+    },
+    "white-non-hispanic-rate": {
+     "v": 73.245682,
+     "m": 4.424158
+    },
+    "living-alone-rate": {
+     "v": 41.558657,
+     "m": 6.775004
+    },
+    "uninsured-rate": {
+     "v": 3.535037,
+     "m": 1.482959
+    },
+    "population-5-plus": {
+     "v": 12291,
+     "m": 179
+    },
+    "population-25-plus": {
+     "v": 9697,
+     "m": 327
+    },
+    "population-hispanic-origin": {
+     "v": 12854,
+     "m": 26
+    },
+    "households-type": {
+     "v": 6018,
+     "m": 280
+    },
+    "population-insurance-status": {
+     "v": 12758,
+     "m": 27
     }
    },
    "unavailable": {}
@@ -2078,6 +2548,58 @@
     "civilian-labor-force": {
      "v": 7209,
      "m": 393
+    },
+    "language-other-than-english-rate": {
+     "v": 15.91442,
+     "m": 4.0002
+    },
+    "limited-english-rate": {
+     "v": 3.71483,
+     "m": 2.013931
+    },
+    "less-than-high-school-rate": {
+     "v": 1.340611,
+     "m": 1.162549
+    },
+    "bachelors-or-higher-rate": {
+     "v": 75.8307,
+     "m": 5.368431
+    },
+    "hispanic-or-latino-rate": {
+     "v": 4.767342,
+     "m": 1.505826
+    },
+    "white-non-hispanic-rate": {
+     "v": 80.102769,
+     "m": 3.043761
+    },
+    "living-alone-rate": {
+     "v": 26.388889,
+     "m": 4.33317
+    },
+    "uninsured-rate": {
+     "v": 3.693629,
+     "m": 1.530885
+    },
+    "population-5-plus": {
+     "v": 13648,
+     "m": 127
+    },
+    "population-25-plus": {
+     "v": 10443,
+     "m": 315
+    },
+    "population-hispanic-origin": {
+     "v": 14012,
+     "m": 26
+    },
+    "households-type": {
+     "v": 5688,
+     "m": 289
+    },
+    "population-insurance-status": {
+     "v": 13970,
+     "m": 26
     }
    },
    "unavailable": {}
@@ -2284,6 +2806,58 @@
     "civilian-labor-force": {
      "v": 26545,
      "m": 851
+    },
+    "language-other-than-english-rate": {
+     "v": 31.494134,
+     "m": 2.764055
+    },
+    "limited-english-rate": {
+     "v": 13.196423,
+     "m": 1.977233
+    },
+    "less-than-high-school-rate": {
+     "v": 10.971284,
+     "m": 2.141392
+    },
+    "bachelors-or-higher-rate": {
+     "v": 48.853217,
+     "m": 2.678149
+    },
+    "hispanic-or-latino-rate": {
+     "v": 27.986907,
+     "m": 2.447087
+    },
+    "white-non-hispanic-rate": {
+     "v": 54.622616,
+     "m": 2.436746
+    },
+    "living-alone-rate": {
+     "v": 25.294176,
+     "m": 3.209462
+    },
+    "uninsured-rate": {
+     "v": 4.873525,
+     "m": 1.194599
+    },
+    "population-5-plus": {
+     "v": 50203,
+     "m": 420
+    },
+    "population-25-plus": {
+     "v": 38063,
+     "m": 781
+    },
+    "population-hispanic-origin": {
+     "v": 52546,
+     "m": 71
+    },
+    "households-type": {
+     "v": 20056,
+     "m": 628
+    },
+    "population-insurance-status": {
+     "v": 52303,
+     "m": 88
     }
    },
    "unavailable": {}
@@ -2487,6 +3061,58 @@
     "civilian-labor-force": {
      "v": 1147,
      "m": 174
+    },
+    "language-other-than-english-rate": {
+     "v": 7.767784,
+     "m": 3.449428
+    },
+    "limited-english-rate": {
+     "v": 1.349141,
+     "m": 3.609874
+    },
+    "less-than-high-school-rate": {
+     "v": 0,
+     "m": 3.39098
+    },
+    "bachelors-or-higher-rate": {
+     "v": 83.239525,
+     "m": 4.615407
+    },
+    "hispanic-or-latino-rate": {
+     "v": 5.717575,
+     "m": 1.837107
+    },
+    "white-non-hispanic-rate": {
+     "v": 79.854183,
+     "m": 5.940599
+    },
+    "living-alone-rate": {
+     "v": 20.763723,
+     "m": 6.803775
+    },
+    "uninsured-rate": {
+     "v": 1.036071,
+     "m": 1.24489
+    },
+    "population-5-plus": {
+     "v": 2446,
+     "m": 336
+    },
+    "population-25-plus": {
+     "v": 1599,
+     "m": 175
+    },
+    "population-hispanic-origin": {
+     "v": 2606,
+     "m": 355
+    },
+    "households-type": {
+     "v": 838,
+     "m": 90
+    },
+    "population-insurance-status": {
+     "v": 2606,
+     "m": 355
     }
    },
    "unavailable": {}
@@ -2693,6 +3319,58 @@
     "civilian-labor-force": {
      "v": 6922,
      "m": 383
+    },
+    "language-other-than-english-rate": {
+     "v": 10.416667,
+     "m": 2.801824
+    },
+    "limited-english-rate": {
+     "v": 1.783333,
+     "m": 1.339864
+    },
+    "less-than-high-school-rate": {
+     "v": 1.950198,
+     "m": 1.284218
+    },
+    "bachelors-or-higher-rate": {
+     "v": 70.559718,
+     "m": 5.011942
+    },
+    "hispanic-or-latino-rate": {
+     "v": 10.466125,
+     "m": 3.50172
+    },
+    "white-non-hispanic-rate": {
+     "v": 74.225097,
+     "m": 4.75096
+    },
+    "living-alone-rate": {
+     "v": 27.029096,
+     "m": 5.871702
+    },
+    "uninsured-rate": {
+     "v": 1.136812,
+     "m": 0.766535
+    },
+    "population-5-plus": {
+     "v": 12000,
+     "m": 191
+    },
+    "population-25-plus": {
+     "v": 9076,
+     "m": 383
+    },
+    "population-hispanic-origin": {
+     "v": 12679,
+     "m": 37
+    },
+    "households-type": {
+     "v": 5224,
+     "m": 296
+    },
+    "population-insurance-status": {
+     "v": 12667,
+     "m": 38
     }
    },
    "unavailable": {}
@@ -2899,6 +3577,58 @@
     "civilian-labor-force": {
      "v": 32254,
      "m": 1113
+    },
+    "language-other-than-english-rate": {
+     "v": 38.054358,
+     "m": 2.449313
+    },
+    "limited-english-rate": {
+     "v": 20.424371,
+     "m": 1.908153
+    },
+    "less-than-high-school-rate": {
+     "v": 15.162555,
+     "m": 1.718385
+    },
+    "bachelors-or-higher-rate": {
+     "v": 49.697167,
+     "m": 2.480839
+    },
+    "hispanic-or-latino-rate": {
+     "v": 35.498817,
+     "m": 2.284655
+    },
+    "white-non-hispanic-rate": {
+     "v": 51.223669,
+     "m": 2.298992
+    },
+    "living-alone-rate": {
+     "v": 31.776517,
+     "m": 3.216182
+    },
+    "uninsured-rate": {
+     "v": 6.730142,
+     "m": 1.090364
+    },
+    "population-5-plus": {
+     "v": 57544,
+     "m": 507
+    },
+    "population-25-plus": {
+     "v": 43093,
+     "m": 849
+    },
+    "population-hispanic-origin": {
+     "v": 60433,
+     "m": 83
+    },
+    "households-type": {
+     "v": 22910,
+     "m": 756
+    },
+    "population-insurance-status": {
+     "v": 59761,
+     "m": 146
     }
    },
    "unavailable": {}
@@ -3104,6 +3834,58 @@
     "civilian-labor-force": {
      "v": 4561,
      "m": 313
+    },
+    "language-other-than-english-rate": {
+     "v": 11.685099,
+     "m": 3.107646
+    },
+    "limited-english-rate": {
+     "v": 1.61525,
+     "m": 1.793648
+    },
+    "less-than-high-school-rate": {
+     "v": 2.746904,
+     "m": 2.94508
+    },
+    "bachelors-or-higher-rate": {
+     "v": 76.484598,
+     "m": 6.29985
+    },
+    "hispanic-or-latino-rate": {
+     "v": 7.968072,
+     "m": 2.60435
+    },
+    "white-non-hispanic-rate": {
+     "v": 81.179107,
+     "m": 3.68705
+    },
+    "living-alone-rate": {
+     "v": 45.397384,
+     "m": 7.433006
+    },
+    "uninsured-rate": {
+     "v": 0.476124,
+     "m": 0.497665
+    },
+    "population-5-plus": {
+     "v": 6872,
+     "m": 109
+    },
+    "population-25-plus": {
+     "v": 6298,
+     "m": 321
+    },
+    "population-hispanic-origin": {
+     "v": 7141,
+     "m": 37
+    },
+    "households-type": {
+     "v": 3976,
+     "m": 276
+    },
+    "population-insurance-status": {
+     "v": 7141,
+     "m": 37
     }
    },
    "unavailable": {}
@@ -3308,6 +4090,58 @@
     "civilian-labor-force": {
      "v": 4266,
      "m": 384
+    },
+    "language-other-than-english-rate": {
+     "v": 22.563156,
+     "m": 5.71907
+    },
+    "limited-english-rate": {
+     "v": 5.963779,
+     "m": 2.756107
+    },
+    "less-than-high-school-rate": {
+     "v": 1.133482,
+     "m": 1.437648
+    },
+    "bachelors-or-higher-rate": {
+     "v": 80.059657,
+     "m": 7.299974
+    },
+    "hispanic-or-latino-rate": {
+     "v": 5.803373,
+     "m": 2.984846
+    },
+    "white-non-hispanic-rate": {
+     "v": 75.765646,
+     "m": 5.697927
+    },
+    "living-alone-rate": {
+     "v": 21.623932,
+     "m": 6.26731
+    },
+    "uninsured-rate": {
+     "v": 1.947907,
+     "m": 1.96679
+    },
+    "population-5-plus": {
+     "v": 8669,
+     "m": 159
+    },
+    "population-25-plus": {
+     "v": 6705,
+     "m": 386
+    },
+    "population-hispanic-origin": {
+     "v": 9012,
+     "m": 30
+    },
+    "households-type": {
+     "v": 3510,
+     "m": 259
+    },
+    "population-insurance-status": {
+     "v": 8984,
+     "m": 31
     }
    },
    "unavailable": {}
@@ -3506,6 +4340,58 @@
     "civilian-labor-force": {
      "v": 659,
      "m": 348
+    },
+    "language-other-than-english-rate": {
+     "v": 6.132542,
+     "m": 9.973527
+    },
+    "limited-english-rate": {
+     "v": 0,
+     "m": 8.308605
+    },
+    "less-than-high-school-rate": {
+     "v": 0,
+     "m": 7.927159
+    },
+    "bachelors-or-higher-rate": {
+     "v": 67.105263,
+     "m": 24.619582
+    },
+    "hispanic-or-latino-rate": {
+     "v": 12.304688,
+     "m": 16.374957
+    },
+    "white-non-hispanic-rate": {
+     "v": 80.566406,
+     "m": 27.604434
+    },
+    "living-alone-rate": {
+     "v": 17.738359,
+     "m": 16.728515
+    },
+    "uninsured-rate": {
+     "v": 0,
+     "m": 2.734375
+    },
+    "population-5-plus": {
+     "v": 1011,
+     "m": 347
+    },
+    "population-25-plus": {
+     "v": 684,
+     "m": 265
+    },
+    "population-hispanic-origin": {
+     "v": 1024,
+     "m": 346
+    },
+    "households-type": {
+     "v": 451,
+     "m": 150
+    },
+    "population-insurance-status": {
+     "v": 1024,
+     "m": 346
     }
    },
    "unavailable": {
@@ -3715,6 +4601,58 @@
     "civilian-labor-force": {
      "v": 858,
      "m": 223
+    },
+    "language-other-than-english-rate": {
+     "v": 15.582822,
+     "m": 7.687164
+    },
+    "limited-english-rate": {
+     "v": 1.472393,
+     "m": 5.273046
+    },
+    "less-than-high-school-rate": {
+     "v": 6.687898,
+     "m": 10.914383
+    },
+    "bachelors-or-higher-rate": {
+     "v": 57.961783,
+     "m": 11.084251
+    },
+    "hispanic-or-latino-rate": {
+     "v": 3.625378,
+     "m": 4.023557
+    },
+    "white-non-hispanic-rate": {
+     "v": 68.519637,
+     "m": 7.851744
+    },
+    "living-alone-rate": {
+     "v": 24.824684,
+     "m": 9.826997
+    },
+    "uninsured-rate": {
+     "v": 2.839879,
+     "m": 2.833793
+    },
+    "population-5-plus": {
+     "v": 1630,
+     "m": 375
+    },
+    "population-25-plus": {
+     "v": 1256,
+     "m": 274
+    },
+    "population-hispanic-origin": {
+     "v": 1655,
+     "m": 380
+    },
+    "households-type": {
+     "v": 713,
+     "m": 147
+    },
+    "population-insurance-status": {
+     "v": 1655,
+     "m": 380
     }
    },
    "unavailable": {}
@@ -3920,6 +4858,58 @@
     "civilian-labor-force": {
      "v": 649,
      "m": 232
+    },
+    "language-other-than-english-rate": {
+     "v": 8.606245,
+     "m": 4.117512
+    },
+    "limited-english-rate": {
+     "v": 3.198781,
+     "m": 6.411624
+    },
+    "less-than-high-school-rate": {
+     "v": 0.913621,
+     "m": 4.350625
+    },
+    "bachelors-or-higher-rate": {
+     "v": 59.800664,
+     "m": 9.296553
+    },
+    "hispanic-or-latino-rate": {
+     "v": 12.818591,
+     "m": 6.161517
+    },
+    "white-non-hispanic-rate": {
+     "v": 79.085457,
+     "m": 7.251094
+    },
+    "living-alone-rate": {
+     "v": 36.973479,
+     "m": 13.469967
+    },
+    "uninsured-rate": {
+     "v": 1.724138,
+     "m": 2.530676
+    },
+    "population-5-plus": {
+     "v": 1313,
+     "m": 283
+    },
+    "population-25-plus": {
+     "v": 1204,
+     "m": 272
+    },
+    "population-hispanic-origin": {
+     "v": 1334,
+     "m": 286
+    },
+    "households-type": {
+     "v": 641,
+     "m": 131
+    },
+    "population-insurance-status": {
+     "v": 1334,
+     "m": 286
     }
    },
    "unavailable": {}
@@ -4118,6 +5108,58 @@
     "civilian-labor-force": {
      "v": 114,
      "m": 99
+    },
+    "language-other-than-english-rate": {
+     "v": 0,
+     "m": 16.552021
+    },
+    "limited-english-rate": {
+     "v": 0,
+     "m": 28.668942
+    },
+    "less-than-high-school-rate": {
+     "v": 0,
+     "m": 18.505722
+    },
+    "bachelors-or-higher-rate": {
+     "v": 72.696246,
+     "m": 60.272519
+    },
+    "hispanic-or-latino-rate": {
+     "v": 11.945392,
+     "m": 14.346639
+    },
+    "white-non-hispanic-rate": {
+     "v": 88.054608,
+     "m": 23.005047
+    },
+    "living-alone-rate": {
+     "v": 0,
+     "m": 10.218978
+    },
+    "uninsured-rate": {
+     "v": 0,
+     "m": 9.556314
+    },
+    "population-5-plus": {
+     "v": 293,
+     "m": 176
+    },
+    "population-25-plus": {
+     "v": 293,
+     "m": 176
+    },
+    "population-hispanic-origin": {
+     "v": 293,
+     "m": 176
+    },
+    "households-type": {
+     "v": 137,
+     "m": 80
+    },
+    "population-insurance-status": {
+     "v": 293,
+     "m": 176
     }
    },
    "unavailable": {
@@ -4327,6 +5369,58 @@
     "civilian-labor-force": {
      "v": 740,
      "m": 204
+    },
+    "language-other-than-english-rate": {
+     "v": 6.325301,
+     "m": 6.027858
+    },
+    "limited-english-rate": {
+     "v": 0,
+     "m": 6.325301
+    },
+    "less-than-high-school-rate": {
+     "v": 0,
+     "m": 4.151743
+    },
+    "bachelors-or-higher-rate": {
+     "v": 64.088821,
+     "m": 10.843382
+    },
+    "hispanic-or-latino-rate": {
+     "v": 2.526003,
+     "m": 2.012777
+    },
+    "white-non-hispanic-rate": {
+     "v": 91.381872,
+     "m": 26.525223
+    },
+    "living-alone-rate": {
+     "v": 61.447212,
+     "m": 17.346821
+    },
+    "uninsured-rate": {
+     "v": 0.742942,
+     "m": 2.112717
+    },
+    "population-5-plus": {
+     "v": 1328,
+     "m": 272
+    },
+    "population-25-plus": {
+     "v": 1306,
+     "m": 263
+    },
+    "population-hispanic-origin": {
+     "v": 1346,
+     "m": 280
+    },
+    "households-type": {
+     "v": 843,
+     "m": 168
+    },
+    "population-insurance-status": {
+     "v": 1346,
+     "m": 280
     }
    },
    "unavailable": {}
@@ -4532,6 +5626,58 @@
     "civilian-labor-force": {
      "v": 3172,
      "m": 363
+    },
+    "language-other-than-english-rate": {
+     "v": 13.574174,
+     "m": 3.626827
+    },
+    "limited-english-rate": {
+     "v": 3.96618,
+     "m": 2.521685
+    },
+    "less-than-high-school-rate": {
+     "v": 0.469292,
+     "m": 1.577057
+    },
+    "bachelors-or-higher-rate": {
+     "v": 80.820241,
+     "m": 4.381462
+    },
+    "hispanic-or-latino-rate": {
+     "v": 8.072464,
+     "m": 3.813484
+    },
+    "white-non-hispanic-rate": {
+     "v": 79.753623,
+     "m": 3.059694
+    },
+    "living-alone-rate": {
+     "v": 19.800148,
+     "m": 6.039647
+    },
+    "uninsured-rate": {
+     "v": 0.855817,
+     "m": 0.698975
+    },
+    "population-5-plus": {
+     "v": 6505,
+     "m": 560
+    },
+    "population-25-plus": {
+     "v": 4901,
+     "m": 427
+    },
+    "population-hispanic-origin": {
+     "v": 6900,
+     "m": 630
+    },
+    "households-type": {
+     "v": 2702,
+     "m": 258
+    },
+    "population-insurance-status": {
+     "v": 6894,
+     "m": 629
     }
    },
    "unavailable": {}
@@ -4738,6 +5884,58 @@
     "civilian-labor-force": {
      "v": 942,
      "m": 299
+    },
+    "language-other-than-english-rate": {
+     "v": 3.974763,
+     "m": 5.45341
+    },
+    "limited-english-rate": {
+     "v": 0,
+     "m": 5.299685
+    },
+    "less-than-high-school-rate": {
+     "v": 3.394834,
+     "m": 6.054449
+    },
+    "bachelors-or-higher-rate": {
+     "v": 61.476015,
+     "m": 8.344766
+    },
+    "hispanic-or-latino-rate": {
+     "v": 17.712177,
+     "m": 12.054704
+    },
+    "white-non-hispanic-rate": {
+     "v": 65.498155,
+     "m": 4.25044
+    },
+    "living-alone-rate": {
+     "v": 45.843521,
+     "m": 15.073623
+    },
+    "uninsured-rate": {
+     "v": 0.430504,
+     "m": 1.659828
+    },
+    "population-5-plus": {
+     "v": 1585,
+     "m": 417
+    },
+    "population-25-plus": {
+     "v": 1355,
+     "m": 377
+    },
+    "population-hispanic-origin": {
+     "v": 1626,
+     "m": 441
+    },
+    "households-type": {
+     "v": 818,
+     "m": 212
+    },
+    "population-insurance-status": {
+     "v": 1626,
+     "m": 441
     }
    },
    "unavailable": {}
@@ -4943,6 +6141,58 @@
     "civilian-labor-force": {
      "v": 3127,
      "m": 475
+    },
+    "language-other-than-english-rate": {
+     "v": 13.474076,
+     "m": 4.019083
+    },
+    "limited-english-rate": {
+     "v": 2.328469,
+     "m": 2.19269
+    },
+    "less-than-high-school-rate": {
+     "v": 2.389558,
+     "m": 2.831424
+    },
+    "bachelors-or-higher-rate": {
+     "v": 70,
+     "m": 7.135937
+    },
+    "hispanic-or-latino-rate": {
+     "v": 8.527731,
+     "m": 2.31678
+    },
+    "white-non-hispanic-rate": {
+     "v": 79.298625,
+     "m": 5.714163
+    },
+    "living-alone-rate": {
+     "v": 25.404531,
+     "m": 6.206412
+    },
+    "uninsured-rate": {
+     "v": 3.494665,
+     "m": 3.758723
+    },
+    "population-5-plus": {
+     "v": 6442,
+     "m": 645
+    },
+    "population-25-plus": {
+     "v": 4980,
+     "m": 553
+    },
+    "population-hispanic-origin": {
+     "v": 6473,
+     "m": 654
+    },
+    "households-type": {
+     "v": 2472,
+     "m": 239
+    },
+    "population-insurance-status": {
+     "v": 6467,
+     "m": 653
     }
    },
    "unavailable": {}
@@ -5149,6 +6399,58 @@
     "civilian-labor-force": {
      "v": 1799,
      "m": 299
+    },
+    "language-other-than-english-rate": {
+     "v": 35.252044,
+     "m": 9.120747
+    },
+    "limited-english-rate": {
+     "v": 16.110354,
+     "m": 6.60072
+    },
+    "less-than-high-school-rate": {
+     "v": 8.655462,
+     "m": 4.319993
+    },
+    "bachelors-or-higher-rate": {
+     "v": 39.159664,
+     "m": 7.836528
+    },
+    "hispanic-or-latino-rate": {
+     "v": 15.023474,
+     "m": 6.775603
+    },
+    "white-non-hispanic-rate": {
+     "v": 26.447574,
+     "m": 8.682055
+    },
+    "living-alone-rate": {
+     "v": 23.19236,
+     "m": 7.899946
+    },
+    "uninsured-rate": {
+     "v": 4.788732,
+     "m": 3.702944
+    },
+    "population-5-plus": {
+     "v": 2936,
+     "m": 409
+    },
+    "population-25-plus": {
+     "v": 2380,
+     "m": 406
+    },
+    "population-hispanic-origin": {
+     "v": 3195,
+     "m": 432
+    },
+    "households-type": {
+     "v": 1466,
+     "m": 214
+    },
+    "population-insurance-status": {
+     "v": 3195,
+     "m": 432
     }
    },
    "unavailable": {}
@@ -5353,6 +6655,58 @@
     "civilian-labor-force": {
      "v": 168,
      "m": 61
+    },
+    "language-other-than-english-rate": {
+     "v": 6.109325,
+     "m": 17.358245
+    },
+    "limited-english-rate": {
+     "v": 0,
+     "m": 27.009646
+    },
+    "less-than-high-school-rate": {
+     "v": 0,
+     "m": 20.156791
+    },
+    "bachelors-or-higher-rate": {
+     "v": 66.171004,
+     "m": 14.266888
+    },
+    "hispanic-or-latino-rate": {
+     "v": 0,
+     "m": 4.501608
+    },
+    "white-non-hispanic-rate": {
+     "v": 88.745981,
+     "m": 14.272788
+    },
+    "living-alone-rate": {
+     "v": 37.037037,
+     "m": 18.890515
+    },
+    "uninsured-rate": {
+     "v": 0,
+     "m": 9.003215
+    },
+    "population-5-plus": {
+     "v": 311,
+     "m": 83
+    },
+    "population-25-plus": {
+     "v": 269,
+     "m": 62
+    },
+    "population-hispanic-origin": {
+     "v": 311,
+     "m": 83
+    },
+    "households-type": {
+     "v": 162,
+     "m": 40
+    },
+    "population-insurance-status": {
+     "v": 311,
+     "m": 83
     }
    },
    "unavailable": {}
@@ -5550,6 +6904,58 @@
     "civilian-labor-force": {
      "v": 62,
      "m": 28
+    },
+    "language-other-than-english-rate": {
+     "v": 12.087912,
+     "m": 54.397393
+    },
+    "limited-english-rate": {
+     "v": 0,
+     "m": 92.307692
+    },
+    "less-than-high-school-rate": {
+     "v": 0,
+     "m": 96.824584
+    },
+    "bachelors-or-higher-rate": {
+     "v": 87.5,
+     "m": 63.408967
+    },
+    "hispanic-or-latino-rate": {
+     "v": 5.494505,
+     "m": 6.007543
+    },
+    "white-non-hispanic-rate": {
+     "v": 92.307692,
+     "m": 64.137086
+    },
+    "living-alone-rate": {
+     "v": 22.580645,
+     "m": 36.151078
+    },
+    "uninsured-rate": {
+     "v": 3.296703,
+     "m": 27.158628
+    },
+    "population-5-plus": {
+     "v": 91,
+     "m": 45
+    },
+    "population-25-plus": {
+     "v": 56,
+     "m": 29
+    },
+    "population-hispanic-origin": {
+     "v": 91,
+     "m": 45
+    },
+    "households-type": {
+     "v": 31,
+     "m": 19
+    },
+    "population-insurance-status": {
+     "v": 91,
+     "m": 45
     }
    },
    "unavailable": {
@@ -5755,6 +7161,58 @@
     "civilian-labor-force": {
      "v": 247,
      "m": 145
+    },
+    "language-other-than-english-rate": {
+     "v": 5.029014,
+     "m": 11.514134
+    },
+    "limited-english-rate": {
+     "v": 5.029014,
+     "m": 17.566006
+    },
+    "less-than-high-school-rate": {
+     "v": 7.021277,
+     "m": 13.722523
+    },
+    "bachelors-or-higher-rate": {
+     "v": 55.319149,
+     "m": 27.686006
+    },
+    "hispanic-or-latino-rate": {
+     "v": 6.769826,
+     "m": 8.008251
+    },
+    "white-non-hispanic-rate": {
+     "v": 90.909091,
+     "m": 19.078471
+    },
+    "living-alone-rate": {
+     "v": 30.689655,
+     "m": 16.14329
+    },
+    "uninsured-rate": {
+     "v": 0,
+     "m": 5.46875
+    },
+    "population-5-plus": {
+     "v": 517,
+     "m": 220
+    },
+    "population-25-plus": {
+     "v": 470,
+     "m": 208
+    },
+    "population-hispanic-origin": {
+     "v": 517,
+     "m": 220
+    },
+    "households-type": {
+     "v": 290,
+     "m": 117
+    },
+    "population-insurance-status": {
+     "v": 512,
+     "m": 220
     }
    },
    "unavailable": {
@@ -5959,6 +7417,58 @@
     "civilian-labor-force": {
      "v": 289,
      "m": 243
+    },
+    "language-other-than-english-rate": {
+     "v": 38.111888,
+     "m": 38.05195
+    },
+    "limited-english-rate": {
+     "v": 0,
+     "m": 14.685315
+    },
+    "less-than-high-school-rate": {
+     "v": 0,
+     "m": 15.01988
+    },
+    "bachelors-or-higher-rate": {
+     "v": 94.459834,
+     "m": 25.682423
+    },
+    "hispanic-or-latino-rate": {
+     "v": 3.430532,
+     "m": 5.017814
+    },
+    "white-non-hispanic-rate": {
+     "v": 86.4494,
+     "m": 18.012067
+    },
+    "living-alone-rate": {
+     "v": 29.468599,
+     "m": 32.327046
+    },
+    "uninsured-rate": {
+     "v": 0,
+     "m": 4.827586
+    },
+    "population-5-plus": {
+     "v": 572,
+     "m": 296
+    },
+    "population-25-plus": {
+     "v": 361,
+     "m": 149
+    },
+    "population-hispanic-origin": {
+     "v": 583,
+     "m": 299
+    },
+    "households-type": {
+     "v": 207,
+     "m": 99
+    },
+    "population-insurance-status": {
+     "v": 580,
+     "m": 299
     }
    },
    "unavailable": {
@@ -6163,6 +7673,58 @@
     "civilian-labor-force": {
      "v": 1837,
      "m": 435
+    },
+    "language-other-than-english-rate": {
+     "v": 8.807703,
+     "m": 4.213421
+    },
+    "limited-english-rate": {
+     "v": 4.78618,
+     "m": 3.644177
+    },
+    "less-than-high-school-rate": {
+     "v": 4.719583,
+     "m": 3.253241
+    },
+    "bachelors-or-higher-rate": {
+     "v": 55.133313,
+     "m": 8.814781
+    },
+    "hispanic-or-latino-rate": {
+     "v": 16.61745,
+     "m": 7.592438
+    },
+    "white-non-hispanic-rate": {
+     "v": 72.510067,
+     "m": 9.624026
+    },
+    "living-alone-rate": {
+     "v": 45.528455,
+     "m": 7.613776
+    },
+    "uninsured-rate": {
+     "v": 1.55587,
+     "m": 2.357961
+    },
+    "population-5-plus": {
+     "v": 3531,
+     "m": 539
+    },
+    "population-25-plus": {
+     "v": 3263,
+     "m": 482
+    },
+    "population-hispanic-origin": {
+     "v": 3725,
+     "m": 620
+    },
+    "households-type": {
+     "v": 1722,
+     "m": 209
+    },
+    "population-insurance-status": {
+     "v": 3535,
+     "m": 593
     }
    },
    "unavailable": {
@@ -6365,6 +7927,58 @@
     "civilian-labor-force": {
      "v": 1579,
      "m": 400
+    },
+    "language-other-than-english-rate": {
+     "v": 6.214689,
+     "m": 4.762946
+    },
+    "limited-english-rate": {
+     "v": 0,
+     "m": 2.791625
+    },
+    "less-than-high-school-rate": {
+     "v": 0,
+     "m": 2.556425
+    },
+    "bachelors-or-higher-rate": {
+     "v": 80.19802,
+     "m": 10.170737
+    },
+    "hispanic-or-latino-rate": {
+     "v": 8.06399,
+     "m": 5.663728
+    },
+    "white-non-hispanic-rate": {
+     "v": 79.399282,
+     "m": 8.539756
+    },
+    "living-alone-rate": {
+     "v": 5.909091,
+     "m": 5.119376
+    },
+    "uninsured-rate": {
+     "v": 0.783546,
+     "m": 1.548835
+    },
+    "population-5-plus": {
+     "v": 3009,
+     "m": 540
+    },
+    "population-25-plus": {
+     "v": 2121,
+     "m": 393
+    },
+    "population-hispanic-origin": {
+     "v": 3063,
+     "m": 547
+    },
+    "households-type": {
+     "v": 1100,
+     "m": 235
+    },
+    "population-insurance-status": {
+     "v": 3063,
+     "m": 547
     }
    },
    "unavailable": {
@@ -6565,6 +8179,58 @@
     "civilian-labor-force": {
      "v": 85,
      "m": 76
+    },
+    "language-other-than-english-rate": {
+     "v": 4.313725,
+     "m": 19.169549
+    },
+    "limited-english-rate": {
+     "v": 0,
+     "m": 32.941176
+    },
+    "less-than-high-school-rate": {
+     "v": 0,
+     "m": 21.263438
+    },
+    "bachelors-or-higher-rate": {
+     "v": 67.843137,
+     "m": 12.951532
+    },
+    "hispanic-or-latino-rate": {
+     "v": 5.098039,
+     "m": 8.34246
+    },
+    "white-non-hispanic-rate": {
+     "v": 94.901961,
+     "m": 7.212676
+    },
+    "living-alone-rate": {
+     "v": 40.277778,
+     "m": 23.655416
+    },
+    "uninsured-rate": {
+     "v": 0,
+     "m": 10.980392
+    },
+    "population-5-plus": {
+     "v": 255,
+     "m": 110
+    },
+    "population-25-plus": {
+     "v": 255,
+     "m": 110
+    },
+    "population-hispanic-origin": {
+     "v": 255,
+     "m": 110
+    },
+    "households-type": {
+     "v": 144,
+     "m": 61
+    },
+    "population-insurance-status": {
+     "v": 255,
+     "m": 110
     }
    },
    "unavailable": {
@@ -6773,6 +8439,58 @@
     "civilian-labor-force": {
      "v": 3032,
      "m": 422
+    },
+    "language-other-than-english-rate": {
+     "v": 27.405087,
+     "m": 6.672017
+    },
+    "limited-english-rate": {
+     "v": 6.339845,
+     "m": 3.405713
+    },
+    "less-than-high-school-rate": {
+     "v": 2.475,
+     "m": 2.735005
+    },
+    "bachelors-or-higher-rate": {
+     "v": 72.1,
+     "m": 5.816109
+    },
+    "hispanic-or-latino-rate": {
+     "v": 16.809605,
+     "m": 9.977714
+    },
+    "white-non-hispanic-rate": {
+     "v": 66.655232,
+     "m": 11.404028
+    },
+    "living-alone-rate": {
+     "v": 32.813816,
+     "m": 5.574936
+    },
+    "uninsured-rate": {
+     "v": 4.743083,
+     "m": 3.657728
+    },
+    "population-5-plus": {
+     "v": 5426,
+     "m": 605
+    },
+    "population-25-plus": {
+     "v": 4000,
+     "m": 467
+    },
+    "population-hispanic-origin": {
+     "v": 5830,
+     "m": 772
+    },
+    "households-type": {
+     "v": 2374,
+     "m": 263
+    },
+    "population-insurance-status": {
+     "v": 5819,
+     "m": 772
     }
    },
    "unavailable": {}
@@ -6978,6 +8696,58 @@
     "civilian-labor-force": {
      "v": 6039,
      "m": 563
+    },
+    "language-other-than-english-rate": {
+     "v": 11.686275,
+     "m": 2.491715
+    },
+    "limited-english-rate": {
+     "v": 2.440087,
+     "m": 1.582502
+    },
+    "less-than-high-school-rate": {
+     "v": 1.202186,
+     "m": 1.231386
+    },
+    "bachelors-or-higher-rate": {
+     "v": 79.842137,
+     "m": 5.99466
+    },
+    "hispanic-or-latino-rate": {
+     "v": 7.571369,
+     "m": 2.739815
+    },
+    "white-non-hispanic-rate": {
+     "v": 76.210178,
+     "m": 4.770168
+    },
+    "living-alone-rate": {
+     "v": 21.821381,
+     "m": 5.018733
+    },
+    "uninsured-rate": {
+     "v": 0.637153,
+     "m": 0.632078
+    },
+    "population-5-plus": {
+     "v": 11475,
+     "m": 1024
+    },
+    "population-25-plus": {
+     "v": 8235,
+     "m": 634
+    },
+    "population-hispanic-origin": {
+     "v": 12085,
+     "m": 1077
+    },
+    "households-type": {
+     "v": 4546,
+     "m": 294
+    },
+    "population-insurance-status": {
+     "v": 12085,
+     "m": 1077
     }
    },
    "unavailable": {}
@@ -7168,6 +8938,58 @@
     "civilian-labor-force": {
      "v": 83,
      "m": 77
+    },
+    "language-other-than-english-rate": {
+     "v": 0,
+     "m": 28.867513
+    },
+    "limited-english-rate": {
+     "v": 0,
+     "m": 50
+    },
+    "less-than-high-school-rate": {
+     "v": 0,
+     "m": 45.56451
+    },
+    "bachelors-or-higher-rate": {
+     "v": 37.815126,
+     "m": 27.626879
+    },
+    "hispanic-or-latino-rate": {
+     "v": 0,
+     "m": 8.333333
+    },
+    "white-non-hispanic-rate": {
+     "v": 100,
+     "m": 0
+    },
+    "living-alone-rate": {
+     "v": 0,
+     "m": 26.415094
+    },
+    "uninsured-rate": {
+     "v": 0,
+     "m": 16.666667
+    },
+    "population-5-plus": {
+     "v": 168,
+     "m": 149
+    },
+    "population-25-plus": {
+     "v": 119,
+     "m": 91
+    },
+    "population-hispanic-origin": {
+     "v": 168,
+     "m": 149
+    },
+    "households-type": {
+     "v": 53,
+     "m": 42
+    },
+    "population-insurance-status": {
+     "v": 168,
+     "m": 149
     }
    },
    "unavailable": {
@@ -7375,6 +9197,58 @@
     "civilian-labor-force": {
      "v": 1259,
      "m": 437
+    },
+    "language-other-than-english-rate": {
+     "v": 12.679575,
+     "m": 9.22079
+    },
+    "limited-english-rate": {
+     "v": 6.620862,
+     "m": 8.870691
+    },
+    "less-than-high-school-rate": {
+     "v": 6.507105,
+     "m": 6.911291
+    },
+    "bachelors-or-higher-rate": {
+     "v": 60.433807,
+     "m": 15.948478
+    },
+    "hispanic-or-latino-rate": {
+     "v": 5.347265,
+     "m": 7.027947
+    },
+    "white-non-hispanic-rate": {
+     "v": 84.511371,
+     "m": 38.146398
+    },
+    "living-alone-rate": {
+     "v": 27.564103,
+     "m": 13.793448
+    },
+    "uninsured-rate": {
+     "v": 5.347265,
+     "m": 4.930724
+    },
+    "population-5-plus": {
+     "v": 1601,
+     "m": 536
+    },
+    "population-25-plus": {
+     "v": 1337,
+     "m": 479
+    },
+    "population-hispanic-origin": {
+     "v": 1627,
+     "m": 545
+    },
+    "households-type": {
+     "v": 624,
+     "m": 170
+    },
+    "population-insurance-status": {
+     "v": 1627,
+     "m": 545
     }
    },
    "unavailable": {
@@ -7583,6 +9457,58 @@
     "civilian-labor-force": {
      "v": 1252,
      "m": 222
+    },
+    "language-other-than-english-rate": {
+     "v": 17.536534,
+     "m": 6.242722
+    },
+    "limited-english-rate": {
+     "v": 1.419624,
+     "m": 3.633893
+    },
+    "less-than-high-school-rate": {
+     "v": 5.702648,
+     "m": 7.159481
+    },
+    "bachelors-or-higher-rate": {
+     "v": 62.576375,
+     "m": 10.805379
+    },
+    "hispanic-or-latino-rate": {
+     "v": 4.200988,
+     "m": 3.177347
+    },
+    "white-non-hispanic-rate": {
+     "v": 71.087315,
+     "m": 10.352815
+    },
+    "living-alone-rate": {
+     "v": 23.183073,
+     "m": 6.8907
+    },
+    "uninsured-rate": {
+     "v": 0.658979,
+     "m": 1.24157
+    },
+    "population-5-plus": {
+     "v": 2395,
+     "m": 268
+    },
+    "population-25-plus": {
+     "v": 1964,
+     "m": 238
+    },
+    "population-hispanic-origin": {
+     "v": 2428,
+     "m": 274
+    },
+    "households-type": {
+     "v": 1087,
+     "m": 133
+    },
+    "population-insurance-status": {
+     "v": 2428,
+     "m": 274
     }
    },
    "unavailable": {}
@@ -7789,6 +9715,58 @@
     "civilian-labor-force": {
      "v": 1481,
      "m": 260
+    },
+    "language-other-than-english-rate": {
+     "v": 22.267658,
+     "m": 8.713491
+    },
+    "limited-english-rate": {
+     "v": 7.732342,
+     "m": 7.89211
+    },
+    "less-than-high-school-rate": {
+     "v": 4.914005,
+     "m": 5.381882
+    },
+    "bachelors-or-higher-rate": {
+     "v": 52.825553,
+     "m": 8.592683
+    },
+    "hispanic-or-latino-rate": {
+     "v": 15.883191,
+     "m": 6.738329
+    },
+    "white-non-hispanic-rate": {
+     "v": 68.660969,
+     "m": 12.43791
+    },
+    "living-alone-rate": {
+     "v": 21.920466,
+     "m": 7.903972
+    },
+    "uninsured-rate": {
+     "v": 3.632479,
+     "m": 2.724398
+    },
+    "population-5-plus": {
+     "v": 2690,
+     "m": 444
+    },
+    "population-25-plus": {
+     "v": 2035,
+     "m": 314
+    },
+    "population-hispanic-origin": {
+     "v": 2808,
+     "m": 427
+    },
+    "households-type": {
+     "v": 1031,
+     "m": 139
+    },
+    "population-insurance-status": {
+     "v": 2808,
+     "m": 427
     }
    },
    "unavailable": {}
@@ -7995,6 +9973,58 @@
     "civilian-labor-force": {
      "v": 979,
      "m": 162
+    },
+    "language-other-than-english-rate": {
+     "v": 16.287879,
+     "m": 5.529935
+    },
+    "limited-english-rate": {
+     "v": 4.829545,
+     "m": 4.616057
+    },
+    "less-than-high-school-rate": {
+     "v": 1.52314,
+     "m": 3.076306
+    },
+    "bachelors-or-higher-rate": {
+     "v": 64.381957,
+     "m": 6.617883
+    },
+    "hispanic-or-latino-rate": {
+     "v": 17.247623,
+     "m": 6.714306
+    },
+    "white-non-hispanic-rate": {
+     "v": 63.693979,
+     "m": 5.033625
+    },
+    "living-alone-rate": {
+     "v": 33.003953,
+     "m": 11.2277
+    },
+    "uninsured-rate": {
+     "v": 4.481666,
+     "m": 3.460716
+    },
+    "population-5-plus": {
+     "v": 2112,
+     "m": 254
+    },
+    "population-25-plus": {
+     "v": 1707,
+     "m": 222
+    },
+    "population-hispanic-origin": {
+     "v": 2209,
+     "m": 261
+    },
+    "households-type": {
+     "v": 1012,
+     "m": 165
+    },
+    "population-insurance-status": {
+     "v": 2209,
+     "m": 261
     }
    },
    "unavailable": {}
@@ -8201,6 +10231,58 @@
     "civilian-labor-force": {
      "v": 2785,
      "m": 484
+    },
+    "language-other-than-english-rate": {
+     "v": 26.589825,
+     "m": 6.901645
+    },
+    "limited-english-rate": {
+     "v": 14.109698,
+     "m": 5.414484
+    },
+    "less-than-high-school-rate": {
+     "v": 11.810412,
+     "m": 5.714947
+    },
+    "bachelors-or-higher-rate": {
+     "v": 47.267547,
+     "m": 9.117966
+    },
+    "hispanic-or-latino-rate": {
+     "v": 22.600561,
+     "m": 6.779797
+    },
+    "white-non-hispanic-rate": {
+     "v": 55.75304,
+     "m": 7.168414
+    },
+    "living-alone-rate": {
+     "v": 19.107957,
+     "m": 7.480785
+    },
+    "uninsured-rate": {
+     "v": 2.450889,
+     "m": 1.714922
+    },
+    "population-5-plus": {
+     "v": 5032,
+     "m": 560
+    },
+    "population-25-plus": {
+     "v": 3861,
+     "m": 444
+    },
+    "population-hispanic-origin": {
+     "v": 5345,
+     "m": 601
+    },
+    "households-type": {
+     "v": 1973,
+     "m": 230
+    },
+    "population-insurance-status": {
+     "v": 5345,
+     "m": 601
     }
    },
    "unavailable": {}
@@ -8407,6 +10489,58 @@
     "civilian-labor-force": {
      "v": 2994,
      "m": 483
+    },
+    "language-other-than-english-rate": {
+     "v": 50.241009,
+     "m": 10.010668
+    },
+    "limited-english-rate": {
+     "v": 20.59696,
+     "m": 5.742248
+    },
+    "less-than-high-school-rate": {
+     "v": 16.887334,
+     "m": 6.530166
+    },
+    "bachelors-or-higher-rate": {
+     "v": 42.842868,
+     "m": 9.211434
+    },
+    "hispanic-or-latino-rate": {
+     "v": 41.396904,
+     "m": 12.878764
+    },
+    "white-non-hispanic-rate": {
+     "v": 44.546094,
+     "m": 2.120535
+    },
+    "living-alone-rate": {
+     "v": 35.265911,
+     "m": 7.945153
+    },
+    "uninsured-rate": {
+     "v": 5.788177,
+     "m": 3.865804
+    },
+    "population-5-plus": {
+     "v": 5394,
+     "m": 669
+    },
+    "population-25-plus": {
+     "v": 4003,
+     "m": 461
+    },
+    "population-hispanic-origin": {
+     "v": 5684,
+     "m": 809
+    },
+    "households-type": {
+     "v": 2294,
+     "m": 318
+    },
+    "population-insurance-status": {
+     "v": 5684,
+     "m": 809
     }
    },
    "unavailable": {}
@@ -8612,6 +10746,58 @@
     "civilian-labor-force": {
      "v": 3684,
      "m": 548
+    },
+    "language-other-than-english-rate": {
+     "v": 13.129471,
+     "m": 4.250818
+    },
+    "limited-english-rate": {
+     "v": 3.871511,
+     "m": 2.427477
+    },
+    "less-than-high-school-rate": {
+     "v": 3.978633,
+     "m": 3.354531
+    },
+    "bachelors-or-higher-rate": {
+     "v": 55.111439,
+     "m": 7.390999
+    },
+    "hispanic-or-latino-rate": {
+     "v": 17.89373,
+     "m": 6.597815
+    },
+    "white-non-hispanic-rate": {
+     "v": 70.78268,
+     "m": 1.627139
+    },
+    "living-alone-rate": {
+     "v": 16.494451,
+     "m": 5.742592
+    },
+    "uninsured-rate": {
+     "v": 1.365934,
+     "m": 1.018898
+    },
+    "population-5-plus": {
+     "v": 7129,
+     "m": 656
+    },
+    "population-25-plus": {
+     "v": 5429,
+     "m": 467
+    },
+    "population-hispanic-origin": {
+     "v": 7321,
+     "m": 654
+    },
+    "households-type": {
+     "v": 2613,
+     "m": 210
+    },
+    "population-insurance-status": {
+     "v": 7321,
+     "m": 654
     }
    },
    "unavailable": {}
@@ -8818,6 +11004,58 @@
     "civilian-labor-force": {
      "v": 2791,
      "m": 494
+    },
+    "language-other-than-english-rate": {
+     "v": 27.732196,
+     "m": 7.827453
+    },
+    "limited-english-rate": {
+     "v": 15.178864,
+     "m": 7.663461
+    },
+    "less-than-high-school-rate": {
+     "v": 16.155542,
+     "m": 8.584236
+    },
+    "bachelors-or-higher-rate": {
+     "v": 43.154941,
+     "m": 6.617082
+    },
+    "hispanic-or-latino-rate": {
+     "v": 23.02799,
+     "m": 7.836853
+    },
+    "white-non-hispanic-rate": {
+     "v": 59.669211,
+     "m": 9.496966
+    },
+    "living-alone-rate": {
+     "v": 21.649485,
+     "m": 5.73108
+    },
+    "uninsured-rate": {
+     "v": 11.243278,
+     "m": 6.434902
+    },
+    "population-5-plus": {
+     "v": 6094,
+     "m": 674
+    },
+    "population-25-plus": {
+     "v": 4989,
+     "m": 620
+    },
+    "population-hispanic-origin": {
+     "v": 6288,
+     "m": 721
+    },
+    "households-type": {
+     "v": 2425,
+     "m": 317
+    },
+    "population-insurance-status": {
+     "v": 6137,
+     "m": 720
     }
    },
    "unavailable": {}
@@ -9024,6 +11262,58 @@
     "civilian-labor-force": {
      "v": 3056,
      "m": 639
+    },
+    "language-other-than-english-rate": {
+     "v": 55.555556,
+     "m": 12.530132
+    },
+    "limited-english-rate": {
+     "v": 27.682973,
+     "m": 8.423014
+    },
+    "less-than-high-school-rate": {
+     "v": 26.091889,
+     "m": 10.685711
+    },
+    "bachelors-or-higher-rate": {
+     "v": 34.912082,
+     "m": 6.622858
+    },
+    "hispanic-or-latino-rate": {
+     "v": 43.375912,
+     "m": 14.819321
+    },
+    "white-non-hispanic-rate": {
+     "v": 31.770073,
+     "m": 4.064583
+    },
+    "living-alone-rate": {
+     "v": 22.742801,
+     "m": 6.783658
+    },
+    "uninsured-rate": {
+     "v": 5.871593,
+     "m": 5.336055
+    },
+    "population-5-plus": {
+     "v": 5274,
+     "m": 922
+    },
+    "population-25-plus": {
+     "v": 3526,
+     "m": 573
+    },
+    "population-hispanic-origin": {
+     "v": 5480,
+     "m": 926
+    },
+    "households-type": {
+     "v": 2049,
+     "m": 236
+    },
+    "population-insurance-status": {
+     "v": 5467,
+     "m": 926
     }
    },
    "unavailable": {}
@@ -9230,6 +11520,58 @@
     "civilian-labor-force": {
      "v": 1565,
      "m": 199
+    },
+    "language-other-than-english-rate": {
+     "v": 15.282518,
+     "m": 5.071803
+    },
+    "limited-english-rate": {
+     "v": 3.147516,
+     "m": 3.5907
+    },
+    "less-than-high-school-rate": {
+     "v": 1.968864,
+     "m": 2.837685
+    },
+    "bachelors-or-higher-rate": {
+     "v": 60.714286,
+     "m": 8.79833
+    },
+    "hispanic-or-latino-rate": {
+     "v": 14.096126,
+     "m": 5.379473
+    },
+    "white-non-hispanic-rate": {
+     "v": 63.522238,
+     "m": 11.009063
+    },
+    "living-alone-rate": {
+     "v": 12.5,
+     "m": 5.468082
+    },
+    "uninsured-rate": {
+     "v": 0.609756,
+     "m": 1.173116
+    },
+    "population-5-plus": {
+     "v": 2637,
+     "m": 255
+    },
+    "population-25-plus": {
+     "v": 2184,
+     "m": 210
+    },
+    "population-hispanic-origin": {
+     "v": 2788,
+     "m": 248
+    },
+    "households-type": {
+     "v": 1016,
+     "m": 102
+    },
+    "population-insurance-status": {
+     "v": 2788,
+     "m": 248
     }
    },
    "unavailable": {}
@@ -9436,6 +11778,58 @@
     "civilian-labor-force": {
      "v": 2651,
      "m": 475
+    },
+    "language-other-than-english-rate": {
+     "v": 35.812133,
+     "m": 12.115606
+    },
+    "limited-english-rate": {
+     "v": 16.025223,
+     "m": 5.94089
+    },
+    "less-than-high-school-rate": {
+     "v": 10.471507,
+     "m": 6.232545
+    },
+    "bachelors-or-higher-rate": {
+     "v": 55.481631,
+     "m": 6.38633
+    },
+    "hispanic-or-latino-rate": {
+     "v": 36.511579,
+     "m": 15.051534
+    },
+    "white-non-hispanic-rate": {
+     "v": 50.949301,
+     "m": 2.946716
+    },
+    "living-alone-rate": {
+     "v": 25.189599,
+     "m": 6.196718
+    },
+    "uninsured-rate": {
+     "v": 8,
+     "m": 5.204829
+    },
+    "population-5-plus": {
+     "v": 4599,
+     "m": 733
+    },
+    "population-25-plus": {
+     "v": 3457,
+     "m": 478
+    },
+    "population-hispanic-origin": {
+     "v": 4793,
+     "m": 768
+    },
+    "households-type": {
+     "v": 1846,
+     "m": 190
+    },
+    "population-insurance-status": {
+     "v": 4775,
+     "m": 770
     }
    },
    "unavailable": {}
@@ -9642,6 +12036,58 @@
     "civilian-labor-force": {
      "v": 2892,
      "m": 510
+    },
+    "language-other-than-english-rate": {
+     "v": 32.894737,
+     "m": 8.665512
+    },
+    "limited-english-rate": {
+     "v": 11.25731,
+     "m": 5.01447
+    },
+    "less-than-high-school-rate": {
+     "v": 6.319077,
+     "m": 3.736538
+    },
+    "bachelors-or-higher-rate": {
+     "v": 41.806824,
+     "m": 6.267501
+    },
+    "hispanic-or-latino-rate": {
+     "v": 33.31038,
+     "m": 10.799284
+    },
+    "white-non-hispanic-rate": {
+     "v": 55.861594,
+     "m": 7.531899
+    },
+    "living-alone-rate": {
+     "v": 25.790425,
+     "m": 7.941069
+    },
+    "uninsured-rate": {
+     "v": 6.885867,
+     "m": 3.581689
+    },
+    "population-5-plus": {
+     "v": 5472,
+     "m": 615
+    },
+    "population-25-plus": {
+     "v": 4162,
+     "m": 516
+    },
+    "population-hispanic-origin": {
+     "v": 5809,
+     "m": 748
+    },
+    "households-type": {
+     "v": 2214,
+     "m": 247
+    },
+    "population-insurance-status": {
+     "v": 5809,
+     "m": 748
     }
    },
    "unavailable": {}
@@ -9848,6 +12294,58 @@
     "civilian-labor-force": {
      "v": 954,
      "m": 217
+    },
+    "language-other-than-english-rate": {
+     "v": 12.275263,
+     "m": 5.974769
+    },
+    "limited-english-rate": {
+     "v": 1.797892,
+     "m": 5.286669
+    },
+    "less-than-high-school-rate": {
+     "v": 3.011583,
+     "m": 5.030274
+    },
+    "bachelors-or-higher-rate": {
+     "v": 53.590734,
+     "m": 3.663923
+    },
+    "hispanic-or-latino-rate": {
+     "v": 11.597779,
+     "m": 9.382133
+    },
+    "white-non-hispanic-rate": {
+     "v": 71.067242,
+     "m": 4.272917
+    },
+    "living-alone-rate": {
+     "v": 29.957806,
+     "m": 9.166898
+    },
+    "uninsured-rate": {
+     "v": 0,
+     "m": 1.727329
+    },
+    "population-5-plus": {
+     "v": 1613,
+     "m": 257
+    },
+    "population-25-plus": {
+     "v": 1295,
+     "m": 236
+    },
+    "population-hispanic-origin": {
+     "v": 1621,
+     "m": 258
+    },
+    "households-type": {
+     "v": 711,
+     "m": 94
+    },
+    "population-insurance-status": {
+     "v": 1621,
+     "m": 258
     }
    },
    "unavailable": {}
@@ -10054,6 +12552,58 @@
     "civilian-labor-force": {
      "v": 1848,
      "m": 358
+    },
+    "language-other-than-english-rate": {
+     "v": 38.479204,
+     "m": 7.88345
+    },
+    "limited-english-rate": {
+     "v": 14.825211,
+     "m": 5.538788
+    },
+    "less-than-high-school-rate": {
+     "v": 18.046788,
+     "m": 7.708552
+    },
+    "bachelors-or-higher-rate": {
+     "v": 46.936502,
+     "m": 9.500817
+    },
+    "hispanic-or-latino-rate": {
+     "v": 38.196681,
+     "m": 7.886452
+    },
+    "white-non-hispanic-rate": {
+     "v": 43.497647,
+     "m": 13.939695
+    },
+    "living-alone-rate": {
+     "v": 33.62963,
+     "m": 8.496491
+    },
+    "uninsured-rate": {
+     "v": 2.998761,
+     "m": 2.588458
+    },
+    "population-5-plus": {
+     "v": 3919,
+     "m": 592
+    },
+    "population-25-plus": {
+     "v": 2693,
+     "m": 489
+    },
+    "population-hispanic-origin": {
+     "v": 4037,
+     "m": 576
+    },
+    "households-type": {
+     "v": 1350,
+     "m": 206
+    },
+    "population-insurance-status": {
+     "v": 4035,
+     "m": 577
     }
    },
    "unavailable": {}
@@ -10259,6 +12809,58 @@
     "civilian-labor-force": {
      "v": 1352,
      "m": 300
+    },
+    "language-other-than-english-rate": {
+     "v": 20.007236,
+     "m": 6.563092
+    },
+    "limited-english-rate": {
+     "v": 3.835022,
+     "m": 4.15568
+    },
+    "less-than-high-school-rate": {
+     "v": 2.601552,
+     "m": 3.006102
+    },
+    "bachelors-or-higher-rate": {
+     "v": 60.52031,
+     "m": 8.518092
+    },
+    "hispanic-or-latino-rate": {
+     "v": 10.958434,
+     "m": 5.977668
+    },
+    "white-non-hispanic-rate": {
+     "v": 60.666438,
+     "m": 9.129054
+    },
+    "living-alone-rate": {
+     "v": 31.44208,
+     "m": 9.092504
+    },
+    "uninsured-rate": {
+     "v": 0,
+     "m": 0.981767
+    },
+    "population-5-plus": {
+     "v": 2764,
+     "m": 381
+    },
+    "population-25-plus": {
+     "v": 2191,
+     "m": 269
+    },
+    "population-hispanic-origin": {
+     "v": 2911,
+     "m": 383
+    },
+    "households-type": {
+     "v": 1269,
+     "m": 161
+    },
+    "population-insurance-status": {
+     "v": 2852,
+     "m": 380
     }
    },
    "unavailable": {}
@@ -10465,6 +13067,58 @@
     "civilian-labor-force": {
      "v": 3091,
      "m": 779
+    },
+    "language-other-than-english-rate": {
+     "v": 24.830918,
+     "m": 10.367739
+    },
+    "limited-english-rate": {
+     "v": 15.922705,
+     "m": 8.765447
+    },
+    "less-than-high-school-rate": {
+     "v": 12.163535,
+     "m": 6.062424
+    },
+    "bachelors-or-higher-rate": {
+     "v": 44.235653,
+     "m": 5.574262
+    },
+    "hispanic-or-latino-rate": {
+     "v": 20.540129,
+     "m": 10.922297
+    },
+    "white-non-hispanic-rate": {
+     "v": 54.127045,
+     "m": 7.895936
+    },
+    "living-alone-rate": {
+     "v": 28.798768,
+     "m": 7.61896
+    },
+    "uninsured-rate": {
+     "v": 10.513497,
+     "m": 7.107395
+    },
+    "population-5-plus": {
+     "v": 5175,
+     "m": 903
+    },
+    "population-25-plus": {
+     "v": 3938,
+     "m": 643
+    },
+    "population-hispanic-origin": {
+     "v": 5258,
+     "m": 895
+    },
+    "households-type": {
+     "v": 1948,
+     "m": 234
+    },
+    "population-insurance-status": {
+     "v": 4927,
+     "m": 895
     }
    },
    "unavailable": {}
@@ -10671,6 +13325,58 @@
     "civilian-labor-force": {
      "v": 2675,
      "m": 545
+    },
+    "language-other-than-english-rate": {
+     "v": 13.781611,
+     "m": 4.297939
+    },
+    "limited-english-rate": {
+     "v": 6.057636,
+     "m": 3.510316
+    },
+    "less-than-high-school-rate": {
+     "v": 7.384202,
+     "m": 3.03017
+    },
+    "bachelors-or-higher-rate": {
+     "v": 52.338331,
+     "m": 7.231343
+    },
+    "hispanic-or-latino-rate": {
+     "v": 20.168224,
+     "m": 5.921143
+    },
+    "white-non-hispanic-rate": {
+     "v": 61.869159,
+     "m": 7.503568
+    },
+    "living-alone-rate": {
+     "v": 43.487957,
+     "m": 6.749785
+    },
+    "uninsured-rate": {
+     "v": 3.068228,
+     "m": 2.722771
+    },
+    "population-5-plus": {
+     "v": 5101,
+     "m": 647
+    },
+    "population-25-plus": {
+     "v": 4469,
+     "m": 525
+    },
+    "population-hispanic-origin": {
+     "v": 5350,
+     "m": 690
+    },
+    "households-type": {
+     "v": 2242,
+     "m": 173
+    },
+    "population-insurance-status": {
+     "v": 4954,
+     "m": 678
     }
    },
    "unavailable": {}
@@ -10876,6 +13582,58 @@
     "civilian-labor-force": {
      "v": 3127,
      "m": 475
+    },
+    "language-other-than-english-rate": {
+     "v": 13.465715,
+     "m": 4.01757
+    },
+    "limited-english-rate": {
+     "v": 2.327025,
+     "m": 2.191383
+    },
+    "less-than-high-school-rate": {
+     "v": 2.389558,
+     "m": 2.831424
+    },
+    "bachelors-or-higher-rate": {
+     "v": 70,
+     "m": 7.135937
+    },
+    "hispanic-or-latino-rate": {
+     "v": 8.584221,
+     "m": 2.297225
+    },
+    "white-non-hispanic-rate": {
+     "v": 79.249653,
+     "m": 5.734646
+    },
+    "living-alone-rate": {
+     "v": 25.404531,
+     "m": 6.206412
+    },
+    "uninsured-rate": {
+     "v": 3.494665,
+     "m": 3.758723
+    },
+    "population-5-plus": {
+     "v": 6446,
+     "m": 644
+    },
+    "population-25-plus": {
+     "v": 4980,
+     "m": 553
+    },
+    "population-hispanic-origin": {
+     "v": 6477,
+     "m": 653
+    },
+    "households-type": {
+     "v": 2472,
+     "m": 239
+    },
+    "population-insurance-status": {
+     "v": 6467,
+     "m": 653
     }
    },
    "unavailable": {}
@@ -11081,6 +13839,58 @@
     "civilian-labor-force": {
      "v": 3491,
      "m": 462
+    },
+    "language-other-than-english-rate": {
+     "v": 20.936077,
+     "m": 6.479322
+    },
+    "limited-english-rate": {
+     "v": 8.606879,
+     "m": 3.838428
+    },
+    "less-than-high-school-rate": {
+     "v": 4.199099,
+     "m": 3.099908
+    },
+    "bachelors-or-higher-rate": {
+     "v": 65.792708,
+     "m": 6.920955
+    },
+    "hispanic-or-latino-rate": {
+     "v": 10.47941,
+     "m": 5.666877
+    },
+    "white-non-hispanic-rate": {
+     "v": 75.568531,
+     "m": 7.814567
+    },
+    "living-alone-rate": {
+     "v": 19.776715,
+     "m": 5.095772
+    },
+    "uninsured-rate": {
+     "v": 1.04551,
+     "m": 0.963403
+    },
+    "population-5-plus": {
+     "v": 6367,
+     "m": 649
+    },
+    "population-25-plus": {
+     "v": 4882,
+     "m": 560
+    },
+    "population-hispanic-origin": {
+     "v": 6508,
+     "m": 648
+    },
+    "households-type": {
+     "v": 2508,
+     "m": 289
+    },
+    "population-insurance-status": {
+     "v": 6504,
+     "m": 647
     }
    },
    "unavailable": {}
@@ -11287,6 +14097,58 @@
     "civilian-labor-force": {
      "v": 1213,
      "m": 278
+    },
+    "language-other-than-english-rate": {
+     "v": 51.653612,
+     "m": 10.953727
+    },
+    "limited-english-rate": {
+     "v": 32.419495,
+     "m": 8.837478
+    },
+    "less-than-high-school-rate": {
+     "v": 17.678959,
+     "m": 5.903956
+    },
+    "bachelors-or-higher-rate": {
+     "v": 40.835141,
+     "m": 10.12119
+    },
+    "hispanic-or-latino-rate": {
+     "v": 42.549599,
+     "m": 11.716369
+    },
+    "white-non-hispanic-rate": {
+     "v": 49.936682,
+     "m": 3.784303
+    },
+    "living-alone-rate": {
+     "v": 47.001934,
+     "m": 12.55817
+    },
+    "uninsured-rate": {
+     "v": 5.292599,
+     "m": 4.483555
+    },
+    "population-5-plus": {
+     "v": 2298,
+     "m": 329
+    },
+    "population-25-plus": {
+     "v": 1844,
+     "m": 243
+    },
+    "population-hispanic-origin": {
+     "v": 2369,
+     "m": 340
+    },
+    "households-type": {
+     "v": 1034,
+     "m": 142
+    },
+    "population-insurance-status": {
+     "v": 2324,
+     "m": 340
     }
    },
    "unavailable": {}
@@ -11489,6 +14351,58 @@
     "civilian-labor-force": {
      "v": 2157,
      "m": 483
+    },
+    "language-other-than-english-rate": {
+     "v": 38.070829,
+     "m": 8.436011
+    },
+    "limited-english-rate": {
+     "v": 14.701771,
+     "m": 4.852707
+    },
+    "less-than-high-school-rate": {
+     "v": 14.056832,
+     "m": 6.599812
+    },
+    "bachelors-or-higher-rate": {
+     "v": 44.891173,
+     "m": 8.490177
+    },
+    "hispanic-or-latino-rate": {
+     "v": 33.602208,
+     "m": 12.761282
+    },
+    "white-non-hispanic-rate": {
+     "v": 52.536616,
+     "m": 9.707603
+    },
+    "living-alone-rate": {
+     "v": 43.784079,
+     "m": 17.638684
+    },
+    "uninsured-rate": {
+     "v": 3.52385,
+     "m": 2.278589
+    },
+    "population-5-plus": {
+     "v": 4292,
+     "m": 693
+    },
+    "population-25-plus": {
+     "v": 3308,
+     "m": 573
+    },
+    "population-hispanic-origin": {
+     "v": 4711,
+     "m": 751
+    },
+    "households-type": {
+     "v": 1834,
+     "m": 391
+    },
+    "population-insurance-status": {
+     "v": 4654,
+     "m": 751
     }
    },
    "unavailable": {
@@ -11697,6 +14611,58 @@
     "civilian-labor-force": {
      "v": 2095,
      "m": 387
+    },
+    "language-other-than-english-rate": {
+     "v": 34.497134,
+     "m": 8.561832
+    },
+    "limited-english-rate": {
+     "v": 20.505472,
+     "m": 7.215448
+    },
+    "less-than-high-school-rate": {
+     "v": 16.135329,
+     "m": 8.274357
+    },
+    "bachelors-or-higher-rate": {
+     "v": 47.722837,
+     "m": 6.883531
+    },
+    "hispanic-or-latino-rate": {
+     "v": 31.916499,
+     "m": 8.308196
+    },
+    "white-non-hispanic-rate": {
+     "v": 47.183099,
+     "m": 5.387347
+    },
+    "living-alone-rate": {
+     "v": 34.01245,
+     "m": 9.461753
+    },
+    "uninsured-rate": {
+     "v": 7.142857,
+     "m": 3.85838
+    },
+    "population-5-plus": {
+     "v": 3838,
+     "m": 468
+    },
+    "population-25-plus": {
+     "v": 3074,
+     "m": 370
+    },
+    "population-hispanic-origin": {
+     "v": 3976,
+     "m": 501
+    },
+    "households-type": {
+     "v": 1767,
+     "m": 152
+    },
+    "population-insurance-status": {
+     "v": 3976,
+     "m": 501
     }
    },
    "unavailable": {}
@@ -11903,6 +14869,58 @@
     "civilian-labor-force": {
      "v": 2550,
      "m": 464
+    },
+    "language-other-than-english-rate": {
+     "v": 15.986717,
+     "m": 5.948715
+    },
+    "limited-english-rate": {
+     "v": 3.795066,
+     "m": 3.437804
+    },
+    "less-than-high-school-rate": {
+     "v": 5.539853,
+     "m": 3.812298
+    },
+    "bachelors-or-higher-rate": {
+     "v": 67.976258,
+     "m": 8.700707
+    },
+    "hispanic-or-latino-rate": {
+     "v": 12.056738,
+     "m": 6.878351
+    },
+    "white-non-hispanic-rate": {
+     "v": 80.274823,
+     "m": 3.578139
+    },
+    "living-alone-rate": {
+     "v": 22.610837,
+     "m": 4.235877
+    },
+    "uninsured-rate": {
+     "v": 1.374113,
+     "m": 1.011661
+    },
+    "population-5-plus": {
+     "v": 4216,
+     "m": 567
+    },
+    "population-25-plus": {
+     "v": 3538,
+     "m": 473
+    },
+    "population-hispanic-origin": {
+     "v": 4512,
+     "m": 575
+    },
+    "households-type": {
+     "v": 2030,
+     "m": 289
+    },
+    "population-insurance-status": {
+     "v": 4512,
+     "m": 575
     }
    },
    "unavailable": {}
@@ -12109,6 +15127,58 @@
     "civilian-labor-force": {
      "v": 2866,
      "m": 386
+    },
+    "language-other-than-english-rate": {
+     "v": 18.301992,
+     "m": 5.556987
+    },
+    "limited-english-rate": {
+     "v": 5.771737,
+     "m": 3.919343
+    },
+    "less-than-high-school-rate": {
+     "v": 3.487817,
+     "m": 2.821498
+    },
+    "bachelors-or-higher-rate": {
+     "v": 60.774009,
+     "m": 9.529023
+    },
+    "hispanic-or-latino-rate": {
+     "v": 15.096341,
+     "m": 4.805416
+    },
+    "white-non-hispanic-rate": {
+     "v": 64.185964,
+     "m": 6.491191
+    },
+    "living-alone-rate": {
+     "v": 39.816361,
+     "m": 10.679695
+    },
+    "uninsured-rate": {
+     "v": 1.190899,
+     "m": 0.863255
+    },
+    "population-5-plus": {
+     "v": 5371,
+     "m": 517
+    },
+    "population-25-plus": {
+     "v": 4186,
+     "m": 406
+    },
+    "population-hispanic-origin": {
+     "v": 5657,
+     "m": 567
+    },
+    "households-type": {
+     "v": 2396,
+     "m": 253
+    },
+    "population-insurance-status": {
+     "v": 5626,
+     "m": 565
     }
    },
    "unavailable": {}
@@ -12307,6 +15377,58 @@
     "civilian-labor-force": {
      "v": 2351,
      "m": 423
+    },
+    "language-other-than-english-rate": {
+     "v": 17.697315,
+     "m": 5.699429
+    },
+    "limited-english-rate": {
+     "v": 3.824247,
+     "m": 2.91435
+    },
+    "less-than-high-school-rate": {
+     "v": 3.891837,
+     "m": 3.014489
+    },
+    "bachelors-or-higher-rate": {
+     "v": 64.89765,
+     "m": 6.630961
+    },
+    "hispanic-or-latino-rate": {
+     "v": 8.801424,
+     "m": 4.907041
+    },
+    "white-non-hispanic-rate": {
+     "v": 79.727057,
+     "m": 7.2337
+    },
+    "living-alone-rate": {
+     "v": 18.362518,
+     "m": 6.001393
+    },
+    "uninsured-rate": {
+     "v": 1.878956,
+     "m": 2.586379
+    },
+    "population-5-plus": {
+     "v": 4916,
+     "m": 565
+    },
+    "population-25-plus": {
+     "v": 3957,
+     "m": 349
+    },
+    "population-hispanic-origin": {
+     "v": 5056,
+     "m": 563
+    },
+    "households-type": {
+     "v": 2113,
+     "m": 179
+    },
+    "population-insurance-status": {
+     "v": 5056,
+     "m": 563
     }
    },
    "unavailable": {
@@ -12512,6 +15634,58 @@
     "civilian-labor-force": {
      "v": 586,
      "m": 132
+    },
+    "language-other-than-english-rate": {
+     "v": 23.604061,
+     "m": 15.041603
+    },
+    "limited-english-rate": {
+     "v": 4.060914,
+     "m": 11.497942
+    },
+    "less-than-high-school-rate": {
+     "v": 1.451379,
+     "m": 10.6371
+    },
+    "bachelors-or-higher-rate": {
+     "v": 56.894049,
+     "m": 16.69232
+    },
+    "hispanic-or-latino-rate": {
+     "v": 7.106599,
+     "m": 9.976178
+    },
+    "white-non-hispanic-rate": {
+     "v": 67.005076,
+     "m": 12.968703
+    },
+    "living-alone-rate": {
+     "v": 77.737882,
+     "m": 12.426442
+    },
+    "uninsured-rate": {
+     "v": 1.015228,
+     "m": 3.4887
+    },
+    "population-5-plus": {
+     "v": 788,
+     "m": 110
+    },
+    "population-25-plus": {
+     "v": 689,
+     "m": 88
+    },
+    "population-hispanic-origin": {
+     "v": 788,
+     "m": 110
+    },
+    "households-type": {
+     "v": 557,
+     "m": 74
+    },
+    "population-insurance-status": {
+     "v": 788,
+     "m": 110
     }
    },
    "unavailable": {
@@ -12720,6 +15894,58 @@
     "civilian-labor-force": {
      "v": 2798,
      "m": 479
+    },
+    "language-other-than-english-rate": {
+     "v": 26.604215,
+     "m": 8.577805
+    },
+    "limited-english-rate": {
+     "v": 8.103044,
+     "m": 4.773887
+    },
+    "less-than-high-school-rate": {
+     "v": 1.705381,
+     "m": 2.230858
+    },
+    "bachelors-or-higher-rate": {
+     "v": 63.834166,
+     "m": 9.719685
+    },
+    "hispanic-or-latino-rate": {
+     "v": 32.68018,
+     "m": 11.988204
+    },
+    "white-non-hispanic-rate": {
+     "v": 60.653153,
+     "m": 6.260054
+    },
+    "living-alone-rate": {
+     "v": 46.808511,
+     "m": 11.961853
+    },
+    "uninsured-rate": {
+     "v": 1.139471,
+     "m": 1.463438
+    },
+    "population-5-plus": {
+     "v": 4270,
+     "m": 612
+    },
+    "population-25-plus": {
+     "v": 3401,
+     "m": 471
+    },
+    "population-hispanic-origin": {
+     "v": 4440,
+     "m": 705
+    },
+    "households-type": {
+     "v": 2115,
+     "m": 294
+    },
+    "population-insurance-status": {
+     "v": 4388,
+     "m": 704
     }
    },
    "unavailable": {}
@@ -12926,6 +16152,58 @@
     "civilian-labor-force": {
      "v": 2585,
      "m": 352
+    },
+    "language-other-than-english-rate": {
+     "v": 38.887539,
+     "m": 7.785036
+    },
+    "limited-english-rate": {
+     "v": 17.901385,
+     "m": 5.59706
+    },
+    "less-than-high-school-rate": {
+     "v": 13.658379,
+     "m": 5.148679
+    },
+    "bachelors-or-higher-rate": {
+     "v": 49.467226,
+     "m": 7.942019
+    },
+    "hispanic-or-latino-rate": {
+     "v": 33.090744,
+     "m": 10.773747
+    },
+    "white-non-hispanic-rate": {
+     "v": 58.699113,
+     "m": 6.603198
+    },
+    "living-alone-rate": {
+     "v": 35.269492,
+     "m": 7.640317
+    },
+    "uninsured-rate": {
+     "v": 7.823516,
+     "m": 2.856286
+    },
+    "population-5-plus": {
+     "v": 4117,
+     "m": 501
+    },
+    "population-25-plus": {
+     "v": 3097,
+     "m": 322
+    },
+    "population-hispanic-origin": {
+     "v": 4397,
+     "m": 579
+    },
+    "households-type": {
+     "v": 1911,
+     "m": 199
+    },
+    "population-insurance-status": {
+     "v": 4397,
+     "m": 579
     }
    },
    "unavailable": {}
@@ -13132,6 +16410,58 @@
     "civilian-labor-force": {
      "v": 2931,
      "m": 400
+    },
+    "language-other-than-english-rate": {
+     "v": 74.476257,
+     "m": 17.679086
+    },
+    "limited-english-rate": {
+     "v": 44.884777,
+     "m": 4.06319
+    },
+    "less-than-high-school-rate": {
+     "v": 37.090505,
+     "m": 9.164725
+    },
+    "bachelors-or-higher-rate": {
+     "v": 26.679622,
+     "m": 6.733571
+    },
+    "hispanic-or-latino-rate": {
+     "v": 77.493197,
+     "m": 11.342576
+    },
+    "white-non-hispanic-rate": {
+     "v": 10.421002,
+     "m": 2.377409
+    },
+    "living-alone-rate": {
+     "v": 21.125731,
+     "m": 11.488473
+    },
+    "uninsured-rate": {
+     "v": 11.54154,
+     "m": 4.614396
+    },
+    "population-5-plus": {
+     "v": 5728,
+     "m": 1000
+    },
+    "population-25-plus": {
+     "v": 3602,
+     "m": 515
+    },
+    "population-hispanic-origin": {
+     "v": 6247,
+     "m": 1026
+    },
+    "households-type": {
+     "v": 1368,
+     "m": 186
+    },
+    "population-insurance-status": {
+     "v": 6247,
+     "m": 1026
     }
    },
    "unavailable": {}
@@ -13338,6 +16668,58 @@
     "civilian-labor-force": {
      "v": 1100,
      "m": 319
+    },
+    "language-other-than-english-rate": {
+     "v": 97.169326,
+     "m": 23.857175
+    },
+    "limited-english-rate": {
+     "v": 79.207411,
+     "m": 13.946838
+    },
+    "less-than-high-school-rate": {
+     "v": 68.612521,
+     "m": 20.055435
+    },
+    "bachelors-or-higher-rate": {
+     "v": 6.683587,
+     "m": 4.359985
+    },
+    "hispanic-or-latino-rate": {
+     "v": 97.88894,
+     "m": 3.882251
+    },
+    "white-non-hispanic-rate": {
+     "v": 0.458926,
+     "m": 0.822809
+    },
+    "living-alone-rate": {
+     "v": 10.071942,
+     "m": 9.512904
+    },
+    "uninsured-rate": {
+     "v": 30.013768,
+     "m": 11.037305
+    },
+    "population-5-plus": {
+     "v": 1943,
+     "m": 351
+    },
+    "population-25-plus": {
+     "v": 1182,
+     "m": 223
+    },
+    "population-hispanic-origin": {
+     "v": 2179,
+     "m": 348
+    },
+    "households-type": {
+     "v": 417,
+     "m": 51
+    },
+    "population-insurance-status": {
+     "v": 2179,
+     "m": 348
     }
    },
    "unavailable": {}
@@ -13543,6 +16925,58 @@
     "civilian-labor-force": {
      "v": 2173,
      "m": 389
+    },
+    "language-other-than-english-rate": {
+     "v": 88.523774,
+     "m": 3.425633
+    },
+    "limited-english-rate": {
+     "v": 57.978591,
+     "m": 9.164556
+    },
+    "less-than-high-school-rate": {
+     "v": 55.923345,
+     "m": 10.142262
+    },
+    "bachelors-or-higher-rate": {
+     "v": 5.270035,
+     "m": 3.186248
+    },
+    "hispanic-or-latino-rate": {
+     "v": 92.201728,
+     "m": 5.294385
+    },
+    "white-non-hispanic-rate": {
+     "v": 6.000467,
+     "m": 4.122666
+    },
+    "living-alone-rate": {
+     "v": 12.790698,
+     "m": 8.667537
+    },
+    "uninsured-rate": {
+     "v": 17.908008,
+     "m": 7.585271
+    },
+    "population-5-plus": {
+     "v": 4017,
+     "m": 616
+    },
+    "population-25-plus": {
+     "v": 2296,
+     "m": 369
+    },
+    "population-hispanic-origin": {
+     "v": 4283,
+     "m": 663
+    },
+    "households-type": {
+     "v": 1032,
+     "m": 199
+    },
+    "population-insurance-status": {
+     "v": 4283,
+     "m": 663
     }
    },
    "unavailable": {}
@@ -13749,6 +17183,58 @@
     "civilian-labor-force": {
      "v": 2512,
      "m": 492
+    },
+    "language-other-than-english-rate": {
+     "v": 12.670157,
+     "m": 7.651205
+    },
+    "limited-english-rate": {
+     "v": 2.774869,
+     "m": 3.808956
+    },
+    "less-than-high-school-rate": {
+     "v": 4.654896,
+     "m": 3.695447
+    },
+    "bachelors-or-higher-rate": {
+     "v": 64.077047,
+     "m": 10.324985
+    },
+    "hispanic-or-latino-rate": {
+     "v": 10.133402,
+     "m": 5.710726
+    },
+    "white-non-hispanic-rate": {
+     "v": 76.80862,
+     "m": 3.994594
+    },
+    "living-alone-rate": {
+     "v": 36.385398,
+     "m": 10.068154
+    },
+    "uninsured-rate": {
+     "v": 2.41335,
+     "m": 2.18047
+    },
+    "population-5-plus": {
+     "v": 3820,
+     "m": 579
+    },
+    "population-25-plus": {
+     "v": 3115,
+     "m": 531
+    },
+    "population-hispanic-origin": {
+     "v": 3898,
+     "m": 609
+    },
+    "households-type": {
+     "v": 1671,
+     "m": 218
+    },
+    "population-insurance-status": {
+     "v": 3895,
+     "m": 609
     }
    },
    "unavailable": {}
@@ -13955,6 +17441,58 @@
     "civilian-labor-force": {
      "v": 2931,
      "m": 358
+    },
+    "language-other-than-english-rate": {
+     "v": 7.695525,
+     "m": 3.192229
+    },
+    "limited-english-rate": {
+     "v": 0.543706,
+     "m": 1.778709
+    },
+    "less-than-high-school-rate": {
+     "v": 0.572172,
+     "m": 1.470068
+    },
+    "bachelors-or-higher-rate": {
+     "v": 68.218466,
+     "m": 7.987776
+    },
+    "hispanic-or-latino-rate": {
+     "v": 5.91538,
+     "m": 3.952477
+    },
+    "white-non-hispanic-rate": {
+     "v": 83.075998,
+     "m": 6.841491
+    },
+    "living-alone-rate": {
+     "v": 25.234522,
+     "m": 7.851841
+    },
+    "uninsured-rate": {
+     "v": 2.807299,
+     "m": 2.425629
+    },
+    "population-5-plus": {
+     "v": 4782,
+     "m": 327
+    },
+    "population-25-plus": {
+     "v": 3845,
+     "m": 304
+    },
+    "population-hispanic-origin": {
+     "v": 4987,
+     "m": 317
+    },
+    "households-type": {
+     "v": 2132,
+     "m": 173
+    },
+    "population-insurance-status": {
+     "v": 4987,
+     "m": 317
     }
    },
    "unavailable": {}
@@ -14161,6 +17699,58 @@
     "civilian-labor-force": {
      "v": 1719,
      "m": 272
+    },
+    "language-other-than-english-rate": {
+     "v": 14.869341,
+     "m": 6.484168
+    },
+    "limited-english-rate": {
+     "v": 4.968715,
+     "m": 4.709212
+    },
+    "less-than-high-school-rate": {
+     "v": 3.336299,
+     "m": 3.982617
+    },
+    "bachelors-or-higher-rate": {
+     "v": 74.55516,
+     "m": 5.465109
+    },
+    "hispanic-or-latino-rate": {
+     "v": 7.718696,
+     "m": 3.887001
+    },
+    "white-non-hispanic-rate": {
+     "v": 77.221269,
+     "m": 8.643847
+    },
+    "living-alone-rate": {
+     "v": 28.504307,
+     "m": 8.076297
+    },
+    "uninsured-rate": {
+     "v": 3.688383,
+     "m": 2.932851
+    },
+    "population-5-plus": {
+     "v": 2717,
+     "m": 322
+    },
+    "population-25-plus": {
+     "v": 2248,
+     "m": 302
+    },
+    "population-hispanic-origin": {
+     "v": 2915,
+     "m": 322
+    },
+    "households-type": {
+     "v": 1277,
+     "m": 162
+    },
+    "population-insurance-status": {
+     "v": 2901,
+     "m": 322
     }
    },
    "unavailable": {}
@@ -14366,6 +17956,58 @@
     "civilian-labor-force": {
      "v": 4160,
      "m": 453
+    },
+    "language-other-than-english-rate": {
+     "v": 9.236139,
+     "m": 3.334571
+    },
+    "limited-english-rate": {
+     "v": 0.886025,
+     "m": 1.660309
+    },
+    "less-than-high-school-rate": {
+     "v": 1.551378,
+     "m": 1.754551
+    },
+    "bachelors-or-higher-rate": {
+     "v": 75.26921,
+     "m": 8.28015
+    },
+    "hispanic-or-latino-rate": {
+     "v": 9.312839,
+     "m": 2.805357
+    },
+    "white-non-hispanic-rate": {
+     "v": 72.849393,
+     "m": 4.556134
+    },
+    "living-alone-rate": {
+     "v": 20.171391,
+     "m": 6.346586
+    },
+    "uninsured-rate": {
+     "v": 0.310118,
+     "m": 0.678987
+    },
+    "population-5-plus": {
+     "v": 7449,
+     "m": 531
+    },
+    "population-25-plus": {
+     "v": 5479,
+     "m": 406
+    },
+    "population-hispanic-origin": {
+     "v": 7742,
+     "m": 543
+    },
+    "households-type": {
+     "v": 3034,
+     "m": 268
+    },
+    "population-insurance-status": {
+     "v": 7739,
+     "m": 543
     }
    },
    "unavailable": {}
@@ -14572,6 +18214,58 @@
     "civilian-labor-force": {
      "v": 1886,
      "m": 284
+    },
+    "language-other-than-english-rate": {
+     "v": 10.282862,
+     "m": 4.767259
+    },
+    "limited-english-rate": {
+     "v": 3.261231,
+     "m": 3.909591
+    },
+    "less-than-high-school-rate": {
+     "v": 1.906412,
+     "m": 2.851912
+    },
+    "bachelors-or-higher-rate": {
+     "v": 74.696707,
+     "m": 7.66808
+    },
+    "hispanic-or-latino-rate": {
+     "v": 4.704768,
+     "m": 3.106149
+    },
+    "white-non-hispanic-rate": {
+     "v": 86.517209,
+     "m": 7.114862
+    },
+    "living-alone-rate": {
+     "v": 28.039514,
+     "m": 6.777339
+    },
+    "uninsured-rate": {
+     "v": 0.822785,
+     "m": 1.052932
+    },
+    "population-5-plus": {
+     "v": 3005,
+     "m": 365
+    },
+    "population-25-plus": {
+     "v": 2308,
+     "m": 254
+    },
+    "population-hispanic-origin": {
+     "v": 3167,
+     "m": 382
+    },
+    "households-type": {
+     "v": 1316,
+     "m": 136
+    },
+    "population-insurance-status": {
+     "v": 3160,
+     "m": 383
     }
    },
    "unavailable": {}
@@ -14778,6 +18472,58 @@
     "civilian-labor-force": {
      "v": 2498,
      "m": 352
+    },
+    "language-other-than-english-rate": {
+     "v": 9.513514,
+     "m": 4.835012
+    },
+    "limited-english-rate": {
+     "v": 1.081081,
+     "m": 2.056109
+    },
+    "less-than-high-school-rate": {
+     "v": 1.37931,
+     "m": 2.076834
+    },
+    "bachelors-or-higher-rate": {
+     "v": 65.488506,
+     "m": 9.893952
+    },
+    "hispanic-or-latino-rate": {
+     "v": 14.358556,
+     "m": 7.322208
+    },
+    "white-non-hispanic-rate": {
+     "v": 72.057924,
+     "m": 12.111312
+    },
+    "living-alone-rate": {
+     "v": 27.690802,
+     "m": 8.492389
+    },
+    "uninsured-rate": {
+     "v": 2.407672,
+     "m": 1.783078
+    },
+    "population-5-plus": {
+     "v": 4625,
+     "m": 599
+    },
+    "population-25-plus": {
+     "v": 3480,
+     "m": 276
+    },
+    "population-hispanic-origin": {
+     "v": 4903,
+     "m": 594
+    },
+    "households-type": {
+     "v": 2044,
+     "m": 172
+    },
+    "population-insurance-status": {
+     "v": 4901,
+     "m": 595
     }
    },
    "unavailable": {}
@@ -14981,6 +18727,58 @@
     "civilian-labor-force": {
      "v": 1147,
      "m": 174
+    },
+    "language-other-than-english-rate": {
+     "v": 7.767784,
+     "m": 3.449428
+    },
+    "limited-english-rate": {
+     "v": 1.349141,
+     "m": 3.609874
+    },
+    "less-than-high-school-rate": {
+     "v": 0,
+     "m": 3.39098
+    },
+    "bachelors-or-higher-rate": {
+     "v": 83.239525,
+     "m": 4.615407
+    },
+    "hispanic-or-latino-rate": {
+     "v": 5.717575,
+     "m": 1.837107
+    },
+    "white-non-hispanic-rate": {
+     "v": 79.854183,
+     "m": 5.940599
+    },
+    "living-alone-rate": {
+     "v": 20.763723,
+     "m": 6.803775
+    },
+    "uninsured-rate": {
+     "v": 1.036071,
+     "m": 1.24489
+    },
+    "population-5-plus": {
+     "v": 2446,
+     "m": 336
+    },
+    "population-25-plus": {
+     "v": 1599,
+     "m": 175
+    },
+    "population-hispanic-origin": {
+     "v": 2606,
+     "m": 355
+    },
+    "households-type": {
+     "v": 838,
+     "m": 90
+    },
+    "population-insurance-status": {
+     "v": 2606,
+     "m": 355
     }
    },
    "unavailable": {}
@@ -15186,6 +18984,58 @@
     "civilian-labor-force": {
      "v": 2101,
      "m": 253
+    },
+    "language-other-than-english-rate": {
+     "v": 13.839286,
+     "m": 4.304862
+    },
+    "limited-english-rate": {
+     "v": 3.102679,
+     "m": 2.40916
+    },
+    "less-than-high-school-rate": {
+     "v": 0.060405,
+     "m": 1.637615
+    },
+    "bachelors-or-higher-rate": {
+     "v": 82.543038,
+     "m": 5.827964
+    },
+    "hispanic-or-latino-rate": {
+     "v": 10.66336,
+     "m": 5.299246
+    },
+    "white-non-hispanic-rate": {
+     "v": 78.900599,
+     "m": 5.823197
+    },
+    "living-alone-rate": {
+     "v": 18.767049,
+     "m": 6.339519
+    },
+    "uninsured-rate": {
+     "v": 0.867948,
+     "m": 0.816045
+    },
+    "population-5-plus": {
+     "v": 4480,
+     "m": 409
+    },
+    "population-25-plus": {
+     "v": 3311,
+     "m": 314
+    },
+    "population-hispanic-origin": {
+     "v": 4839,
+     "m": 456
+    },
+    "households-type": {
+     "v": 1833,
+     "m": 198
+    },
+    "population-insurance-status": {
+     "v": 4839,
+     "m": 456
     }
    },
    "unavailable": {}
@@ -15392,6 +19242,58 @@
     "civilian-labor-force": {
      "v": 1883,
      "m": 292
+    },
+    "language-other-than-english-rate": {
+     "v": 35.68049,
+     "m": 10.874778
+    },
+    "limited-english-rate": {
+     "v": 6.512664,
+     "m": 3.66583
+    },
+    "less-than-high-school-rate": {
+     "v": 1.042718,
+     "m": 2.012405
+    },
+    "bachelors-or-higher-rate": {
+     "v": 62.260343,
+     "m": 6.305353
+    },
+    "hispanic-or-latino-rate": {
+     "v": 13.543092,
+     "m": 5.736773
+    },
+    "white-non-hispanic-rate": {
+     "v": 66.675787,
+     "m": 8.535595
+    },
+    "living-alone-rate": {
+     "v": 53.062249,
+     "m": 6.960133
+    },
+    "uninsured-rate": {
+     "v": 2.247822,
+     "m": 1.9389
+    },
+    "population-5-plus": {
+     "v": 3593,
+     "m": 349
+    },
+    "population-25-plus": {
+     "v": 2973,
+     "m": 311
+    },
+    "population-hispanic-origin": {
+     "v": 3655,
+     "m": 351
+    },
+    "households-type": {
+     "v": 1992,
+     "m": 195
+    },
+    "population-insurance-status": {
+     "v": 3559,
+     "m": 351
     }
    },
    "unavailable": {}
@@ -15595,6 +19497,58 @@
     "civilian-labor-force": {
      "v": 2039,
      "m": 304
+    },
+    "language-other-than-english-rate": {
+     "v": 10.350448,
+     "m": 4.414915
+    },
+    "limited-english-rate": {
+     "v": 3.748981,
+     "m": 3.69369
+    },
+    "less-than-high-school-rate": {
+     "v": 0.784167,
+     "m": 2.310463
+    },
+    "bachelors-or-higher-rate": {
+     "v": 80.4705,
+     "m": 8.933451
+    },
+    "hispanic-or-latino-rate": {
+     "v": 1.409949,
+     "m": 1.161905
+    },
+    "white-non-hispanic-rate": {
+     "v": 79.755254,
+     "m": 5.70647
+    },
+    "living-alone-rate": {
+     "v": 14.689655,
+     "m": 8.004253
+    },
+    "uninsured-rate": {
+     "v": 2.63789,
+     "m": 2.835208
+    },
+    "population-5-plus": {
+     "v": 3681,
+     "m": 374
+    },
+    "population-25-plus": {
+     "v": 2678,
+     "m": 273
+    },
+    "population-hispanic-origin": {
+     "v": 3759,
+     "m": 378
+    },
+    "households-type": {
+     "v": 1450,
+     "m": 145
+    },
+    "population-insurance-status": {
+     "v": 3753,
+     "m": 377
     }
    },
    "unavailable": {}
@@ -15800,6 +19754,58 @@
     "civilian-labor-force": {
      "v": 963,
      "m": 271
+    },
+    "language-other-than-english-rate": {
+     "v": 14.841689,
+     "m": 9.515922
+    },
+    "limited-english-rate": {
+     "v": 8.641161,
+     "m": 6.961334
+    },
+    "less-than-high-school-rate": {
+     "v": 6.323397,
+     "m": 7.525273
+    },
+    "bachelors-or-higher-rate": {
+     "v": 66.576332,
+     "m": 7.5489
+    },
+    "hispanic-or-latino-rate": {
+     "v": 11.306533,
+     "m": 7.809374
+    },
+    "white-non-hispanic-rate": {
+     "v": 75.565327,
+     "m": 8.538797
+    },
+    "living-alone-rate": {
+     "v": 30.79096,
+     "m": 8.059297
+    },
+    "uninsured-rate": {
+     "v": 4.836683,
+     "m": 4.021031
+    },
+    "population-5-plus": {
+     "v": 1516,
+     "m": 344
+    },
+    "population-25-plus": {
+     "v": 1107,
+     "m": 240
+    },
+    "population-hispanic-origin": {
+     "v": 1592,
+     "m": 336
+    },
+    "households-type": {
+     "v": 708,
+     "m": 126
+    },
+    "population-insurance-status": {
+     "v": 1592,
+     "m": 336
     }
    },
    "unavailable": {}
@@ -16005,6 +20011,58 @@
     "civilian-labor-force": {
      "v": 2520,
      "m": 308
+    },
+    "language-other-than-english-rate": {
+     "v": 8.237677,
+     "m": 3.54626
+    },
+    "limited-english-rate": {
+     "v": 2.18321,
+     "m": 2.254276
+    },
+    "less-than-high-school-rate": {
+     "v": 0.141084,
+     "m": 1.510266
+    },
+    "bachelors-or-higher-rate": {
+     "v": 77.39842,
+     "m": 8.487185
+    },
+    "hispanic-or-latino-rate": {
+     "v": 5.80766,
+     "m": 3.830034
+    },
+    "white-non-hispanic-rate": {
+     "v": 79.829309,
+     "m": 5.382052
+    },
+    "living-alone-rate": {
+     "v": 35.380835,
+     "m": 9.29685
+    },
+    "uninsured-rate": {
+     "v": 3.16403,
+     "m": 2.378475
+    },
+    "population-5-plus": {
+     "v": 4443,
+     "m": 421
+    },
+    "population-25-plus": {
+     "v": 3544,
+     "m": 316
+    },
+    "population-hispanic-origin": {
+     "v": 4804,
+     "m": 469
+    },
+    "households-type": {
+     "v": 2035,
+     "m": 208
+    },
+    "population-insurance-status": {
+     "v": 4804,
+     "m": 469
     }
    },
    "unavailable": {}
@@ -16210,6 +20268,58 @@
     "civilian-labor-force": {
      "v": 2823,
      "m": 415
+    },
+    "language-other-than-english-rate": {
+     "v": 10.005806,
+     "m": 3.557774
+    },
+    "limited-english-rate": {
+     "v": 3.754596,
+     "m": 3.15242
+    },
+    "less-than-high-school-rate": {
+     "v": 1.195929,
+     "m": 2.422581
+    },
+    "bachelors-or-higher-rate": {
+     "v": 80.610687,
+     "m": 9.925552
+    },
+    "hispanic-or-latino-rate": {
+     "v": 13.134757,
+     "m": 6.098358
+    },
+    "white-non-hispanic-rate": {
+     "v": 74.807106,
+     "m": 6.096592
+    },
+    "living-alone-rate": {
+     "v": 27.151211,
+     "m": 7.885119
+    },
+    "uninsured-rate": {
+     "v": 0.53831,
+     "m": 0.984767
+    },
+    "population-5-plus": {
+     "v": 5167,
+     "m": 460
+    },
+    "population-25-plus": {
+     "v": 3930,
+     "m": 379
+    },
+    "population-hispanic-origin": {
+     "v": 5573,
+     "m": 494
+    },
+    "households-type": {
+     "v": 2394,
+     "m": 275
+    },
+    "population-insurance-status": {
+     "v": 5573,
+     "m": 494
     }
    },
    "unavailable": {}
@@ -16415,6 +20525,58 @@
     "civilian-labor-force": {
      "v": 3087,
      "m": 523
+    },
+    "language-other-than-english-rate": {
+     "v": 22.509531,
+     "m": 6.496297
+    },
+    "limited-english-rate": {
+     "v": 5.221283,
+     "m": 2.960566
+    },
+    "less-than-high-school-rate": {
+     "v": 6.577012,
+     "m": 3.509558
+    },
+    "bachelors-or-higher-rate": {
+     "v": 61.00021,
+     "m": 6.285654
+    },
+    "hispanic-or-latino-rate": {
+     "v": 12.927518,
+     "m": 5.851291
+    },
+    "white-non-hispanic-rate": {
+     "v": 62.739253,
+     "m": 5.884366
+    },
+    "living-alone-rate": {
+     "v": 32.985305,
+     "m": 12.830966
+    },
+    "uninsured-rate": {
+     "v": 3.430962,
+     "m": 2.715106
+    },
+    "population-5-plus": {
+     "v": 6033,
+     "m": 641
+    },
+    "population-25-plus": {
+     "v": 4759,
+     "m": 571
+    },
+    "population-hispanic-origin": {
+     "v": 6374,
+     "m": 639
+    },
+    "households-type": {
+     "v": 2586,
+     "m": 374
+    },
+    "population-insurance-status": {
+     "v": 5975,
+     "m": 644
     }
    },
    "unavailable": {}
@@ -16601,6 +20763,58 @@
     "civilian-labor-force": {
      "v": 18,
      "m": 28
+    },
+    "language-other-than-english-rate": {
+     "v": 38.682635,
+     "m": 8.062871
+    },
+    "limited-english-rate": {
+     "v": 12.51497,
+     "m": 5.89125
+    },
+    "less-than-high-school-rate": {
+     "v": 26.878981,
+     "m": 6.474129
+    },
+    "bachelors-or-higher-rate": {
+     "v": 3.375796,
+     "m": 3.101932
+    },
+    "hispanic-or-latino-rate": {
+     "v": 38.783943,
+     "m": 10.861429
+    },
+    "white-non-hispanic-rate": {
+     "v": 22.31405,
+     "m": 6.261037
+    },
+    "living-alone-rate": {
+     "v": 0,
+     "m": 77.777778
+    },
+    "uninsured-rate": {
+     "v": 0,
+     "m": 23.728814
+    },
+    "population-5-plus": {
+     "v": 1670,
+     "m": 234
+    },
+    "population-25-plus": {
+     "v": 1570,
+     "m": 188
+    },
+    "population-hispanic-origin": {
+     "v": 1694,
+     "m": 261
+    },
+    "households-type": {
+     "v": 18,
+     "m": 28
+    },
+    "population-insurance-status": {
+     "v": 118,
+     "m": 194
     }
    },
    "unavailable": {
@@ -16810,6 +21024,58 @@
     "civilian-labor-force": {
      "v": 1077,
      "m": 167
+    },
+    "language-other-than-english-rate": {
+     "v": 11.047028,
+     "m": 3.994756
+    },
+    "limited-english-rate": {
+     "v": 3.593611,
+     "m": 4.376048
+    },
+    "less-than-high-school-rate": {
+     "v": 0.71048,
+     "m": 3.1126
+    },
+    "bachelors-or-higher-rate": {
+     "v": 87.448194,
+     "m": 4.0118
+    },
+    "hispanic-or-latino-rate": {
+     "v": 5.819881,
+     "m": 3.73736
+    },
+    "white-non-hispanic-rate": {
+     "v": 85.131691,
+     "m": 6.595009
+    },
+    "living-alone-rate": {
+     "v": 20.763187,
+     "m": 5.929958
+    },
+    "uninsured-rate": {
+     "v": 0.552251,
+     "m": 1.187003
+    },
+    "population-5-plus": {
+     "v": 2254,
+     "m": 297
+    },
+    "population-25-plus": {
+     "v": 1689,
+     "m": 209
+    },
+    "population-hispanic-origin": {
+     "v": 2354,
+     "m": 326
+    },
+    "households-type": {
+     "v": 891,
+     "m": 103
+    },
+    "population-insurance-status": {
+     "v": 2354,
+     "m": 326
     }
    },
    "unavailable": {}
@@ -17014,6 +21280,58 @@
     "civilian-labor-force": {
      "v": 2758,
      "m": 426
+    },
+    "language-other-than-english-rate": {
+     "v": 20.113659,
+     "m": 6.789835
+    },
+    "limited-english-rate": {
+     "v": 4.546377,
+     "m": 3.661783
+    },
+    "less-than-high-school-rate": {
+     "v": 2.223385,
+     "m": 2.49592
+    },
+    "bachelors-or-higher-rate": {
+     "v": 73.842532,
+     "m": 5.256156
+    },
+    "hispanic-or-latino-rate": {
+     "v": 7.006988,
+     "m": 3.496804
+    },
+    "white-non-hispanic-rate": {
+     "v": 73.680124,
+     "m": 5.060734
+    },
+    "living-alone-rate": {
+     "v": 21.68616,
+     "m": 6.490936
+    },
+    "uninsured-rate": {
+     "v": 2.173913,
+     "m": 2.026107
+    },
+    "population-5-plus": {
+     "v": 4927,
+     "m": 537
+    },
+    "population-25-plus": {
+     "v": 3823,
+     "m": 489
+    },
+    "population-hispanic-origin": {
+     "v": 5152,
+     "m": 534
+    },
+    "households-type": {
+     "v": 2052,
+     "m": 227
+    },
+    "population-insurance-status": {
+     "v": 5152,
+     "m": 534
     }
    },
    "unavailable": {}
@@ -17218,6 +21536,58 @@
     "civilian-labor-force": {
      "v": 2439,
      "m": 346
+    },
+    "language-other-than-english-rate": {
+     "v": 24.271311,
+     "m": 6.635378
+    },
+    "limited-english-rate": {
+     "v": 5.627864,
+     "m": 3.487801
+    },
+    "less-than-high-school-rate": {
+     "v": 0.142214,
+     "m": 1.708803
+    },
+    "bachelors-or-higher-rate": {
+     "v": 85.920834,
+     "m": 6.581797
+    },
+    "hispanic-or-latino-rate": {
+     "v": 6.029069,
+     "m": 4.345112
+    },
+    "white-non-hispanic-rate": {
+     "v": 78.485555,
+     "m": 5.29152
+    },
+    "living-alone-rate": {
+     "v": 23.363636,
+     "m": 8.716939
+    },
+    "uninsured-rate": {
+     "v": 1.695221,
+     "m": 2.554017
+    },
+    "population-5-plus": {
+     "v": 5455,
+     "m": 516
+    },
+    "population-25-plus": {
+     "v": 4219,
+     "m": 444
+    },
+    "population-hispanic-origin": {
+     "v": 5573,
+     "m": 497
+    },
+    "households-type": {
+     "v": 2200,
+     "m": 243
+    },
+    "population-insurance-status": {
+     "v": 5545,
+     "m": 496
     }
    },
    "unavailable": {}
@@ -17423,6 +21793,58 @@
     "civilian-labor-force": {
      "v": 2397,
      "m": 351
+    },
+    "language-other-than-english-rate": {
+     "v": 27.934952,
+     "m": 7.56295
+    },
+    "limited-english-rate": {
+     "v": 7.37358,
+     "m": 3.811255
+    },
+    "less-than-high-school-rate": {
+     "v": 3.097622,
+     "m": 3.124573
+    },
+    "bachelors-or-higher-rate": {
+     "v": 70.463079,
+     "m": 6.861302
+    },
+    "hispanic-or-latino-rate": {
+     "v": 16.472512,
+     "m": 11.464777
+    },
+    "white-non-hispanic-rate": {
+     "v": 67.116289,
+     "m": 12.319126
+    },
+    "living-alone-rate": {
+     "v": 36.026763,
+     "m": 6.232055
+    },
+    "uninsured-rate": {
+     "v": 5.018435,
+     "m": 4.289747
+    },
+    "population-5-plus": {
+     "v": 4489,
+     "m": 510
+    },
+    "population-25-plus": {
+     "v": 3196,
+     "m": 395
+    },
+    "population-hispanic-origin": {
+     "v": 4893,
+     "m": 709
+    },
+    "households-type": {
+     "v": 1943,
+     "m": 241
+    },
+    "population-insurance-status": {
+     "v": 4882,
+     "m": 709
     }
    },
    "unavailable": {}
@@ -17627,6 +22049,58 @@
     "civilian-labor-force": {
      "v": 3297,
      "m": 372
+    },
+    "language-other-than-english-rate": {
+     "v": 13.678065,
+     "m": 5.735535
+    },
+    "limited-english-rate": {
+     "v": 3.753128,
+     "m": 3.940936
+    },
+    "less-than-high-school-rate": {
+     "v": 0.812819,
+     "m": 1.87291
+    },
+    "bachelors-or-higher-rate": {
+     "v": 80.747794,
+     "m": 8.510463
+    },
+    "hispanic-or-latino-rate": {
+     "v": 4.29428,
+     "m": 2.285108
+    },
+    "white-non-hispanic-rate": {
+     "v": 87.522282,
+     "m": 4.542178
+    },
+    "living-alone-rate": {
+     "v": 21.341719,
+     "m": 5.399006
+    },
+    "uninsured-rate": {
+     "v": 2.787231,
+     "m": 1.281764
+    },
+    "population-5-plus": {
+     "v": 5995,
+     "m": 383
+    },
+    "population-25-plus": {
+     "v": 4306,
+     "m": 325
+    },
+    "population-hispanic-origin": {
+     "v": 6171,
+     "m": 389
+    },
+    "households-type": {
+     "v": 2385,
+     "m": 190
+    },
+    "population-insurance-status": {
+     "v": 6171,
+     "m": 389
     }
    },
    "unavailable": {}
@@ -17833,6 +22307,58 @@
     "civilian-labor-force": {
      "v": 2235,
      "m": 461
+    },
+    "language-other-than-english-rate": {
+     "v": 15.298061,
+     "m": 6.161431
+    },
+    "limited-english-rate": {
+     "v": 5.602107,
+     "m": 3.749871
+    },
+    "less-than-high-school-rate": {
+     "v": 1.358382,
+     "m": 2.403096
+    },
+    "bachelors-or-higher-rate": {
+     "v": 64.364162,
+     "m": 8.349169
+    },
+    "hispanic-or-latino-rate": {
+     "v": 6.896552,
+     "m": 5.226788
+    },
+    "white-non-hispanic-rate": {
+     "v": 64.794967,
+     "m": 7.229389
+    },
+    "living-alone-rate": {
+     "v": 32.774869,
+     "m": 9.652463
+    },
+    "uninsured-rate": {
+     "v": 5.670588,
+     "m": 3.836858
+    },
+    "population-5-plus": {
+     "v": 4177,
+     "m": 488
+    },
+    "population-25-plus": {
+     "v": 3460,
+     "m": 463
+    },
+    "population-hispanic-origin": {
+     "v": 4292,
+     "m": 503
+    },
+    "households-type": {
+     "v": 1910,
+     "m": 203
+    },
+    "population-insurance-status": {
+     "v": 4250,
+     "m": 502
     }
    },
    "unavailable": {}
@@ -18038,6 +22564,58 @@
     "civilian-labor-force": {
      "v": 2336,
      "m": 364
+    },
+    "language-other-than-english-rate": {
+     "v": 17.272119,
+     "m": 6.86871
+    },
+    "limited-english-rate": {
+     "v": 1.069757,
+     "m": 1.9486
+    },
+    "less-than-high-school-rate": {
+     "v": 1.725677,
+     "m": 2.419522
+    },
+    "bachelors-or-higher-rate": {
+     "v": 79.559655,
+     "m": 7.288359
+    },
+    "hispanic-or-latino-rate": {
+     "v": 5.095124,
+     "m": 2.918535
+    },
+    "white-non-hispanic-rate": {
+     "v": 84.561557,
+     "m": 5.610741
+    },
+    "living-alone-rate": {
+     "v": 24.186551,
+     "m": 6.798431
+    },
+    "uninsured-rate": {
+     "v": 2.252351,
+     "m": 2.075856
+    },
+    "population-5-plus": {
+     "v": 4487,
+     "m": 515
+    },
+    "population-25-plus": {
+     "v": 3361,
+     "m": 343
+    },
+    "population-hispanic-origin": {
+     "v": 4573,
+     "m": 513
+    },
+    "households-type": {
+     "v": 1844,
+     "m": 218
+    },
+    "population-insurance-status": {
+     "v": 4573,
+     "m": 513
     }
    },
    "unavailable": {}
@@ -18244,6 +22822,58 @@
     "civilian-labor-force": {
      "v": 3706,
      "m": 433
+    },
+    "language-other-than-english-rate": {
+     "v": 12.602904,
+     "m": 3.426715
+    },
+    "limited-english-rate": {
+     "v": 3.63718,
+     "m": 2.527352
+    },
+    "less-than-high-school-rate": {
+     "v": 0.880881,
+     "m": 1.707514
+    },
+    "bachelors-or-higher-rate": {
+     "v": 77.817818,
+     "m": 7.40148
+    },
+    "hispanic-or-latino-rate": {
+     "v": 8.798104,
+     "m": 3.332626
+    },
+    "white-non-hispanic-rate": {
+     "v": 74.637479,
+     "m": 2.427416
+    },
+    "living-alone-rate": {
+     "v": 23.303411,
+     "m": 7.23221
+    },
+    "uninsured-rate": {
+     "v": 0.878416,
+     "m": 0.905815
+    },
+    "population-5-plus": {
+     "v": 6681,
+     "m": 816
+    },
+    "population-25-plus": {
+     "v": 4995,
+     "m": 551
+    },
+    "population-hispanic-origin": {
+     "v": 7172,
+     "m": 871
+    },
+    "households-type": {
+     "v": 2785,
+     "m": 255
+    },
+    "population-insurance-status": {
+     "v": 7172,
+     "m": 871
     }
    },
    "unavailable": {}
@@ -18448,6 +23078,58 @@
     "civilian-labor-force": {
      "v": 2525,
      "m": 374
+    },
+    "language-other-than-english-rate": {
+     "v": 11.095755,
+     "m": 3.228587
+    },
+    "limited-english-rate": {
+     "v": 1.30306,
+     "m": 2.448511
+    },
+    "less-than-high-school-rate": {
+     "v": 1.585014,
+     "m": 2.3032
+    },
+    "bachelors-or-higher-rate": {
+     "v": 81.095101,
+     "m": 8.513091
+    },
+    "hispanic-or-latino-rate": {
+     "v": 6.996521,
+     "m": 3.315785
+    },
+    "white-non-hispanic-rate": {
+     "v": 76.884422,
+     "m": 9.231955
+    },
+    "living-alone-rate": {
+     "v": 21.461897,
+     "m": 5.709395
+    },
+    "uninsured-rate": {
+     "v": 0.270584,
+     "m": 0.786295
+    },
+    "population-5-plus": {
+     "v": 5065,
+     "m": 723
+    },
+    "population-25-plus": {
+     "v": 3470,
+     "m": 387
+    },
+    "population-hispanic-origin": {
+     "v": 5174,
+     "m": 730
+    },
+    "households-type": {
+     "v": 1929,
+     "m": 184
+    },
+    "population-insurance-status": {
+     "v": 5174,
+     "m": 730
     }
    },
    "unavailable": {}
@@ -18654,6 +23336,58 @@
     "civilian-labor-force": {
      "v": 1640,
      "m": 276
+    },
+    "language-other-than-english-rate": {
+     "v": 38.051471,
+     "m": 9.639618
+    },
+    "limited-english-rate": {
+     "v": 17.389706,
+     "m": 7.065986
+    },
+    "less-than-high-school-rate": {
+     "v": 9.519409,
+     "m": 4.710801
+    },
+    "bachelors-or-higher-rate": {
+     "v": 33.086876,
+     "m": 7.060009
+    },
+    "hispanic-or-latino-rate": {
+     "v": 15.609265,
+     "m": 7.180351
+    },
+    "white-non-hispanic-rate": {
+     "v": 22.826452,
+     "m": 8.634906
+    },
+    "living-alone-rate": {
+     "v": 20.363361,
+     "m": 7.458053
+    },
+    "uninsured-rate": {
+     "v": 5.135952,
+     "m": 3.964232
+    },
+    "population-5-plus": {
+     "v": 2720,
+     "m": 405
+    },
+    "population-25-plus": {
+     "v": 2164,
+     "m": 395
+    },
+    "population-hispanic-origin": {
+     "v": 2979,
+     "m": 426
+    },
+    "households-type": {
+     "v": 1321,
+     "m": 205
+    },
+    "population-insurance-status": {
+     "v": 2979,
+     "m": 426
     }
    },
    "unavailable": {}
@@ -18858,6 +23592,58 @@
     "civilian-labor-force": {
      "v": 1882,
      "m": 241
+    },
+    "language-other-than-english-rate": {
+     "v": 7.456275,
+     "m": 3.670439
+    },
+    "limited-english-rate": {
+     "v": 0.767106,
+     "m": 2.678734
+    },
+    "less-than-high-school-rate": {
+     "v": 0.47908,
+     "m": 1.745687
+    },
+    "bachelors-or-higher-rate": {
+     "v": 77.738742,
+     "m": 7.603568
+    },
+    "hispanic-or-latino-rate": {
+     "v": 3.177903,
+     "m": 2.532005
+    },
+    "white-non-hispanic-rate": {
+     "v": 87.407187,
+     "m": 5.722903
+    },
+    "living-alone-rate": {
+     "v": 36.963696,
+     "m": 6.88583
+    },
+    "uninsured-rate": {
+     "v": 0.297,
+     "m": 0.878981
+    },
+    "population-5-plus": {
+     "v": 3259,
+     "m": 338
+    },
+    "population-25-plus": {
+     "v": 3131,
+     "m": 334
+    },
+    "population-hispanic-origin": {
+     "v": 3367,
+     "m": 356
+    },
+    "households-type": {
+     "v": 1818,
+     "m": 187
+    },
+    "population-insurance-status": {
+     "v": 3367,
+     "m": 356
     }
    },
    "unavailable": {}
@@ -19063,6 +23849,58 @@
     "civilian-labor-force": {
      "v": 1521,
      "m": 318
+    },
+    "language-other-than-english-rate": {
+     "v": 13.85804,
+     "m": 5.443845
+    },
+    "limited-english-rate": {
+     "v": 1.207146,
+     "m": 4.245142
+    },
+    "less-than-high-school-rate": {
+     "v": 7.683552,
+     "m": 10.211497
+    },
+    "bachelors-or-higher-rate": {
+     "v": 75.412635,
+     "m": 7.930245
+    },
+    "hispanic-or-latino-rate": {
+     "v": 17.638953,
+     "m": 7.792387
+    },
+    "white-non-hispanic-rate": {
+     "v": 70.234267,
+     "m": 9.799617
+    },
+    "living-alone-rate": {
+     "v": 55.024712,
+     "m": 15.795033
+    },
+    "uninsured-rate": {
+     "v": 0,
+     "m": 1.286174
+    },
+    "population-5-plus": {
+     "v": 2071,
+     "m": 394
+    },
+    "population-25-plus": {
+     "v": 1757,
+     "m": 286
+    },
+    "population-hispanic-origin": {
+     "v": 2177,
+     "m": 404
+    },
+    "households-type": {
+     "v": 1214,
+     "m": 196
+    },
+    "population-insurance-status": {
+     "v": 2177,
+     "m": 404
     }
    },
    "unavailable": {}
@@ -19269,6 +24107,58 @@
     "civilian-labor-force": {
      "v": 1557,
      "m": 226
+    },
+    "language-other-than-english-rate": {
+     "v": 17.843222,
+     "m": 6.645739
+    },
+    "limited-english-rate": {
+     "v": 2.641836,
+     "m": 4.090784
+    },
+    "less-than-high-school-rate": {
+     "v": 1.117047,
+     "m": 2.744722
+    },
+    "bachelors-or-higher-rate": {
+     "v": 73.627975,
+     "m": 9.747462
+    },
+    "hispanic-or-latino-rate": {
+     "v": 5.759599,
+     "m": 2.637004
+    },
+    "white-non-hispanic-rate": {
+     "v": 84.641068,
+     "m": 7.671981
+    },
+    "living-alone-rate": {
+     "v": 41.591592,
+     "m": 8.972972
+    },
+    "uninsured-rate": {
+     "v": 1.001669,
+     "m": 1.318465
+    },
+    "population-5-plus": {
+     "v": 2309,
+     "m": 254
+    },
+    "population-25-plus": {
+     "v": 2059,
+     "m": 240
+    },
+    "population-hispanic-origin": {
+     "v": 2396,
+     "m": 265
+    },
+    "households-type": {
+     "v": 1332,
+     "m": 161
+    },
+    "population-insurance-status": {
+     "v": 2396,
+     "m": 265
     }
    },
    "unavailable": {}
@@ -19474,6 +24364,58 @@
     "civilian-labor-force": {
      "v": 680,
      "m": 152
+    },
+    "language-other-than-english-rate": {
+     "v": 6.350421,
+     "m": 6.378716
+    },
+    "limited-english-rate": {
+     "v": 0.612089,
+     "m": 6.291789
+    },
+    "less-than-high-school-rate": {
+     "v": 3.207965,
+     "m": 8.636317
+    },
+    "bachelors-or-higher-rate": {
+     "v": 75.221239,
+     "m": 11.555927
+    },
+    "hispanic-or-latino-rate": {
+     "v": 3.26087,
+     "m": 1.86891
+    },
+    "white-non-hispanic-rate": {
+     "v": 88.550725,
+     "m": 9.431992
+    },
+    "living-alone-rate": {
+     "v": 21.691974,
+     "m": 8.644156
+    },
+    "uninsured-rate": {
+     "v": 4.42992,
+     "m": 7.279285
+    },
+    "population-5-plus": {
+     "v": 1307,
+     "m": 208
+    },
+    "population-25-plus": {
+     "v": 904,
+     "m": 181
+    },
+    "population-hispanic-origin": {
+     "v": 1380,
+     "m": 245
+    },
+    "households-type": {
+     "v": 461,
+     "m": 86
+    },
+    "population-insurance-status": {
+     "v": 1377,
+     "m": 245
     }
    },
    "unavailable": {}
@@ -19679,6 +24621,58 @@
     "civilian-labor-force": {
      "v": 734,
      "m": 243
+    },
+    "language-other-than-english-rate": {
+     "v": 7.721046,
+     "m": 3.444815
+    },
+    "limited-english-rate": {
+     "v": 2.615193,
+     "m": 5.250319
+    },
+    "less-than-high-school-rate": {
+     "v": 0.734803,
+     "m": 3.5003
+    },
+    "bachelors-or-higher-rate": {
+     "v": 62.191049,
+     "m": 7.050923
+    },
+    "hispanic-or-latino-rate": {
+     "v": 11.309158,
+     "m": 5.195416
+    },
+    "white-non-hispanic-rate": {
+     "v": 82.052858,
+     "m": 4.863019
+    },
+    "living-alone-rate": {
+     "v": 37.013802,
+     "m": 11.326443
+    },
+    "uninsured-rate": {
+     "v": 1.413645,
+     "m": 2.080908
+    },
+    "population-5-plus": {
+     "v": 1606,
+     "m": 294
+    },
+    "population-25-plus": {
+     "v": 1497,
+     "m": 282
+    },
+    "population-hispanic-origin": {
+     "v": 1627,
+     "m": 298
+    },
+    "households-type": {
+     "v": 797,
+     "m": 134
+    },
+    "population-insurance-status": {
+     "v": 1627,
+     "m": 298
     }
    },
    "unavailable": {}
@@ -19885,6 +24879,58 @@
     "civilian-labor-force": {
      "v": 931,
      "m": 222
+    },
+    "language-other-than-english-rate": {
+     "v": 6.583851,
+     "m": 5.125361
+    },
+    "limited-english-rate": {
+     "v": 0.062112,
+     "m": 5.1504
+    },
+    "less-than-high-school-rate": {
+     "v": 0.520494,
+     "m": 3.495161
+    },
+    "bachelors-or-higher-rate": {
+     "v": 60.312297,
+     "m": 10.005224
+    },
+    "hispanic-or-latino-rate": {
+     "v": 3.182375,
+     "m": 2.117169
+    },
+    "white-non-hispanic-rate": {
+     "v": 91.615667,
+     "m": 24.570715
+    },
+    "living-alone-rate": {
+     "v": 58.384458,
+     "m": 15.148214
+    },
+    "uninsured-rate": {
+     "v": 0.611995,
+     "m": 1.741049
+    },
+    "population-5-plus": {
+     "v": 1610,
+     "m": 301
+    },
+    "population-25-plus": {
+     "v": 1537,
+     "m": 278
+    },
+    "population-hispanic-origin": {
+     "v": 1634,
+     "m": 313
+    },
+    "households-type": {
+     "v": 978,
+     "m": 169
+    },
+    "population-insurance-status": {
+     "v": 1634,
+     "m": 313
     }
    },
    "unavailable": {}
@@ -20091,6 +25137,58 @@
     "civilian-labor-force": {
      "v": 1599,
      "m": 286
+    },
+    "language-other-than-english-rate": {
+     "v": 13.295211,
+     "m": 6.406974
+    },
+    "limited-english-rate": {
+     "v": 6.254467,
+     "m": 6.258067
+    },
+    "less-than-high-school-rate": {
+     "v": 6.565217,
+     "m": 5.077808
+    },
+    "bachelors-or-higher-rate": {
+     "v": 55,
+     "m": 6.80334
+    },
+    "hispanic-or-latino-rate": {
+     "v": 10.756124,
+     "m": 5.809473
+    },
+    "white-non-hispanic-rate": {
+     "v": 85.197018,
+     "m": 6.471099
+    },
+    "living-alone-rate": {
+     "v": 28.511706,
+     "m": 9.835424
+    },
+    "uninsured-rate": {
+     "v": 1.069519,
+     "m": 0.868732
+    },
+    "population-5-plus": {
+     "v": 2798,
+     "m": 460
+    },
+    "population-25-plus": {
+     "v": 2300,
+     "m": 341
+    },
+    "population-hispanic-origin": {
+     "v": 2817,
+     "m": 461
+    },
+    "households-type": {
+     "v": 1196,
+     "m": 177
+    },
+    "population-insurance-status": {
+     "v": 2805,
+     "m": 460
     }
    },
    "unavailable": {}
@@ -20185,6 +25283,26 @@
     "civilian-labor-force": {
      "v": 0,
      "m": 14
+    },
+    "population-5-plus": {
+     "v": 0,
+     "m": 14
+    },
+    "population-25-plus": {
+     "v": 0,
+     "m": 14
+    },
+    "population-hispanic-origin": {
+     "v": 0,
+     "m": 14
+    },
+    "households-type": {
+     "v": 0,
+     "m": 14
+    },
+    "population-insurance-status": {
+     "v": 0,
+     "m": 14
     }
    },
    "unavailable": {
@@ -20215,7 +25333,15 @@
     "public-transit-rate": "the denominator is 0, so there is no share",
     "households-without-vehicle-rate": "the denominator is 0, so there is no share",
     "labor-force-participation-rate": "the denominator is 0, so there is no share",
-    "unemployment-rate": "the denominator is 0, so there is no share"
+    "unemployment-rate": "the denominator is 0, so there is no share",
+    "language-other-than-english-rate": "the denominator is 0, so there is no share",
+    "limited-english-rate": "the denominator is 0, so there is no share",
+    "less-than-high-school-rate": "the denominator is 0, so there is no share",
+    "bachelors-or-higher-rate": "the denominator is 0, so there is no share",
+    "hispanic-or-latino-rate": "the denominator is 0, so there is no share",
+    "white-non-hispanic-rate": "the denominator is 0, so there is no share",
+    "living-alone-rate": "the denominator is 0, so there is no share",
+    "uninsured-rate": "the denominator is 0, so there is no share"
    }
   }
  ]

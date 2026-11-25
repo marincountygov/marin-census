@@ -55,7 +55,7 @@ class CensusData(unittest.TestCase):
         measures = [m["id"] for m in DATA["measures"]]
         indicators = {v["id"] for v in DATA["variables"] if v["role"] == "indicator"}
         self.assertEqual(set(measures), indicators)
-        self.assertEqual(len(measures), 33)
+        self.assertEqual(len(measures), 41)
         self.assertIn("population-total", measures)  # a measure even though it is also a denominator
         self.assertNotIn("occupied-housing-units", measures)
         self.assertEqual(len(DATA["headlineMeasures"]), 10)
