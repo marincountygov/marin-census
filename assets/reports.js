@@ -156,7 +156,8 @@
       return;
     }
     if (!state.opened && built && built.tables > M.LIMITS.tables) {
-      note.textContent = `A report holds ${M.LIMITS.tables} tables and this one needs ${built.tables}, so the last ${built.tables - M.LIMITS.tables} are left out. Choose fewer places or measures, or remove a section.`;
+      const over = built.tables - M.LIMITS.tables;
+      note.textContent = `A report can hold ${M.LIMITS.tables} tables and charts. This one has ${built.tables}, so ${over === 1 ? 'the last one is' : `the last ${over} are`} not shown. To show ${over === 1 ? 'it' : 'them'}, remove a chart, a section, or some places or measures.`;
       note.hidden = false;
     }
     drawReport(region, report);
