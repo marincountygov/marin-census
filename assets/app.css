@@ -122,16 +122,9 @@ html.has-expanded {
   color: var(--app-muted);
 }
 
-#place-table .census-cell,
-#place-table td {
+#place-tables .census-cell,
+#place-tables td {
   white-space: normal;
-}
-
-.census-topic th {
-  padding-top: 1.25rem;
-  font-size: 1rem;
-  font-weight: 700;
-  background: transparent;
 }
 
 .census-source {
@@ -264,5 +257,304 @@ html.has-expanded {
 
 #measures-table td:nth-child(3) {
   min-width: 18rem;
+}
+
+/* The Reports tab: the builder is a collapsible sidebar beside the report it makes. */
+.report-sections {
+  margin: 0 0 1rem;
+  padding: 0;
+  list-style: none;
+}
+
+.report-sections > li {
+  list-style: none;
+}
+
+.report-section {
+  margin: 0 0 1rem;
+}
+
+.report-section > details > summary {
+  font-size: 1.125rem;
+}
+
+.report-section h3 {
+  margin: 0 0 0.75rem;
+  font-size: 1.25rem;
+}
+
+.report-section .app-field {
+  margin: 0 0 1rem;
+}
+
+.report-checks {
+  margin: 0.5rem 0;
+  padding: 0;
+  list-style: none;
+}
+
+.report-checks li {
+  margin: 0 0 0.6rem;
+  padding: 0;
+  list-style: none; /* Pico gives each item its own marker */
+}
+
+.report-checks label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  font-weight: 400;
+}
+
+.report-muted,
+.report-count {
+  color: var(--app-muted);
+  font-size: 0.875rem;
+}
+
+.report-count {
+  margin: 0;
+}
+
+.report-section-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.report-preview {
+  overflow-x: auto;
+}
+
+.report-preview h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.5rem;
+}
+
+.report-preview h3 {
+  margin: 1.5rem 0 0.5rem;
+  font-size: 1.25rem;
+}
+
+.report-preview table td:not(:first-child),
+.report-preview table th:not(:first-child) {
+  text-align: right;
+}
+
+.report-empty {
+  color: var(--app-muted);
+}
+
+#report-preview-region.is-expanded .report-preview {
+  max-width: 70rem;
+}
+
+/* A group of choices in a section: a border round it, so where it starts and ends is clear. Lists do not scroll. */
+.report-group {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--app-border);
+  border-radius: var(--pico-border-radius);
+}
+
+.report-group legend,
+.report-kinds legend {
+  padding: 0 0.25rem;
+  font-weight: 700;
+}
+
+.report-kinds {
+  margin: 0 0 1rem;
+  padding: 0;
+  border: 0;
+}
+
+.report-select-all {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.5rem 0;
+  font-weight: 700;
+}
+
+.report-select-all input[type="checkbox"] {
+  width: 1.5rem;
+  height: 1.5rem;
+  flex: none;
+  margin: 0;
+}
+
+.report-checks li[hidden] {
+  display: none;
+}
+
+.report-checks input[type="checkbox"] {
+  width: 1.5rem;
+  height: 1.5rem;
+  flex: none;
+  margin: 0;
+}
+
+/* A table has a border and each cell has one, so rows and columns read as a grid: the same as Marin Budget's tables, on
+   the page and in Fullscreen. The table keeps its top and left edge and each cell its right and bottom edge, so a
+   sticky first column keeps its lines when the rest scrolls. */
+.table-scroll table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-top: 1px solid var(--app-border);
+  border-left: 1px solid var(--app-border);
+  font-variant-numeric: tabular-nums;
+}
+
+.table-scroll th,
+.table-scroll td {
+  border-right: 1px solid var(--app-border);
+  border-bottom: 1px solid var(--app-border);
+}
+
+/* A place's tables, one for each topic, line up: the same four columns in each. */
+.place-topic h3 {
+  margin: 1.5rem 0 0.5rem;
+  font-size: 1.25rem;
+}
+
+#place-tables table {
+  table-layout: fixed;
+}
+
+#place-tables th:nth-child(1) {
+  width: 34%;
+}
+
+#place-tables th:nth-child(2),
+#place-tables th:nth-child(3) {
+  width: 20%;
+}
+
+/* An accordion (a details that opens a list): a border round it, and the same type size as the text beside it. */
+details.drill {
+  margin: 0.75rem 0 0;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--app-border);
+  border-radius: var(--pico-border-radius);
+}
+
+details.drill > summary {
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.report-section details.drill[open] > summary {
+  margin-bottom: 0.75rem;
+}
+
+/* The measures run in topics, each a name over its choices (a fieldset: a role="group" would lay them side by side). */
+.report-topic {
+  margin: 1rem 0 0;
+  padding: 0;
+  border: 0;
+}
+
+.report-topic-name {
+  margin: 0;
+  padding: 0;
+  font-size: 0.9375rem;
+  font-weight: 700;
+}
+
+/* The section's name is the main heading of its accordion: the text color, open or closed (Pico mutes a closed summary). */
+.report-section > details {
+  --pico-accordion-close-summary-color: var(--app-text);
+  --pico-accordion-open-summary-color: var(--app-text);
+}
+
+/* The builder does not scroll inside the page: it is as tall as its form and the page scrolls. (The shell's filter
+   column scrolls on its own and sticks, which suits a short list of filters, not a whole form.) */
+@media (min-width: 851px) {
+  .reports-layout > .search-side {
+    position: static;
+    max-height: none;
+  }
+
+  .reports-layout > .search-side > .search-sidebar {
+    overflow: visible;
+    max-height: none;
+  }
+}
+
+/* The builder sidebar is wider than a filter column: it holds a whole form. Narrow screens keep the shell's one column. */
+@media (min-width: 851px) {
+  .search-layout.reports-layout[data-filters="open"] {
+    grid-template-columns: minmax(20rem, 26rem) minmax(0, 1fr);
+  }
+}
+
+/* ---- Reports sidebar: accessibility ---- */
+
+/* The builder does not scroll on its own, so its Report and Reset row does not stick: a pinned row would cover the
+   field that has focus when the page scrolls (WCAG 2.4.11). */
+.reports-layout .search-side .search-panel-header {
+  position: static;
+}
+
+/* Targets are at least 24 px: a section's summary and every checkbox in it. */
+.report-section > details > summary {
+  min-height: 1.5rem;
+  padding-block: 0.25rem;
+}
+
+.report-section input[type="checkbox"] {
+  width: 1.5rem;
+  height: 1.5rem;
+  flex: none;
+  margin: 0;
+}
+
+/* A skip link: out of sight until it has focus. */
+.skip-to-report:not(:focus) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* A table that scrolls sideways can be focused, so the keyboard can scroll it; the ring shows where focus is. */
+.table-scroll:focus-visible,
+.report-preview:focus-visible {
+  outline: 2px solid var(--app-accent, Highlight);
+  outline-offset: 2px;
+}
+
+/* A section's fields are a fieldset (its legend names the section for a screen reader) laid out as the form grid. */
+fieldset.report-fields {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+fieldset.report-fields > legend {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* A section's box runs the full width of the sidebar: no padding round the sidebar or the list item. (The sidebar does
+   not scroll on its own, so nothing clips a focus ring at its edge.) */
+.reports-layout .search-side > .search-sidebar {
+  padding-inline: 0;
+}
+
+.report-section {
+  padding: 0;
 }
 

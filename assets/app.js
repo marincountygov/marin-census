@@ -4,7 +4,7 @@
 //
 // What goes where (marin-ui "Filter column" and "Results header"):
 //   filter column  Search and Area types: what narrows which places show, and nothing else
-//   toolbar        sort (cards), layout (cards or table), then Copy link, Copy, Download and, last, Fullscreen
+//   toolbar        sort (cards), layout (cards or table), then Copy, Copy link, Download and, last, Fullscreen
 //   address        keeps the filters (the column does), the layout and the sort
 // The table has a fixed set of columns, the headline measures. Choosing other measures, and comparing places, is for
 // the compare and reports tool; every measure is on a place's page and in the downloads.
@@ -17,6 +17,10 @@
   const DEFAULT_KINDS = ['County', 'City or town', 'Census-designated place'];
   const DEFAULT_SORT = { key: 'population-total', dir: -1 };
 
+  // What the Reports tab (assets/reports.js) uses from this file, once the data has loaded.
+  let resolveReady;
+  window.marinCensus = { ready: new Promise((resolve) => { resolveReady = resolve; }) };
+
   const app = {
     data: null,
     column: null,
@@ -26,7 +30,6 @@
     shown: [], // the measures the table has columns for
     filtered: [],
     place: null, // the place on show
-    placeSort: null, // { dir } by measure name, or null for the order in the file
     fullscreenGroup: null, // the Fullscreen button of the list, which only the table has
     measureSort: null, // { key, dir } on the Data tab's table
   };
@@ -85,7 +88,7 @@
   }
 
   // ---- the buttons above a table or a place ------------------------------------------------------------------
-  // Copy link, Copy and Download, then Fullscreen in a group of its own, as every table of a Marin app has them.
+  // Copy, Copy link and Download, then Fullscreen in a group of its own, as every table of a Marin app has them.
   //   spec.formats()   { text, html, markdown } of what is on screen
   //   spec.csv() / spec.json()   the file contents of Download
   //   spec.fileName    the name of the files
@@ -121,8 +124,10 @@
     status.setAttribute('aria-live', 'polite');
     const share = el('button', { type: 'button', className: 'action-button', title: 'Copy link' }, svg('<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>'));
     share.setAttribute('aria-label', 'Copy link');
-    const actions = el('div', { className: 'doc-actions' }, share,
+    // The order of every table's buttons: Copy, Copy link, Download, then Fullscreen in a group of its own.
+    const actions = el('div', { className: 'doc-actions' },
       menu('copy', 'Copy', [['Text', 'data-copy-format', 'text'], ['HTML', 'data-copy-format', 'html'], ['Markdown', 'data-copy-format', 'markdown']]),
+      share,
       menu('download', 'Download', [['Text', 'data-download-format', 'text'], ['HTML', 'data-download-format', 'html'], ['Markdown', 'data-download-format', 'markdown'], ['JSON', 'data-download', 'json'], ['CSV', 'data-download', 'csv']]),
       status);
     actions.dataset.fileName = spec.fileName;
@@ -352,24 +357,19 @@
 
   // ---- one place ---------------------------------------------------------------------------------------------
 
+  // One table for each topic, each with a heading and a caption, so a screen reader can move from table to table and
+  // hear what each is. The rows are the measures in the order of topics.json: they are in different units (people,
+  // dollars, percent), so there is nothing to sort.
   function drawPlace(place) {
     app.place = place;
     $('place-heading').textContent = place.name;
     document.title = `${place.name} | Marin Census`;
     const level = F.confidence(app.data.source.confidenceLevel);
-    const measure = el('th', { scope: 'col' }, el('button', { type: 'button', className: 'sort-button', textContent: 'Measure' }));
-    measure.dataset.key = 'name';
-    measure.setAttribute('aria-sort', app.placeSort ? (app.placeSort.dir > 0 ? 'ascending' : 'descending') : 'none');
-    const head = el('tr', {}, measure, ...['Estimate', `Margin of error (${level})`, 'Out of'].map((t) => el('th', { scope: 'col', textContent: t })));
-    $('place-table').tHead.replaceChildren(head);
-    // Only the measure name sorts, within its topic: the estimates are in different units (people, dollars, percent),
-    // so ordering them together would mean nothing.
-    const bodies = app.data.topics.map((topic) => {
-      let measures = app.data.measures.filter((m) => m.topic === topic.name).map((m) => app.byId[m.id]);
-      if (app.placeSort) measures = measures.slice().sort((a, b) => app.placeSort.dir * a.name.localeCompare(b.name, 'en'));
+    const tables = app.data.topics.map((topic) => {
+      const head = el('tr', {}, ...['Measure', 'Estimate', `Margin of error (${level})`, 'Out of'].map((t) => el('th', { scope: 'col', textContent: t })));
       const body = el('tbody');
-      body.append(el('tr', { className: 'census-topic' }, el('th', { scope: 'colgroup', colSpan: 4, textContent: topic.name })));
-      measures.forEach((v) => {
+      app.data.measures.filter((m) => m.topic === topic.name).forEach((m) => {
+        const v = app.byId[m.id];
         const e = F.entry(v, place);
         const estimate = el('td', { className: `census-cell census-cell--${e.kind}` }, el('span', { className: 'census-value', textContent: e.text }));
         if (e.kind === 'missing' && e.reason) estimate.append(el('span', { className: 'census-margin', textContent: e.reason }));
@@ -379,10 +379,10 @@
         tr.append(el('td', {}, out ? [el('span', { className: 'census-value', textContent: out.text }), el('span', { className: 'census-margin', textContent: denominator.name })] : null));
         body.append(tr);
       });
-      return body;
+      const table = el('table', {}, el('caption', { className: 'visually-hidden', textContent: `${place.name}: ${topic.name}` }), el('thead', {}, head), body);
+      return el('section', { className: 'place-topic' }, el('h3', { textContent: topic.name }), el('div', { className: 'table-scroll' }, table));
     });
-    [...$('place-table').tBodies].forEach((body) => body.remove());
-    $('place-table').append(...bodies);
+    $('place-tables').replaceChildren(...tables);
   }
 
   // ---- the Data tab ------------------------------------------------------------------------------------------
@@ -397,7 +397,7 @@
   }
 
   function drawMeasureTable() {
-    const sortable = ['Measure', 'Topic', 'Unit', 'Census table'];
+    const sortable = ['Topic', 'Unit', 'Census table']; // columns whose values repeat; a measure's name is its own
     const head = el('tr');
     MEASURE_HEAD.forEach((name, i) => {
       const th = el('th', { scope: 'col' });
@@ -417,8 +417,20 @@
   // ---- the tabs ----------------------------------------------------------------------------------------------
   // The shell shows the section the hash names and marks its own navigation. This marks #page-tabs the same way.
 
+  const TAB_TITLES = { start: 'Places', reports: 'Reports', data: 'Data' };
+  const currentTab = () => ({ '#data': 'data', '#reports': 'reports' }[window.location.hash] || 'start');
+
+  // The page title names the tab (WCAG 2.4.2); a place's own page names the place.
+  function setPageTitle() {
+    const tab = currentTab();
+    const place = new URLSearchParams(window.location.search).get('place');
+    if (tab === 'start' && place && app.place) document.title = `${app.place.name} | Marin Census`;
+    else document.title = tab === 'start' ? 'Marin Census | County of Marin' : `${TAB_TITLES[tab]} | Marin Census`;
+  }
+
   function syncPageTabs() {
-    const current = window.location.hash === '#data' ? 'data' : 'start';
+    const current = currentTab();
+    setPageTitle();
     document.querySelectorAll('#page-tabs a[data-tab]').forEach((link) => {
       if (link.dataset.tab === current) link.setAttribute('aria-current', 'page');
       else link.removeAttribute('aria-current');
@@ -435,11 +447,10 @@
     $('census-place').hidden = !place;
     $('census-places').hidden = Boolean(place);
     if (place) {
-      if (!app.place || app.place.id !== place.id) app.placeSort = null;
       drawPlace(place);
       if (focus) $('place-heading').focus();
     } else {
-      document.title = 'Marin Census | County of Marin';
+      setPageTitle();
       if (app.column) update();
     }
   }
@@ -448,6 +459,46 @@
     window.history.pushState({}, '', `?place=${encodeURIComponent(code)}`);
     route(true);
     window.scrollTo(0, 0);
+  }
+
+  // ---- tables that scroll sideways ---------------------------------------------------------------------------
+  // A box that scrolls must be reachable by keyboard (WCAG 2.1.1): when its table is wider than it, the box takes a tab
+  // stop, a region role and the table's name. A box that does not scroll takes none, so there are no needless stops.
+
+  function markScrollBox(box) {
+    const table = box.querySelector('table');
+    const caption = table && table.querySelector('caption');
+    const name = ((caption && caption.textContent) || (table && table.getAttribute('aria-label')) || '').trim();
+    if (name && box.scrollWidth > box.clientWidth + 1) {
+      box.tabIndex = 0;
+      box.setAttribute('role', 'region');
+      box.setAttribute('aria-label', name);
+    } else {
+      box.removeAttribute('tabindex');
+      box.removeAttribute('role');
+      box.removeAttribute('aria-label');
+    }
+  }
+
+  function watchScrollBoxes() {
+    const seen = new WeakSet();
+    const sizes = new ResizeObserver((entries) => entries.forEach((entry) => markScrollBox(entry.target.closest('.table-scroll') || entry.target)));
+    const scan = () => document.querySelectorAll('.table-scroll').forEach((box) => {
+      if (!seen.has(box)) {
+        seen.add(box);
+        sizes.observe(box);
+        const table = box.querySelector('table');
+        if (table) sizes.observe(table);
+      }
+      markScrollBox(box);
+    });
+    let queued = false;
+    new MutationObserver(() => {
+      if (queued) return;
+      queued = true;
+      window.requestAnimationFrame(() => { queued = false; scan(); });
+    }).observe(document.body, { childList: true, subtree: true });
+    scan();
   }
 
   // ---- start -------------------------------------------------------------------------------------------------
@@ -507,6 +558,9 @@
     drawSource();
     drawData();
     wireActionBars();
+    Object.assign(window.marinCensus, { data: app.data, F, el, svg, actionBar });
+    resolveReady(window.marinCensus);
+    watchScrollBoxes();
     syncPageTabs();
     window.addEventListener('hashchange', syncPageTabs);
     // Places is home: a link to ./ (a fresh page, like the title), so it leaves a place's page and clears the filters.
@@ -546,12 +600,6 @@
     };
     $('census-table').tBodies[0].addEventListener('click', openPlace);
     $('census-cards').addEventListener('click', openPlace);
-    $('place-table').tHead.addEventListener('click', (event) => {
-      if (!event.target.closest('th[data-key]')) return;
-      app.placeSort = { dir: app.placeSort ? -app.placeSort.dir : 1 };
-      drawPlace(app.place);
-      $('place-table').tHead.querySelector('button').focus();
-    });
     window.addEventListener('popstate', () => { readAddress(); route(true); });
 
     loading.hidden = true;

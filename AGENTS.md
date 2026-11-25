@@ -13,9 +13,21 @@ Reading an observation:
 - `marginOfError` and its `confidenceLevel` are optional. Show them when present; do not invent them.
 - A statistical area is a `Place` with `areaType`. Governed areas are jurisdictions. Do not treat a community, a Census place and a tract as the same thing.
 
+## Tabs and tables
+
+The tabs are Places, Reports, Data: Data is always last. Every table has a border and each cell has one, the same as Marin Budget's tables (see `.table-scroll table` in `assets/app.css`).
+
 ## The list view
 
-Read `marin-ui/docs/components.md` ("Filter column", "Results header", "Cards") before changing it. The list is a directory of places and stays simple: the filter column has Search and Area types and nothing else. Cards are the default layout (the name, then Population); the table has a fixed set of columns, the headline measures in `topics.json`. The toolbar has, in order: sort (cards only), layout, then Copy link, Copy, Download and Fullscreen (table only). Copy link, Copy and Download are in a `.doc-actions` that is a direct child of the toolbar, never inside an `.action-group`. Choosing other measures and comparing places belongs to the compare and reports tool (the shell's `docs/reports-plan.md`), not to the list: do not add column pickers or measure filters here. The source is on a place's page and the Data tab, not on the list. The layout and sort are kept in the address; always keep `location.hash`, because the shell's tabs use it. Do not add a control the rules do not describe.
+Read `marin-ui/docs/components.md` ("Filter column", "Results header", "Cards") before changing it. The list is a directory of places and stays simple: the filter column has Search and Area types and nothing else. Cards are the default layout (the name, then Population); the table has a fixed set of columns, the headline measures in `topics.json`. The toolbar has, in order: sort (cards only), layout, then Copy, Copy link, Download and Fullscreen (table only). Copy, Copy link and Download are in a `.doc-actions` that is a direct child of the toolbar, never inside an `.action-group`. Choosing other measures and comparing places belongs to the compare and reports tool (the shell's `docs/reports-plan.md`), not to the list: do not add column pickers or measure filters here. The source is on a place's page and the Data tab, not on the list. The layout and sort are kept in the address; always keep `location.hash`, because the shell's tabs use it. Do not add a control the rules do not describe.
+
+## Reports
+
+The Reports tab is the only place that chooses measures or compares places; keep that out of the list. A report is made by the shell's core (`window.marinReports`), never by hand: `assets/report-model.js` (pure, tested in Node) turns sections into the report object, `assets/reports.js` is the screens and the address. A cell's raw value carries `{ value, margin }` or a one-sided bound (`min`/`max`), so the CSV keeps both, and a value the Census does not give is empty, never zero. A section has no limit on places or measures: more than 11 across (the core allows 12 columns) become several tables, the core holds 10 tables, and the page says when some are left out. A list of choices never scrolls inside the page: show it in full, or narrow it with a filter, and put a border round a group so its edges are clear. The core's HTML has inline styles for pasting into Word; the preview drops them because the page's policy forbids inline styles. Do not add inline styles or write report HTML anywhere else.
+
+## Accessibility of the Reports sidebar
+
+`tests/a11y_reports.py` is the test (run with `AXE_CORE=/path/to/axe.min.js` to include axe-core; `npm pack axe-core` gets it). It checks what a screen reader hears is unique (a section's fields are a `fieldset` whose legend is "Section N", and repeated controls say which section: "Move up, section 2"), focus is never under another element (the Report/Reset row does not stick), targets are 24 px, a table that scrolls sideways is a focusable named region (`watchScrollBoxes` in `assets/app.js`), changes are announced after a pause in `#report-announce`, the report is a region named by its title with a "Skip to the report" link, and a removed section or a reset has Undo. Do not use `role="group"` on a div (Pico lays it out inline-flex): use a `fieldset`. One known upstream issue: in forced colors a checked checkbox has no mark (marin-ui); the test says so.
 
 ## Boundaries
 
