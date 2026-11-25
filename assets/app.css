@@ -108,25 +108,6 @@ html.has-expanded {
   font-size: 1.125rem;
 }
 
-/* A card, the same in every app: the name 1.25rem and bold, the figures lines of text (a label and its value on one line). */
-.search-results-list {
-  gap: 1rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.search-results-list > .app-card {
-  margin-bottom: 0;
-  list-style: none;
-}
-
-.mm-card__title {
-  margin: 0 0 0.5rem;
-  font-size: 1.25rem;
-  font-weight: 700;
-}
-
 .mm-card .capital-figures {
   display: block;
   margin: 0;
@@ -513,8 +494,6 @@ fieldset.report-fields > legend {
 .report-chart canvas {
   max-width: 100%;
 }
-
-
 
 /* The Charts items of the Copy and Download menus show only when the report has charts; the menu's button style would otherwise override hidden. */
 .menu-panel button[hidden] {
