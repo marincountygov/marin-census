@@ -38,6 +38,9 @@ if command -v node >/dev/null 2>&1; then
   node --check "$ROOT_DIR/vendor/marinos/marinos.js"
   node --check "$ROOT_DIR/assets/app.js"
   node --check "$ROOT_DIR/assets/format.js"
+  node --check "$ROOT_DIR/assets/report-model.js"
+  node --check "$ROOT_DIR/assets/reports.js"
+  node "$ROOT_DIR/tests/report-model.test.js" | tail -1
   node "$ROOT_DIR/tests/format.test.js" | tail -1
   printf 'JavaScript syntax: PASS\n'
 else
@@ -48,6 +51,8 @@ if [[ "$RUN_BROWSER" == 1 ]]; then
   python3 "$ROOT_DIR/tests/browser_smoke.py"
   python3 "$ROOT_DIR/tests/browser_security.py"
   python3 "$ROOT_DIR/tests/browser_census.py"
+  # Reports accessibility. With AXE_CORE set to axe.min.js (npm pack axe-core) it also runs axe-core.
+  python3 "$ROOT_DIR/tests/a11y_reports.py"
 else
   printf 'SKIP: Browser tests not requested; run with --browser to include them.\n'
 fi
