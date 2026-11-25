@@ -18,6 +18,8 @@
 
   // What to draw. `places` are place records of data/census.json, `variable` the measure, `F` the formatter.
   // A place with no exact value (not available, or only "or more") is not drawn and is counted.
+  const UNIT_WORDS = { percent: 'percent', persons: 'people', households: 'households', 'housing units': 'housing units', USD: 'dollars', years: 'years', 'persons per household': 'people per household' };
+
   function spec(F, places, variable, options) {
     const opts = options || {};
     const margins = opts.margins !== false;
@@ -30,7 +32,7 @@
     const bars = exact.slice(0, MAX_BARS);
     const notDrawn = all.length - exact.length;
     const axis = scale(Math.max(0, ...bars.map((bar) => bar.value + bar.margin)));
-    const title = `${variable.name} by place`;
+    const title = `${variable.name} by place (${UNIT_WORDS[variable.unit] || variable.unit})`;
     const parts = [];
     if (bars.length) {
       const top = bars[0];
@@ -41,7 +43,13 @@
     }
     if (exact.length > MAX_BARS) parts.push(`Showing the ${MAX_BARS} highest of ${exact.length}.`);
     if (notDrawn) parts.push(`${notDrawn} ${notDrawn === 1 ? 'place has' : 'places have'} no exact value and ${notDrawn === 1 ? 'is' : 'are'} not drawn.`);
-    return { kind: opts.kind === 'columns' ? 'columns' : 'bars', variable: variable.id, unit: variable.unit, title, summary: parts.join(' '), bars, notDrawn, axis, margins };
+    const level = opts.confidence ? `${Math.round(opts.confidence * 100)}% margin of error` : 'Margin of error';
+    return {
+      kind: opts.kind === 'columns' ? 'columns' : 'bars', variable: variable.id, unit: variable.unit, title, summary: parts.join(' '),
+      bars, notDrawn, axis, margins, marginLabel: level,
+      omitted: all.filter((bar) => bar.value === null).map((bar) => bar.id).concat(exact.slice(MAX_BARS).map((bar) => bar.id)).filter((id, i, list) => list.indexOf(id) === i),
+      hasWhiskers: margins && bars.some((bar) => bar.margin > 0),
+    };
   }
 
   // ---- drawing (needs the page) -------------------------------------------------------------------------------
@@ -66,13 +74,31 @@
     const labelWidth = horizontal ? Math.min(220, Math.max(80, 7 * Math.max(0, ...bars.map((bar) => bar.label.length)))) : 0;
     const W = horizontal ? 760 : Math.max(420, 70 + bars.length * 46);
     const rowH = 26;
+    const top = 62; // room for the title and the legend above the plot
     const plot = horizontal
-      ? { x: labelWidth + 12, y: 12, w: W - labelWidth - 64, h: bars.length * rowH }
-      : { x: 70, y: 16, w: W - 86, h: 280 };
+      ? { x: labelWidth + 12, y: top, w: W - labelWidth - 64, h: bars.length * rowH }
+      : { x: 70, y: top + 8, w: W - 86, h: 280 };
     const labelBand = horizontal ? 0 : Math.min(150, 24 + 6.2 * Math.max(0, ...bars.map((bar) => bar.label.length))); // room under the columns for turned names
     const H = plot.y + plot.h + (horizontal ? 36 : labelBand);
     const root = el('svg', { viewBox: `0 0 ${W} ${H}`, width: W, height: H, role: 'img' });
     if (image) root.append(el('rect', { x: 0, y: 0, width: W, height: H, fill: IMAGE.background }));
+
+    // the visible title, and a legend that says what the bar and the whisker are
+    const heading = el('text', image ? { x: 8, y: 22, fill: IMAGE.text, 'font-family': FONT, 'font-size': 15, 'font-weight': 700 } : { x: 8, y: 22, class: 'chart-heading' });
+    heading.textContent = chartSpec.title;
+    root.append(heading);
+    let legendX = 8;
+    root.append(el('rect', { x: legendX, y: 36, width: 14, height: 14, ...look('chart-bar', { fill: IMAGE.bar }) }));
+    const estimate = el('text', textLook({ x: legendX + 20, y: 48 }));
+    estimate.textContent = 'Estimate';
+    root.append(estimate);
+    legendX += 20 + 7 * 'Estimate'.length + 18;
+    if (chartSpec.hasWhiskers) {
+      root.append(el('path', { d: `M${legendX} 43H${legendX + 22}M${legendX} 38V48M${legendX + 22} 38V48`, fill: 'none', ...look('chart-whisker', { stroke: IMAGE.whisker, 'stroke-width': 1.5 }) }));
+      const margin = el('text', textLook({ x: legendX + 28, y: 48 }));
+      margin.textContent = chartSpec.marginLabel;
+      root.append(margin);
+    }
     const along = (value) => (horizontal ? plot.x + (value / axis.max) * plot.w : plot.y + plot.h - (value / axis.max) * plot.h);
 
     // grid and axis labels

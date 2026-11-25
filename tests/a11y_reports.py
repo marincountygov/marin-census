@@ -129,7 +129,7 @@ def main():
         check(page.evaluate("document.activeElement.id") == "report-preview", "the skip link moves focus to the report")
 
         # a group is described by its count; the report title shows its default; the page title names the tab
-        check(page.locator("fieldset.report-group[aria-describedby]").count() == 4, "Places and Measures are described by their counts")
+        check(page.locator("fieldset.report-group[aria-describedby]").count() == 6, "Places, Measures and Chart measures are described by their counts")
         check(page.locator("#report-title").get_attribute("placeholder") == "Marin Census report", "the report title shows the default as its placeholder")
         check(page.evaluate("document.title") == "Reports | Marin Census", f"the page title names the tab: {page.evaluate('document.title')!r}")
 
@@ -211,13 +211,13 @@ def main():
             sec.locator("input[data-kind=cdp]").uncheck()
             sec.locator('[data-all="places"]').check()
             sec.locator('[data-field="chart"]').select_option("columns")
-            sec.locator('[data-field="chartMeasure"]').select_option("poverty-rate")
+            sec.locator('[data-chart-measure="poverty-rate"]').check()
             page.locator("#add-section").click()
             page.locator(".report-section").last.locator('[data-field="chart"]').select_option("bars")
             page.wait_for_timeout(400)
             ids = page.evaluate("[...document.querySelectorAll('#report-preview svg')].map((s) => [s.getAttribute('aria-labelledby'), s.getAttribute('aria-describedby')])")
             flat = [i for pair in ids for i in pair]
-            check(len(ids) == 2 and len(set(flat)) == 4 and all(page.locator("#" + i).count() == 1 for i in flat), f"{scheme}: each chart is named and described by ids of its own")
+            check(len(ids) == 3 and len(set(flat)) == 6 and all(page.locator("#" + i).count() == 1 for i in flat), f"{scheme}: each of the {len(ids)} charts is named and described by ids of its own")
             ratios = page.evaluate(r"""() => {
                 const parse = (c) => c.match(/[\d.]+/g).slice(0, 3).map(Number);
                 const lum = ([r, g, b]) => { const f = (v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); }; return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b); };

@@ -45,7 +45,7 @@ test('more than 30 places show the 30 highest and say so', () => {
 test('the sentence names the highest and the lowest with their values', () => {
   const s = C.spec(F, places(['san-rafael', 'novato', 'belvedere']), variable('population-total'));
   assert.match(s.summary, /^Total population for 3 places: highest San Rafael \(60,433\), lowest Belvedere \(2,345\)\.$/);
-  assert.equal(s.title, 'Total population by place');
+  assert.equal(s.title, 'Total population by place (people)');
 });
 
 test('the axis starts at zero and ends at a round number above the longest bar and its whisker', () => {
@@ -62,4 +62,20 @@ test('the axis starts at zero and ends at a round number above the longest bar a
 test('columns are the other direction of the same bars', () => {
   assert.equal(C.spec(F, places(['novato']), variable('median-age'), { kind: 'columns' }).kind, 'columns');
   assert.equal(C.spec(F, places(['novato']), variable('median-age'), { kind: 'anything' }).kind, 'bars');
+});
+
+test('the title says the unit, and the legend words come from the confidence level', () => {
+  assert.equal(C.spec(F, places(['novato']), variable('poverty-rate')).title, 'Poverty rate by place (percent)');
+  assert.equal(C.spec(F, places(['novato']), variable('median-household-income')).title, 'Median household income by place (dollars)');
+  assert.equal(C.spec(F, places(['novato']), variable('median-age'), { confidence: 0.9 }).marginLabel, '90% margin of error');
+  assert.equal(C.spec(F, places(['novato']), variable('median-age')).marginLabel, 'Margin of error');
+  assert.equal(C.spec(F, places(['novato']), variable('median-age')).hasWhiskers, true);
+  assert.equal(C.spec(F, places(['novato']), variable('median-age'), { margins: false }).hasWhiskers, false);
+});
+
+test('the places a chart leaves out are listed, so its table can list them last', () => {
+  const s = C.spec(F, places(['belvedere', 'novato']), variable('median-household-income'));
+  assert.deepEqual(s.omitted, ['belvedere']);
+  const many = C.spec(F, data.places.filter((p) => p.kind === 'tract'), variable('population-total'));
+  assert.equal(many.omitted.length, 63 - 30);
 });

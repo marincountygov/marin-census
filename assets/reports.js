@@ -197,9 +197,9 @@
   }
 
   // A "Select all" box: checked when everything it covers is, and mixed when some are.
-  function selectAll(name, text) {
+  function selectAll(name, text, key) {
     const input = ctx.el('input', { type: 'checkbox' });
-    input.dataset.all = name;
+    input.dataset.all = key || name;
     input.setAttribute('aria-label', `${text} ${name}`); // "Select all places": the visible words stay in the name
     return ctx.el('label', { className: 'report-select-all' }, input, ` ${text}`);
   }
@@ -233,10 +233,18 @@
     margins.dataset.field = 'margins';
     const chart = ctx.el('select', { id: id('chart') }, [['none', 'None'], ['bars', 'Bars'], ['columns', 'Columns']].map(([value, text]) => ctx.el('option', { value, textContent: text, selected: (section.chart || 'none') === value })));
     chart.dataset.field = 'chart';
-    const chartMeasure = ctx.el('select', { id: id('chart-measure') });
-    chartMeasure.dataset.field = 'chartMeasure';
-    const chartMeasureField = field('Chart measure', chartMeasure, id('chart-measure'));
-    chartMeasureField.dataset.chartMeasureField = 'true';
+    // the measures that get a chart: any of the section's measures, each a chart with a table of its own
+    const chartItems = data.measures.map((m) => {
+      const item = checkbox('chartMeasure', m.id, m.name, (section.chartMeasures || []).includes(m.id));
+      item.dataset.measureId = m.id;
+      return item;
+    });
+    const chartCount = ctx.el('p', { id: id('charts-count'), className: 'report-count' });
+    chartCount.dataset.count = 'charts';
+    const chartGroup = describedBy(ctx.el('fieldset', { className: 'app-field report-group' },
+      ctx.el('legend', { textContent: 'Chart measures' }),
+      selectAll('chart measures', 'Select all', 'chart'), ctx.el('ul', { className: 'report-checks' }, chartItems), chartCount), id('charts-count'));
+    chartGroup.dataset.chartGroup = 'true';
 
     // places: area types and a search narrow the list, as the list's filter column does; Select all takes what is shown
     const shownKinds = openKinds(section);
@@ -280,7 +288,7 @@
         field('Title', title, id('title')),
         field('Layout', layout, id('layout')),
         field('Chart', chart, id('chart')),
-        chartMeasureField,
+        chartGroup,
         ctx.el('div', { className: 'app-field' }, ctx.el('label', {}, margins, ' Show margins of error')),
         describedBy(ctx.el('fieldset', { className: 'app-field report-group' },
           ctx.el('legend', { textContent: 'Places' }),
@@ -326,14 +334,23 @@
       }
     });
     li.dataset.shown = String(shown);
-    // The chart measure is one of the measures in the section; it is shown only when there is a chart.
-    const pick = li.querySelector('[data-field="chartMeasure"]');
-    const chartChoices = state.data.measures.filter((m) => section.measures.includes(m.id));
-    pick.replaceChildren(...chartChoices.map((m) => ctx.el('option', { value: m.id, textContent: m.name, selected: m.id === section.chartMeasure })));
-    li.querySelector('[data-chart-measure-field]').hidden = !section.chart || section.chart === 'none' || !chartChoices.length;
+    // The chart measures are some of the section's measures; the group shows only when there is a chart.
+    const charted = section.chart && section.chart !== 'none';
+    li.querySelector('[data-chart-group]').hidden = !charted;
+    let chartShown = 0;
+    let chartChosen = 0;
+    li.querySelectorAll('[data-measure-id]').forEach((item) => {
+      const visible = section.measures.includes(item.dataset.measureId);
+      item.hidden = !visible;
+      const box = item.querySelector('input');
+      box.checked = (section.chartMeasures || []).includes(item.dataset.measureId);
+      if (visible) { chartShown += 1; if (box.checked) chartChosen += 1; }
+    });
+    li.querySelector('[data-count="charts"]').textContent = `${chartChosen} of ${chartShown} measures charted`;
     const mixed = (box, chosen, of) => { box.checked = of > 0 && chosen === of; box.indeterminate = chosen > 0 && chosen < of; };
     mixed(li.querySelector('[data-all="places"]'), shownChosen, shown);
     mixed(li.querySelector('[data-all="measures"]'), section.measures.length, total.measures);
+    mixed(li.querySelector('[data-all="chart"]'), chartChosen, chartShown);
   }
 
   // How many places the list shows after the area types or the search narrow it.
@@ -342,12 +359,9 @@
     announce(n === 0 ? 'No places match.' : `${n} ${n === 1 ? 'place' : 'places'} shown.`);
   }
 
-  // The chart's measure is always one of the section's measures.
+  // The charted measures are always some of the section's measures.
   function keepChartMeasure(section) {
-    if (section.chart && section.chart !== 'none' && !section.measures.includes(section.chartMeasure)) {
-      const first = state.data.measures.find((m) => section.measures.includes(m.id));
-      section.chartMeasure = first ? first.id : '';
-    }
+    section.chartMeasures = state.data.measures.map((m) => m.id).filter((id) => section.measures.includes(id) && (section.chartMeasures || []).includes(id));
   }
 
   function drawSections() {
@@ -392,9 +406,17 @@
       section.margins = t.checked;
     } else if (t.dataset.field === 'chart') {
       section.chart = t.value;
-      if (!section.chartMeasure && section.measures.length) section.chartMeasure = state.data.measures.find((m) => section.measures.includes(m.id)).id;
-    } else if (t.dataset.field === 'chartMeasure') {
-      section.chartMeasure = t.value;
+      // choosing a chart charts the first measure to start; the person adds the others
+      if (t.value !== 'none' && !(section.chartMeasures || []).length) {
+        const first = state.data.measures.find((m) => section.measures.includes(m.id));
+        section.chartMeasures = first ? [first.id] : [];
+      }
+    } else if (t.dataset.chartMeasure !== undefined) {
+      const wanted = new Set(section.chartMeasures || []);
+      if (t.checked) wanted.add(t.dataset.chartMeasure); else wanted.delete(t.dataset.chartMeasure);
+      section.chartMeasures = state.data.measures.map((m) => m.id).filter((id) => wanted.has(id));
+    } else if (t.dataset.all === 'chart') {
+      section.chartMeasures = t.checked ? state.data.measures.map((m) => m.id).filter((id) => section.measures.includes(id)) : [];
     } else return;
     keepChartMeasure(section);
     refresh(li, section);

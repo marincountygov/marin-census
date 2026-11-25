@@ -589,6 +589,11 @@ fieldset.report-fields > legend {
   stroke-width: 1;
 }
 
+.chart-heading {
+  fill: var(--app-text);
+  font: 700 15px system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
 .chart-text {
   fill: var(--app-text);
   font: 12px system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -606,7 +611,8 @@ fieldset.report-fields > legend {
     stroke: CanvasText;
   }
 
-  .chart-text {
+  .chart-text,
+  .chart-heading {
     fill: CanvasText;
   }
 }
