@@ -36,4 +36,4 @@ Open `http://127.0.0.1:8765/`. Use HTTP, not `file://`. There is no build step.
 
 ## Shell
 
-Built on Marin App Shell 2.2.0 (`vendor/marinos/`). Do not edit it. See `docs/development.md` for updating it.
+Built on Marin App Shell 2.4.0 (`vendor/marinos/`). Do not edit it. See `docs/development.md` for updating it.
