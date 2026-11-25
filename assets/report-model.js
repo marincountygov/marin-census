@@ -3,16 +3,19 @@
 // are a comparison. `buildReport` turns the sections into the object the shell's report core (window.marinReports)
 // makes every output from: the preview, Copy, Download and the report file.
 (() => {
+  const C = typeof module !== 'undefined' && module.exports ? require('./chart.js') : window.MarinCensusChart;
+
   // A table in a report has at most 12 columns (the shell's core), so at most 11 across after the label column. A section
   // with more across is made as several tables (part 1 of 3, ...), so nothing has to be left out. The report core holds
   // 10 tables, and a section is 4 at most.
   const LIMITS = { across: 11, sections: 4, tables: 10 };
+  const CHARTS = ['none', 'bars', 'columns']; // a chart of one measure across the section's places
   const ORIENTATIONS = ['auto', 'places', 'measures']; // which of the two runs across the top; auto puts the longer one down
 
   // A new section. With no places given it starts on Marin County, so the preview is never empty.
   function newSection(data, places) {
     const chosen = places && places.length ? places : [data.places[0].id];
-    return { title: '', places: chosen, measures: data.headlineMeasures.slice(), orientation: 'auto', margins: true };
+    return { title: '', places: chosen, measures: data.headlineMeasures.slice(), orientation: 'auto', margins: true, chart: 'none', chartMeasure: '' };
   }
 
   // Keeps only places and measures that exist, in the order of the data.
@@ -25,6 +28,8 @@
       measures,
       orientation: ORIENTATIONS.includes(s.orientation) ? s.orientation : 'auto',
       margins: s.margins !== false,
+      chart: CHARTS.includes(s.chart) ? s.chart : 'none',
+      chartMeasure: measures.includes(s.chartMeasure) ? s.chartMeasure : (measures[0] || ''),
     };
   }
 
@@ -76,6 +81,25 @@
     return out.length ? out : [[]];
   };
 
+  // The key a chart's picture is kept under: what it draws, so a changed chart gets a new picture.
+  const chartKey = (spec) => JSON.stringify([spec.kind, spec.variable, spec.margins, spec.bars.map((b) => [b.id, b.value, b.margin])]);
+
+  // The chart of a section: its spec for the page, and the chart the report core holds (labels, numbers, a sentence and,
+  // when it has been made, the PNG). A chart with no bar to draw has only its sentence on the page.
+  function chartOf(data, F, s, places, chartImage) {
+    if (s.chart === 'none' || !s.chartMeasure) return null;
+    const variable = variableOf(data, s.chartMeasure);
+    const spec = C.spec(F, places, variable, { kind: s.chart, margins: s.margins });
+    spec.key = chartKey(spec);
+    if (!spec.bars.length) return { spec, report: null };
+    const picture = (chartImage && chartImage(spec.key)) || { image: '', width: 0, height: 0 };
+    return { spec, report: {
+      kind: spec.kind, title: spec.title, summary: spec.summary, labels: spec.bars.map((b) => b.label),
+      series: [{ name: variable.name, values: spec.bars.map((b) => b.value) }],
+      image: picture.image, width: picture.width, height: picture.height,
+    } };
+  }
+
   // How many tables a section makes.
   function tableCount(data, raw) {
     const s = clean(data, raw);
@@ -85,7 +109,7 @@
 
   // The tables of one section for the report core: one, or several when more than 11 run across. Empty for a section
   // with nothing chosen.
-  function buildSection(data, F, raw) {
+  function buildSection(data, F, raw, chartImage) {
     const s = clean(data, raw);
     if (!s.places.length || !s.measures.length) return [];
     const places = s.places.map((id) => placeOf(data, id));
@@ -95,7 +119,8 @@
     const rawValue = (v, p) => cellValue(v, p, s.margins);
     const title = s.title || autoTitle(data, s);
     const parts = chunks(acrossPlaces ? places : variables);
-    return parts.map((part, i) => {
+    const chart = chartOf(data, F, s, places, chartImage);
+    const tables = parts.map((part, i) => {
       const name = parts.length > 1 ? `${title} (part ${i + 1} of ${parts.length})` : title;
       if (acrossPlaces) {
         return {
@@ -112,6 +137,12 @@
         values: places.map((p) => [p.name, ...part.map((v) => rawValue(v, p))]),
       };
     });
+    // The chart goes with the first table of the section.
+    if (chart) {
+      tables[0]._chartSpec = chart.spec; // for the page's own preview; the report core ignores it
+      if (chart.report) tables[0].chart = chart.report;
+    }
+    return tables;
   }
 
   // The source line that closes every report: the dataset and the confidence level of its margins.
@@ -122,7 +153,7 @@
 
   function buildReport(data, F, sections, options) {
     const opts = options || {};
-    const built = sections.flatMap((s) => buildSection(data, F, s));
+    const built = sections.flatMap((s) => buildSection(data, F, s, opts.chartImage));
     return {
       title: String(opts.title || '').trim() || 'Marin Census report',
       prepared: opts.prepared || '',
@@ -137,28 +168,35 @@
   // section, joined by ~. A list that holds every place (or every measure) is written as *.
   const title = (s) => encodeURIComponent(s.title || '').replace(/~/g, '%7E'); // encodeURIComponent leaves ~ alone, and ~ joins the sections
   const LAYOUT = { auto: 'a', places: 'p', measures: 'm' };
+  const CHART_CODE = { none: 'n', bars: 'b', columns: 'c' };
 
   function encode(data, sections) {
     const list = (ids, all) => (ids.length === all.length ? '*' : ids.join('.'));
-    return sections.map((s) => [list(s.places, data.places), list(s.measures, data.measures), LAYOUT[s.orientation] || 'a', s.margins === false ? '0' : '1', title(s)].join('|')).join('~');
+    return sections.map((s) => {
+      const fields = [list(s.places, data.places), list(s.measures, data.measures), LAYOUT[s.orientation] || 'a', s.margins === false ? '0' : '1', title(s)];
+      if (s.chart && s.chart !== 'none') fields.push(CHART_CODE[s.chart], s.chartMeasure); // a section with no chart keeps the shorter, older form
+      return fields.join('|');
+    }).join('~');
   }
 
   function decode(text, data) {
     if (!text) return [];
     const ids = (part, all) => (part === '*' ? all.map((x) => x.id) : (part || '').split('.').filter(Boolean));
     return text.split('~').slice(0, LIMITS.sections).map((part) => {
-      const [places, measures, layout, margins, title_] = part.split('|');
+      const [places, measures, layout, margins, title_, chart, chartMeasure] = part.split('|');
       return clean(data, {
         places: ids(places, data.places),
         measures: ids(measures, data.measures),
         orientation: { a: 'auto', p: 'places', m: 'measures' }[layout] || 'auto',
         margins: margins !== '0',
+        chart: { b: 'bars', c: 'columns' }[chart] || 'none',
+        chartMeasure: chartMeasure || '',
         title: (() => { try { return decodeURIComponent(title_ || ''); } catch (e) { return ''; } })(),
       });
     }).filter((s) => s.places.length && s.measures.length);
   }
 
-  const api = { LIMITS, newSection, clean, autoTitle, acrossOf, tableCount, buildSection, buildReport, sourceOf, encode, decode };
+  const api = { LIMITS, CHARTS, newSection, clean, autoTitle, acrossOf, tableCount, chartKey, buildSection, buildReport, sourceOf, encode, decode };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else window.MarinCensusReportModel = api;
 })();

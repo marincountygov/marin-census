@@ -107,12 +107,36 @@ test('the report ends with the source and the confidence level', () => {
 test('the address holds the sections and reads them back; everything is written as *', () => {
   const sections = [section({ title: 'A | B ~ C', orientation: 'measures', margins: false })];
   assert.deepEqual(M.decode(M.encode(data, sections), data), sections.map((s) => M.clean(data, s)));
-  const all = [{ places: data.places.map((p) => p.id), measures: data.measures.map((m) => m.id), orientation: 'auto', margins: true, title: '' }];
+  const all = [{ places: data.places.map((p) => p.id), measures: data.measures.map((m) => m.id), orientation: 'auto', margins: true, title: '', chart: 'none', chartMeasure: data.measures[0].id }];
   assert.equal(M.encode(data, all), '*|*|a|1|');
   assert.deepEqual(M.decode('*|*|a|1|', data), all);
   assert.deepEqual(M.decode('', data), []);
   assert.deepEqual(M.decode('nowhere|nope|p|1|', data), []);
   assert.equal(M.decode(Array(10).fill('san-rafael|population-total|p|1|').join('~'), data).length, M.LIMITS.sections);
+});
+
+test('a chart is part of the section: it goes with the first table, has its sentence, and keeps to the address', () => {
+  const sec = section({ chart: 'bars', chartMeasure: 'median-age', measures: ['population-total', 'median-age'] });
+  const tables = M.buildSection(data, F, sec, () => ({ image: 'data:image/png;base64,AAAA', width: 700, height: 200 }));
+  assert.equal(tables.length, 1);
+  assert.equal(tables[0].chart.kind, 'bars');
+  assert.equal(tables[0].chart.labels.length, 2);
+  assert.equal(tables[0].chart.series[0].name, 'Median age');
+  assert.match(tables[0].chart.summary, /^Median age for 2 places: highest /);
+  assert.equal(tables[0].chart.image, 'data:image/png;base64,AAAA');
+  assert.ok(tables[0]._chartSpec.bars.length === 2);
+  const wide = M.buildSection(data, F, { places: data.places.map((p) => p.id), measures: data.measures.map((m) => m.id), orientation: 'measures', margins: true, title: '', chart: 'columns', chartMeasure: 'poverty-rate' });
+  assert.ok(wide[0].chart && !wide[1].chart && !wide[2].chart, 'only the first of several tables has the chart');
+  assert.equal(wide[0].chart.labels.length, 30);
+  assert.deepEqual(M.decode(M.encode(data, [sec]), data), [M.clean(data, sec)]);
+  assert.ok(!M.encode(data, [section()]).includes('|b|'), 'a section with no chart keeps the short form');
+});
+
+test('a chart measure that is not in the section falls back to one that is; no measure means no chart', () => {
+  const c = M.clean(data, { places: ['novato'], measures: ['median-age'], chart: 'bars', chartMeasure: 'poverty-rate' });
+  assert.equal(c.chartMeasure, 'median-age');
+  assert.equal(M.clean(data, { places: ['novato'], measures: ['median-age'], chart: 'pie' }).chart, 'none');
+  assert.equal(M.buildSection(data, F, { places: ['belvedere'], measures: ['median-household-income'], chart: 'bars', chartMeasure: 'median-household-income', orientation: 'auto', margins: true })[0].chart, undefined);
 });
 
 test('a table never has more than 12 columns', () => {

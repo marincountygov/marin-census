@@ -38,6 +38,8 @@ if command -v node >/dev/null 2>&1; then
   node --check "$ROOT_DIR/vendor/marinos/marinos.js"
   node --check "$ROOT_DIR/assets/app.js"
   node --check "$ROOT_DIR/assets/format.js"
+  node --check "$ROOT_DIR/assets/chart.js"
+  node "$ROOT_DIR/tests/chart.test.js" | tail -1
   node --check "$ROOT_DIR/assets/report-model.js"
   node --check "$ROOT_DIR/assets/reports.js"
   node "$ROOT_DIR/tests/report-model.test.js" | tail -1

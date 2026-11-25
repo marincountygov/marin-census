@@ -79,9 +79,23 @@
 
   let built = null; // the report object last made from the sections
 
+  // A chart's picture (a PNG) is made after the page draws, and kept by what the chart draws. Copy and Download use it
+  // when it is ready; until then the chart is in the report as its sentence.
+  const pictures = new Map();
+  const making = new Set();
+  function makePictures() {
+    if (!built) return;
+    built.sections.forEach((table) => {
+      const spec = table._chartSpec;
+      if (!spec || !spec.bars.length || pictures.has(spec.key) || making.has(spec.key)) return;
+      making.add(spec.key);
+      window.MarinCensusChart.png(ctx.F, spec).then((picture) => { pictures.set(spec.key, picture); making.delete(spec.key); });
+    });
+  }
+
   function currentReport() {
     if (state.opened) return state.opened;
-    built = M.buildReport(state.data, ctx.F, state.sections, { title: state.title, prepared: window.marinReports.pacificToday() });
+    built = M.buildReport(state.data, ctx.F, state.sections, { title: state.title, prepared: window.marinReports.pacificToday(), chartImage: (key) => pictures.get(key) || null });
     const made = window.marinReports.create(built);
     return made.errors.length ? null : made.report;
   }
@@ -95,9 +109,17 @@
     region.replaceChildren(text('h2', report.title));
     if (report.prepared) region.append(text('p', `Prepared ${window.marinReports.formatDate(report.prepared)}`));
     if (report.filters) region.append(text('p', report.filters));
-    report.sections.forEach((section) => {
+    report.sections.forEach((section, index) => {
       if (section.title) region.append(text('h3', section.title));
-      if (section.chart && section.chart.summary) region.append(text('p', section.chart.summary)); // a chart's picture is not drawn here
+      const spec = !state.opened && built && built.sections[index] && built.sections[index]._chartSpec;
+      if (spec && spec.bars.length) {
+        // the chart is drawn from our own numbers, as an SVG with a name and a description, and its sentence under it
+        region.append(ctx.el('figure', { className: 'report-chart' }, window.MarinCensusChart.draw(ctx.F, spec, 'page').node, ctx.el('figcaption', { textContent: spec.summary })));
+      } else if (spec) {
+        region.append(text('p', spec.summary));
+      } else if (section.chart && section.chart.summary) {
+        region.append(text('p', section.chart.summary)); // a chart in a saved file: its sentence; its picture is not drawn
+      }
       const head = ctx.el('tr', {}, section.head.map((h) => { const th = text('th', h); th.setAttribute('scope', 'col'); return th; }));
       const rows = section.rows.map((row) => ctx.el('tr', {}, row.map((cell, i) => {
         const node = text(i ? 'td' : 'th', cell);
@@ -137,6 +159,7 @@
       note.hidden = false;
     }
     drawReport(region, report);
+    makePictures();
     // The report is a region named by its own title, so a screen reader can jump to it.
     const heading = region.querySelector('h2');
     if (heading) {
@@ -208,6 +231,12 @@
     layout.setAttribute('aria-describedby', 'report-layout-hint');
     const margins = ctx.el('input', { type: 'checkbox', checked: section.margins });
     margins.dataset.field = 'margins';
+    const chart = ctx.el('select', { id: id('chart') }, [['none', 'None'], ['bars', 'Bars'], ['columns', 'Columns']].map(([value, text]) => ctx.el('option', { value, textContent: text, selected: (section.chart || 'none') === value })));
+    chart.dataset.field = 'chart';
+    const chartMeasure = ctx.el('select', { id: id('chart-measure') });
+    chartMeasure.dataset.field = 'chartMeasure';
+    const chartMeasureField = field('Chart measure', chartMeasure, id('chart-measure'));
+    chartMeasureField.dataset.chartMeasureField = 'true';
 
     // places: area types and a search narrow the list, as the list's filter column does; Select all takes what is shown
     const shownKinds = openKinds(section);
@@ -250,6 +279,8 @@
       ctx.el('fieldset', { className: 'app-form-grid report-fields' }, legend,
         field('Title', title, id('title')),
         field('Layout', layout, id('layout')),
+        field('Chart', chart, id('chart')),
+        chartMeasureField,
         ctx.el('div', { className: 'app-field' }, ctx.el('label', {}, margins, ' Show margins of error')),
         describedBy(ctx.el('fieldset', { className: 'app-field report-group' },
           ctx.el('legend', { textContent: 'Places' }),
@@ -295,6 +326,11 @@
       }
     });
     li.dataset.shown = String(shown);
+    // The chart measure is one of the measures in the section; it is shown only when there is a chart.
+    const pick = li.querySelector('[data-field="chartMeasure"]');
+    const chartChoices = state.data.measures.filter((m) => section.measures.includes(m.id));
+    pick.replaceChildren(...chartChoices.map((m) => ctx.el('option', { value: m.id, textContent: m.name, selected: m.id === section.chartMeasure })));
+    li.querySelector('[data-chart-measure-field]').hidden = !section.chart || section.chart === 'none' || !chartChoices.length;
     const mixed = (box, chosen, of) => { box.checked = of > 0 && chosen === of; box.indeterminate = chosen > 0 && chosen < of; };
     mixed(li.querySelector('[data-all="places"]'), shownChosen, shown);
     mixed(li.querySelector('[data-all="measures"]'), section.measures.length, total.measures);
@@ -304,6 +340,14 @@
   function announceShown(li) {
     const n = Number(li.dataset.shown);
     announce(n === 0 ? 'No places match.' : `${n} ${n === 1 ? 'place' : 'places'} shown.`);
+  }
+
+  // The chart's measure is always one of the section's measures.
+  function keepChartMeasure(section) {
+    if (section.chart && section.chart !== 'none' && !section.measures.includes(section.chartMeasure)) {
+      const first = state.data.measures.find((m) => section.measures.includes(m.id));
+      section.chartMeasure = first ? first.id : '';
+    }
   }
 
   function drawSections() {
@@ -346,7 +390,13 @@
       section.orientation = t.value;
     } else if (t.dataset.field === 'margins') {
       section.margins = t.checked;
+    } else if (t.dataset.field === 'chart') {
+      section.chart = t.value;
+      if (!section.chartMeasure && section.measures.length) section.chartMeasure = state.data.measures.find((m) => section.measures.includes(m.id)).id;
+    } else if (t.dataset.field === 'chartMeasure') {
+      section.chartMeasure = t.value;
     } else return;
+    keepChartMeasure(section);
     refresh(li, section);
     changed();
   }

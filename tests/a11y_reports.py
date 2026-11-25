@@ -204,6 +204,32 @@ def main():
             check(not clipped, f"{label}: text is cut off in {clipped[:3]}")
             context.close()
 
+        # ---- a chart: axe, its name and description, and contrast (3:1 for the bars and lines, 4.5:1 for its words) ------
+        for scheme in ("light", "dark"):
+            context, page = open_reports(scheme=scheme)
+            sec = page.locator(".report-section").first
+            sec.locator("input[data-kind=cdp]").uncheck()
+            sec.locator('[data-all="places"]').check()
+            sec.locator('[data-field="chart"]').select_option("columns")
+            sec.locator('[data-field="chartMeasure"]').select_option("poverty-rate")
+            page.locator("#add-section").click()
+            page.locator(".report-section").last.locator('[data-field="chart"]').select_option("bars")
+            page.wait_for_timeout(400)
+            ids = page.evaluate("[...document.querySelectorAll('#report-preview svg')].map((s) => [s.getAttribute('aria-labelledby'), s.getAttribute('aria-describedby')])")
+            flat = [i for pair in ids for i in pair]
+            check(len(ids) == 2 and len(set(flat)) == 4 and all(page.locator("#" + i).count() == 1 for i in flat), f"{scheme}: each chart is named and described by ids of its own")
+            ratios = page.evaluate(r"""() => {
+                const parse = (c) => c.match(/[\d.]+/g).slice(0, 3).map(Number);
+                const lum = ([r, g, b]) => { const f = (v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); }; return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b); };
+                const ratio = (a, b) => { const x = lum(parse(a)), y = lum(parse(b)); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); };
+                const bg = getComputedStyle(document.body).backgroundColor;
+                const svg = document.querySelector('#report-preview svg');
+                return { bar: ratio(getComputedStyle(svg.querySelector('.chart-bar')).fill, bg), line: ratio(getComputedStyle(svg.querySelector('.chart-whisker')).stroke, bg), text: ratio(getComputedStyle(svg.querySelector('.chart-text')).fill, bg) };
+            }""")
+            check(ratios["bar"] >= 3 and ratios["line"] >= 3 and ratios["text"] >= 4.5, f"{scheme}: chart contrast {ratios}")
+            axe_scan(page, f"report with two charts, {scheme}")
+            context.close()
+
         # ---- axe on the other states ----------------------------------------------------------------------------
         for label, kwargs in (("default, light", {}), ("default, dark", {"scheme": "dark"}), ("320 px", {"width": 320})):
             context, page = open_reports(**kwargs)
