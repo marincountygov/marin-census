@@ -389,9 +389,9 @@
   function drawData() {
     const facts = datasetFacts().map(([name, value]) => {
       const content = name === 'Dataset' && app.data.source.url ? el('a', { href: app.data.source.url, textContent: value }) : value;
-      return el('div', {}, el('dt', { textContent: name }), el('dd', {}, content));
+      return [el('dt', { textContent: name }), el('dd', {}, content)];
     });
-    $('dataset-facts').replaceChildren(el('dl', {}, facts));
+    $('dataset-facts').replaceChildren(el('dl', { className: 'details' }, facts.flat()));
     drawMeasureTable();
   }
 

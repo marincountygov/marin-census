@@ -34,7 +34,7 @@ KINDS = {
 }
 
 
-TOPICS = ROOT / "topics.json"
+TOPICS = SOURCE / "topics.json"
 
 
 def load(path):
@@ -117,7 +117,7 @@ def build():
     for v in variables:
         v["censusTables"] = tables[v["id"]]
     ids = [v["id"] for v in variables]
-    # Which variables are measures, and how they are grouped, comes from topics.json (presentation, kept here).
+    # Which variables are measures, and how they are grouped, comes from topics.json (copied from marin-data, the same grouping marin-pulse shows).
     topics = load(TOPICS)
     topic_of = {m: t["name"] for t in topics["topics"] for m in t["measures"]}
     listed = [m for t in topics["topics"] for m in t["measures"]]

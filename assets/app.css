@@ -197,32 +197,6 @@ html.has-expanded {
   margin: 0;
 }
 
-/* A list of a thing's own facts: one bordered box, a name and its value on each line. */
-.facts {
-  margin: 0 0 1rem;
-  padding: 0.75rem 1rem;
-  border: 1px solid var(--app-border);
-  border-radius: var(--pico-border-radius);
-}
-
-.facts dl {
-  margin: 0;
-}
-
-.facts dl > div {
-  display: grid;
-  grid-template-columns: minmax(12rem, 1fr) 2fr;
-  gap: 0 1rem;
-  padding: 0.125rem 0;
-}
-
-.facts dt,
-.facts dd {
-  margin: 0;
-  font-size: 1rem;
-  font-weight: 400;
-}
-
 #data h3 {
   margin: 1.5rem 0 0.75rem;
   font-size: 1.25rem;
