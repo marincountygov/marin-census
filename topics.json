@@ -29,7 +29,8 @@
         "population-65-plus",
         "population-65-plus-rate",
         "households-total",
-        "average-household-size"
+        "average-household-size",
+        "living-alone-rate"
       ]
     },
     {
@@ -38,13 +39,17 @@
       "measures": [
         "foreign-born-rate",
         "veteran-rate",
-        "disability-rate"
+        "disability-rate",
+        "hispanic-or-latino-rate",
+        "white-non-hispanic-rate"
       ]
     },
     {
       "id": "language",
       "name": "Language",
       "measures": [
+        "language-other-than-english-rate",
+        "limited-english-rate",
         "limited-english-households-rate"
       ]
     },
@@ -83,6 +88,14 @@
       ]
     },
     {
+      "id": "education",
+      "name": "Education",
+      "measures": [
+        "less-than-high-school-rate",
+        "bachelors-or-higher-rate"
+      ]
+    },
+    {
       "id": "transportation",
       "name": "Transportation",
       "measures": [
@@ -97,6 +110,13 @@
       "measures": [
         "labor-force-participation-rate",
         "unemployment-rate"
+      ]
+    },
+    {
+      "id": "health",
+      "name": "Health",
+      "measures": [
+        "uninsured-rate"
       ]
     }
   ]

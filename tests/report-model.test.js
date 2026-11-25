@@ -50,11 +50,11 @@ test('measures across: a place on each row', () => {
 test('every place and every measure fit: many across become several tables, with nothing left out', () => {
   const everything = { places: data.places.map((p) => p.id), measures: data.measures.map((m) => m.id), orientation: 'measures', margins: true, title: '' };
   const tables = M.buildSection(data, F, everything);
-  assert.equal(tables.length, 3); // 33 measures across, 11 at a time
-  assert.equal(M.tableCount(data, everything), 3);
+  assert.equal(tables.length, 4); // 41 measures across, 11 at a time
+  assert.equal(M.tableCount(data, everything), 4);
   tables.forEach((t) => { assert.equal(t.rows.length, data.places.length); assert.ok(t.head.length <= 12); });
   assert.equal(tables.reduce((n, t) => n + t.head.length - 1, 0), data.measures.length);
-  assert.match(tables[1].title, /\(part 2 of 3\)$/);
+  assert.match(tables[1].title, /\(part 2 of 4\)$/);
   const placesAcross = M.buildSection(data, F, { ...everything, orientation: 'places' });
   assert.equal(placesAcross.length, Math.ceil(data.places.length / 11));
   assert.equal(placesAcross.reduce((n, t) => n + t.head.length - 1, 0), data.places.length);
