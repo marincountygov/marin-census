@@ -157,10 +157,10 @@
     return tables;
   }
 
-  // The source line that closes every report: the dataset and the confidence level of its margins.
+  // The source line that closes every report: the dataset, and nothing else.
   function sourceOf(data) {
-    const { label, url, confidenceLevel } = data.source;
-    return { label: `${label}. Margins of error are at the ${Math.round(confidenceLevel * 100)}% confidence level.`, url: url || '' };
+    const { label, url } = data.source;
+    return { label, url: url || '' };
   }
 
   function buildReport(data, F, sections, options) {

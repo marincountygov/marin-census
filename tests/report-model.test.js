@@ -97,10 +97,11 @@ test('a section with no place or no measure makes no table', () => {
   assert.equal(r.prepared, '2026-11-24');
 });
 
-test('the report ends with the source and the confidence level', () => {
+test('the report ends with the source and nothing else', () => {
   const r = M.buildReport(data, F, [section()], {});
   assert.equal(r.sources.length, 1);
-  assert.match(r.sources[0].label, /American Community Survey 5-year estimates, 2020\u20132024\. Margins of error are at the 90% confidence level\.$/);
+  assert.match(r.sources[0].label, /^U\.S\. Census Bureau, American Community Survey 5-year estimates, 2020\u20132024$/);
+  assert.ok(!/margin|confidence/i.test(r.sources[0].label));
   assert.match(r.sources[0].url, /^https:\/\//);
 });
 
