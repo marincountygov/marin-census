@@ -568,3 +568,8 @@ fieldset.report-fields > legend {
 }
 
 
+
+/* The Charts items of the Copy and Download menus show only when the report has charts; the menu's button style would otherwise override hidden. */
+.menu-panel button[hidden] {
+  display: none;
+}
